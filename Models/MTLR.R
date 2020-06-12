@@ -66,7 +66,8 @@ source("Evaluations/EvaluationHelperFunctions.R")
 
 MTLR = function(training, testing, C1 = NULL, numFolds = 5){
   if(is.null(C1)){
-    C1 = mtlr_cv(Surv(time,delta)~.,data=training, loss= "conc", C1_vec = c(10,75,100,150,200,250,350,500,750,1000,1250,1500), train_biases = F,train_uncensored = F)$best_C1
+    C1 = mtlr_cv(Surv(time,delta)~.,data=training, loss= "conc", C1_vec = c(0.001,0.01,0.1,1,10,100,1000)
+, train_biases = F,train_uncensored = F)$best_C1
     print(C1)
   }
   
@@ -81,28 +82,28 @@ MTLR = function(training, testing, C1 = NULL, numFolds = 5){
 }
 
 internalCV_MTLR = function(training, numFolds){
- foldedData = createFoldsOfData(training, numFolds)[[2]] 
- resultsMatrix = matrix(rep(0,numFolds*7), ncol = 7,nrow =5) #7 vals of C1
- 
- #Much of this code is duplicated from MTLR(). See comments in that function.
- for(i in 1:numFolds){
-   trainingFold = foldedData[[1]][[i]]
-   testingFold = foldedData[[2]][[i]]
-   
-   trainingFold = trainingFold[order(trainingFold$delta),]
-   testingFold = testingFold[order(testingFold$delta),]
+  foldedData = createFoldsOfData(training, numFolds)[[2]] 
+  resultsMatrix = matrix(rep(0,numFolds*7), ncol = 7,nrow =5) #7 vals of C1
+  
+  #Much of this code is duplicated from MTLR(). See comments in that function.
+  for(i in 1:numFolds){
+    trainingFold = foldedData[[1]][[i]]
+    testingFold = foldedData[[2]][[i]]
     
-   m = floor(sqrt(nrow(training))+1)
-   quantileVals = seq(0,1,length.out = m+2)[-c(1,m+2)]
-   timePoints = unname(quantile(trainingFold$time, quantileVals))
-   timePoints = timePoints[!duplicated(timePoints)]
-   d = as.matrix(trainingFold[,-c(1,2)])
-   dAsZero = matrix(0,ncol = ncol(d), nrow = nrow(d))
-   yval = matrix(1 -Reduce(c,Map(function(x) trainingFold$time > timePoints[x],1:length(timePoints))), ncol = nrow(trainingFold), byrow = T)
+    trainingFold = trainingFold[order(trainingFold$delta),]
+    testingFold = testingFold[order(testingFold$delta),]
+    
+    m = floor(sqrt(nrow(training))+1)
+    quantileVals = seq(0,1,length.out = m+2)[-c(1,m+2)]
+    timePoints = unname(quantile(trainingFold$time, quantileVals))
+    timePoints = timePoints[!duplicated(timePoints)]
+    d = as.matrix(trainingFold[,-c(1,2)])
+    dAsZero = matrix(0,ncol = ncol(d), nrow = nrow(d))
+    yval = matrix(1 -Reduce(c,Map(function(x) trainingFold$time > timePoints[x],1:length(timePoints))), ncol = nrow(trainingFold), byrow = T)
     
     #Train biases first and then all parameters.
-   resultVec = c()
-   for(C1 in c(0.001,0.01,0.1, 1, 10,100,1000)){
+    resultVec = c()
+    for(C1 in c(0.001,0.01,0.1, 1, 10,100,1000)){
       biasPar = optim(par = rep(0,length(timePoints)*(ncol(d) +1)),fn = mtlr_objVal,gr = mtlr_grad, yval = yval, featureVal = dAsZero,C1=C1, delta = sort(trainingFold$delta), 
                       method = "L-BFGS-B", lower = -20,upper=20,control=c(maxit = 5000, factr = .45036e11))
       
@@ -120,7 +121,7 @@ internalCV_MTLR = function(training, numFolds){
   bestC1 = c(0.001,0.01,0.1, 1, 10, 100,1000)[which.min(meanResults)]
   return(bestC1)
 }
-  
+
 avgLogLikLoss = function(params, dat, timePoints){
   #For the log-likelihood loss we need to compute losses differently for censored and uncensored patients.
   #For censored patients the loss will correspond the the (log) survival probability assigned by the model at the time of censoring.
@@ -152,6 +153,3 @@ avgLogLikLoss = function(params, dat, timePoints){
   
   return(logloss/nrow(dat))
 }
-  
-  
-  
