@@ -57,6 +57,25 @@ survivalDataset$BOX1_SCORE = NULL
 survivalDataset$BOX2_SCORE = NULL
 survivalDataset$BOX3_SCORE = NULL
 
+survivalDataset$NO_APPETITE = NULL
+survivalDataset$TASTE_FUNNY = NULL
+survivalDataset$FEEL_FULL = NULL
+survivalDataset$SSWALLOW = NULL
+survivalDataset$SWALLOW = NULL
+survivalDataset$DRY_MOUTH = NULL
+survivalDataset$SMELL = NULL
+survivalDataset$SORE_MOUTH = NULL
+survivalDataset$PAIN = NULL
+survivalDataset$OTHER = NULL
+survivalDataset$DENTAL_PROBLEM = NULL
+survivalDataset$VOMIT = NULL
+survivalDataset$NAUSEA = NULL
+survivalDataset$DIARRHEA = NULL
+survivalDataset$CONSTIPATION = NULL
+survivalDataset$AGE65 = NULL
+survivalDataset$MISC = NULL
+survivalDataset$WEIGHT_CHANGEPOINT = NULL
+
 featureIdx = sample(3:ncol(survivalDataset),10)
 
 survivalDataset = survivalDataset[,c(1,2,featureIdx)]

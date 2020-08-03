@@ -1,0 +1,630 @@
+vital_status,days_to_death,days_to_last_followup,age_at_initial_pathologic_diagnosis,anatomic_neoplasm_subdivision,colon_polyps_present,days_to_birth,followup_treatment_success,gender,height,histological_type,history_of_colon_polyps,icd_10,icd_o_3_histology,kras_gene_analysis_performed,loss_expression_of_mismatch_repair_proteins_by_ihc,lymph_node_examined_count,lymphatic_invasion,mononucleotide_and_dinucleotide_marker_panel_analysis_status,number_of_lymphnodes_positive_by_he,other_dx,pathologic_m,pathologic_n,pathologic_stage,pathologic_t,person_neoplasm_cancer_status,postoperative_rx_tx,preoperative_pretreatment_cea_level,residual_tumor,tissue_prospective_collection_indicator,tissue_source_site,tumor_tissue_site,venous_invasion,weight
+dead,740,NA,68,cecum,no,-25143,NA,female,160,colon adenocarcinoma,no,c18.2,Mar-40,no,NA,30,yes,mss,5,yes,m0,n2,stage iiic,t3,tumor free,yes,27.4,r0,yes,a6,colon,no,55.2
+alive,NA,1387,73,cecum,no,-26929,complete remission/response,female,170.1,colon adenocarcinoma,no,c18.9,Mar-40,no,NA,23,no,mss,0,yes,m0,n0,stage iia,t3,tumor free,no,2.4,r0,yes,a6,colon,no,79.6
+dead,424,NA,70,NA,no,-25683,NA,male,180,colon adenocarcinoma,yes,c18.9,Mar-40,yes,NA,13,yes,mss,2,yes,m1,n1,stage iv,t4b,with tumor,yes,2.8,r0,yes,a6,colon,yes,96.5
+dead,442,NA,79,ascending colon,yes,-29097,NA,male,180.3,colon adenocarcinoma,no,c18.2,Mar-40,no,no,19,no,mss,0,yes,m0,n0,stage iia,t3,tumor free,no,NA,NA,yes,a6,colon,no,83.3
+alive,NA,735,66,hepatic flexure,yes,-24237,complete remission/response,male,190,colon adenocarcinoma,yes,c18.2,Mar-40,no,NA,23,yes,mss,2,yes,m0,n1b,stage iiib,t3,tumor free,yes,10.9,NA,yes,a6,colon,yes,106
+alive,NA,31,83,ascending colon,NA,-30438,NA,female,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,23,NA,msi-l,0,yes,m0,n0,stage ii,t3,with tumor,NA,0.2,r0,no,aa,colon,NA,NA
+alive,NA,1765,77,hepatic flexure,NA,-28275,NA,male,NA,colon adenocarcinoma,NA,c18.9,Mar-40,no,no,46,NA,mss,0,yes,m0,n0,stage i,t2,with tumor,no,2.08,r0,no,aa,colon,NA,NA
+dead,396,NA,74,ascending colon,NA,-27303,NA,female,NA,colon mucinous adenocarcinoma,yes,c18.9,Mar-80,no,no,26,no,msi-h,7,yes,m0,n2,stage iii,t3,with tumor,no,1.41,NA,no,aa,colon,no,NA
+alive,NA,731,86,ascending colon,NA,-31531,NA,female,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,20,no,msi-l,0,yes,m0,n0,stage ii,t3,with tumor,no,5.8,r0,no,aa,colon,no,NA
+alive,NA,NA,87,sigmoid colon,NA,-31805,NA,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,22,no,mss,0,yes,m0,n0,stage ii,t3,with tumor,NA,0.99,r0,no,aa,colon,no,NA
+alive,NA,1127,67,ascending colon,NA,-24653,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,18,yes,mss,0,yes,m0,n0,stage iia,t3,tumor free,no,0.96,r0,no,aa,colon,no,NA
+alive,NA,1096,85,sigmoid colon,NA,-31197,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,28,no,mss,0,yes,m0,n0,stage ii,t3,tumor free,no,1.3,r0,no,aa,colon,no,NA
+alive,NA,245,90,hepatic flexure,NA,-32871,partial remission/response,male,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,28,no,msi-h,2,yes,m0,n1,stage iiib,t3,tumor free,no,11.14,r0,no,aa,colon,no,NA
+alive,NA,0,90,cecum,NA,-32871,NA,female,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,15,no,mss,0,yes,m0,n0,stage iia,t3,with tumor,NA,4.72,r0,no,aa,colon,no,NA
+alive,NA,580,80,cecum,NA,-29402,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,24,no,mss,0,yes,m0,n0,stage i,t2,tumor free,no,1.88,r0,no,aa,colon,no,NA
+alive,NA,1035,75,sigmoid colon,NA,-27514,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,37,no,msi-l,0,yes,m0,n0,stage iia,t3,tumor free,no,0.65,r0,no,aa,colon,no,NA
+alive,NA,30,84,cecum,NA,-30772,NA,male,NA,colon mucinous adenocarcinoma,yes,c18.2,Mar-80,no,no,25,no,msi-h,0,yes,m0,n0,stage i,t2,tumor free,no,0.81,r0,no,aa,colon,no,NA
+dead,396,NA,85,cecum,NA,-31290,complete remission/response,male,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,20,yes,mss,10,yes,m0,n2,stage iiic,t3,tumor free,no,2.71,r0,no,aa,colon,no,NA
+alive,NA,546,62,ascending colon,NA,-22799,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,39,no,msi-h,0,yes,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,700,78,sigmoid colon,NA,-28704,NA,male,NA,NA,yes,c18.7,Mar-80,no,no,22,no,mss,0,yes,m0,n0,stage i,t2,with tumor,no,NA,r0,no,aa,colon,no,NA
+alive,NA,608,72,sigmoid colon,NA,-26359,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,25,yes,mss,5,yes,m0,n2,stage iiic,t3,tumor free,yes,NA,r0,no,aa,colon,no,NA
+alive,NA,608,82,descending colon,NA,-30254,NA,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,28,yes,mss,7,yes,m0,n2,stage iiic,t3,with tumor,yes,NA,r0,no,aa,colon,no,NA
+alive,NA,184,80,sigmoid colon,NA,-29554,partial remission/response,female,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,15,no,mss,4,yes,m1,n2,stage iv,t4,with tumor,yes,1286,r2,no,aa,colon,no,NA
+alive,NA,28,90,transverse colon,NA,-32873,NA,female,NA,colon adenocarcinoma,no,c18.4,Mar-40,no,no,21,no,msi-h,4,yes,m0,n1,stage iii,t3,tumor free,no,1.27,r0,no,aa,colon,no,NA
+alive,NA,578,80,sigmoid colon,NA,-29220,progressive disease,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,13,yes,msi-l,2,yes,m1,n1,stage iv,t3,with tumor,no,47.45,r2,no,aa,colon,no,NA
+dead,1095,NA,47,splenic flexure,NA,-17167,progressive disease,female,NA,colon mucinous adenocarcinoma,yes,c18.9,Mar-80,no,no,30,no,msi-l,5,yes,m1,n2,stage iv,t3,with tumor,yes,49.21,r2,no,aa,colon,no,NA
+alive,NA,2587,77,sigmoid colon,NA,-28367,NA,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,50,NA,msi-l,0,no,m0,n0,stage ii,t3,with tumor,no,4.6,r0,no,aa,colon,NA,NA
+alive,NA,579,68,ascending colon,NA,-24927,partial remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,15,NA,msi-h,0,yes,m1,n0,stage iv,t3,tumor free,yes,83.68,r2,no,aa,colon,NA,NA
+dead,579,NA,77,ascending colon,NA,-28428,NA,male,NA,colon adenocarcinoma,yes,c18.2,Mar-60,no,no,12,yes,msi-h,0,yes,m0,n0,stage ii,t3,with tumor,no,7.05,r0,no,aa,colon,NA,NA
+alive,NA,0,85,ascending colon,NA,-31380,NA,female,NA,colon adenocarcinoma,no,c18.9,Mar-55,no,no,23,yes,mss,0,yes,m0,n0,stage iia,t3,with tumor,NA,4.03,r0,no,aa,colon,yes,NA
+alive,NA,454,78,sigmoid colon,NA,-28521,progressive disease,female,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,18,yes,mss,7,yes,m0,n2,stage iiic,t3,with tumor,yes,NA,r0,no,aa,colon,yes,NA
+alive,NA,945,53,sigmoid colon,NA,-19449,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,14,yes,mss,2,yes,m0,n1,stage iiib,t3,tumor free,yes,NA,r0,no,aa,colon,yes,NA
+alive,NA,914,82,transverse colon,NA,-30163,complete remission/response,male,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,16,yes,mss,0,yes,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,NA,NA
+alive,NA,731,74,sigmoid colon,NA,-27028,NA,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,24,yes,mss,4,yes,m1,n2,stage iv,t3,with tumor,no,304.5,r2,no,aa,colon,no,NA
+alive,NA,912,71,ascending colon,NA,-26086,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,23,yes,mss,5,yes,m1,n2,stage iv,t3,tumor free,yes,NA,r0,no,aa,colon,no,NA
+alive,NA,395,83,ascending colon,NA,-30439,NA,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,40,no,mss,0,yes,m0,n0,stage iia,t3,with tumor,no,NA,r0,no,aa,colon,no,NA
+alive,NA,730,79,ascending colon,NA,-29130,complete remission/response,female,NA,colon mucinous adenocarcinoma,no,c18.2,Mar-80,no,no,17,no,msi-h,0,yes,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+dead,61,NA,68,descending colon,NA,-24868,NA,male,NA,colon adenocarcinoma,yes,c18.6,Mar-40,no,no,14,yes,mss,6,yes,m0,n2,stage iiic,t3,with tumor,NA,NA,r0,no,aa,colon,yes,NA
+alive,NA,1551,72,sigmoid colon,NA,-26360,progressive disease,male,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,12,no,msi-l,3,yes,m1,n1,stage iv,t3,with tumor,yes,5.15,r2,no,aa,colon,no,NA
+alive,NA,791,70,sigmoid colon,NA,-25599,complete remission/response,male,NA,colon adenocarcinoma,no,c19,Mar-40,no,no,16,NA,mss,2,yes,m0,n1,stage iiia,t2,with tumor,yes,NA,r0,no,aa,colon,no,NA
+alive,NA,730,84,sigmoid colon,NA,-30742,complete remission/response,male,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,22,no,mss,0,yes,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,580,73,transverse colon,NA,-26967,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,27,no,mss,0,yes,m0,n0,stage i,t2,tumor free,no,1.89,r0,no,aa,colon,no,NA
+alive,NA,1157,66,transverse colon,NA,-24319,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.4,Mar-40,no,no,32,no,mss,0,yes,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,669,70,sigmoid colon,NA,-25872,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,37,yes,mss,0,yes,m0,n0,stage iia,t3,tumor free,no,1.18,r0,no,aa,colon,no,NA
+dead,1188,NA,81,descending colon,NA,-29708,complete remission/response,male,NA,colon mucinous adenocarcinoma,no,c18.6,Mar-40,no,no,14,NA,msi-l,0,yes,m0,n0,stage ii,t3,tumor free,no,3.77,r0,no,aa,colon,NA,NA
+alive,NA,650,81,splenic flexure,yes,-29758,complete remission/response,female,157.5,colon adenocarcinoma,yes,c18.5,Mar-40,NA,NA,12,no,msi-l,0,no,m0,n0,stage i,t2,tumor free,no,2.6,r0,yes,ad,colon,NA,78.6
+dead,472,NA,73,hepatic flexure,yes,-26816,progressive disease,male,183,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,18,yes,mss,2,yes,m0,n1b,stage iiib,t3,with tumor,no,NA,r0,no,ad,colon,yes,96
+alive,NA,763,84,cecum,no,-30879,complete remission/response,male,170,colon adenocarcinoma,NA,c18.0,Mar-40,no,no,17,yes,msi-h,1,yes,m0,n1a,stage iiib,t3,tumor free,no,NA,r0,yes,ad,colon,yes,68
+dead,331,NA,58,cecum,no,-21457,progressive disease,male,183,colon adenocarcinoma,no,c18.2,Mar-40,no,yes,16,yes,msi-h,0,yes,NA,n2b,NA,t4a,with tumor,yes,NA,NA,yes,ad,colon,yes,91
+alive,NA,2310,51,descending colon,NA,-18765,complete remission/response,female,NA,colon adenocarcinoma,NA,c18.6,Mar-40,NA,NA,13,yes,msi-h,0,yes,m0,n0,stage i,t1,tumor free,no,5.9,NA,no,az,colon,yes,57
+alive,NA,3247,79,ascending colon,yes,-28906,complete remission/response,female,NA,colon adenocarcinoma,NA,c18.2,Mar-40,NA,NA,NA,NA,mss,NA,no,m0,n0,stage iia,t3,tumor free,no,15.1,r0,no,az,colon,NA,68
+dead,3042,NA,68,sigmoid colon,NA,-25082,progressive disease,male,162,colon adenocarcinoma,NA,c18.7,Mar-40,NA,NA,11,yes,msi-h,0,yes,m0,n0,stage ii,t3,with tumor,no,1.8,NA,no,az,colon,yes,59
+dead,59,NA,55,sigmoid colon,NA,-20094,progressive disease,female,NA,colon adenocarcinoma,NA,c18.7,Mar-40,NA,NA,12,yes,msi-l,2,yes,m0,n1,stage iiia,t2,with tumor,no,3.7,NA,no,az,colon,yes,NA
+dead,1493,NA,81,cecum,yes,-29938,NA,male,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,NA,NA,no,mss,NA,yes,mx,n0,stage i,t2,tumor free,no,1.3,rx,NA,ck,colon,no,NA
+dead,179,NA,71,ascending colon,yes,-26021,NA,female,175,colon mucinous adenocarcinoma,yes,c18.2,Mar-80,yes,NA,18,NA,mss,11,yes,m1,n2,stage iv,t3,NA,NA,NA,NA,no,dm,colon,NA,72
+dead,858,NA,75,cecum,yes,-27755,NA,male,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,10,no,mss,2,yes,m1,n1,stage iv,t3,with tumor,yes,NA,r0,no,g4,colon,no,47.5
+dead,715,NA,90,cecum,no,-32873,NA,male,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,37,no,msi-l,1,yes,mx,n1,stage iiib,t4a,with tumor,no,NA,r0,no,g4,colon,no,59.4
+alive,NA,1935,69,cecum,no,-25243,complete remission/response,male,173,colon adenocarcinoma,no,c18.9,Mar-40,no,yes,66,no,mss,1,yes,m0,n1,stage iiib,t3,tumor free,yes,NA,r0,no,g4,colon,no,102.5
+alive,NA,1093,76,cecum,yes,-27958,NA,female,158.5,colon adenocarcinoma,no,c18.0,Mar-40,yes,no,59,yes,mss,50,yes,m1,n2,stage iv,t3,with tumor,yes,NA,r0,no,g4,colon,yes,84.1
+alive,NA,672,60,cecum,yes,-21921,NA,female,178.2,colon adenocarcinoma,yes,c18.0,Mar-40,no,yes,44,no,msi-l,3,yes,mx,n1,stage iii,t2,tumor free,yes,3.4,r0,no,g4,colon,no,100
+alive,NA,1089,73,ascending colon,no,-27020,NA,female,152.1,colon adenocarcinoma,no,c18.2,Mar-40,no,no,17,yes,msi-h,0,yes,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,g4,colon,yes,63.2
+alive,NA,796,58,cecum,no,-21532,NA,female,166,colon adenocarcinoma,yes,c18.0,Mar-40,no,yes,15,no,msi-h,0,yes,m0,n0,stage iia,t3,tumor free,no,2.8,r0,no,g4,colon,no,57
+alive,NA,2792,77,sigmoid colon,yes,-28163,NA,female,149,colon adenocarcinoma,no,c18.7,Mar-40,no,no,18,no,mss,0,yes,m0,n0,stage iia,t3,tumor free,no,5.5,r0,no,g4,colon,no,65.5
+alive,NA,2424,78,cecum,yes,-28772,complete remission/response,male,169,colon adenocarcinoma,no,c18.0,Mar-40,no,no,16,no,msi-h,0,yes,m0,n0,stage i,t2,tumor free,no,2.1,r0,no,g4,colon,no,91
+alive,NA,543,53,sigmoid colon,no,-19535,NA,female,80.3,colon adenocarcinoma,no,c18.7,Mar-40,yes,yes,18,no,indeterminate,0,"yes, history of synchronous/bilateral malignancy",mx,n0,stage iia,t3,with tumor,yes,100.3,r0,yes,nh,colon,no,175.3
+dead,316,NA,60,rectosigmoid junction,yes,-21970,NA,male,180,rectal adenocarcinoma,no,c19,Mar-40,yes,no,26,yes,mss,1,yes,m1,n1,stage iv,t3,with tumor,yes,41.5,r0,yes,af,rectum,no,95.5
+alive,NA,244,67,rectum,NA,-24775,complete remission/response,male,NA,rectal adenocarcinoma,yes,c19,Mar-40,no,no,22,no,mss,0,yes,m0,n0,stage i,t1,tumor free,no,0.87,r0,no,ag,rectum,no,NA
+alive,NA,424,72,rectum,NA,-26420,complete remission/response,male,NA,rectal adenocarcinoma,yes,c19,Mar-40,no,no,19,no,mss,0,yes,m0,n0,stage iia,t3,tumor free,yes,NA,r0,no,ag,rectum,no,NA
+alive,NA,608,55,rectum,NA,-20242,complete remission/response,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,32,no,mss,1,yes,m0,n1,stage iiib,t3,tumor free,yes,NA,r0,no,ag,rectum,no,NA
+alive,NA,518,62,rectum,NA,-22950,complete remission/response,male,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,12,yes,mss,0,yes,m0,n0,stage i,t2,tumor free,no,NA,r0,no,ag,rectum,yes,NA
+alive,NA,518,63,rectum,NA,-23192,complete remission/response,male,NA,rectal adenocarcinoma,no,c18.9,Mar-40,no,no,15,yes,mss,0,yes,m0,n0,stage iia,t3,tumor free,yes,NA,r0,no,ag,rectum,yes,NA
+alive,NA,790,75,rectum,NA,-27485,progressive disease,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,32,no,mss,0,yes,m0,n0,stage iia,t3,with tumor,yes,1.5,r0,no,ag,rectum,no,NA
+alive,NA,485,86,rectum,NA,-31718,NA,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,15,no,mss,0,yes,m0,n0,stage i,t2,with tumor,NA,NA,r0,no,ag,rectum,no,NA
+alive,NA,1096,64,rectum,NA,-23496,complete remission/response,female,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,18,no,mss,0,yes,m0,n0,stage i,t1,tumor free,no,NA,r0,no,ag,rectum,no,NA
+alive,NA,943,68,rectum,NA,-25049,partial remission/response,female,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,23,yes,mss,0,yes,m1,n0,stage iv,t2,with tumor,yes,NA,r2,no,ag,rectum,no,NA
+dead,1581,NA,62,rectum,NA,-22830,progressive disease,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,12,yes,mss,6,yes,m1,n2,stage iv,t4,with tumor,no,1.88,r2,no,ag,rectum,yes,NA
+alive,NA,646,73,rectum,no,-26837,complete remission/response,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,11,no,mss,0,yes,NA,n1,stage iiib,t3,tumor free,no,81.3,r0,yes,bm,rectum,no,119
+dead,556,NA,74,sigmoid colon,no,-27190,NA,male,176.9,rectal adenocarcinoma,no,c20,Mar-40,yes,no,72,yes,msi-l,27,yes,m0,n2,NA,t3,with tumor,no,0.5,r0,no,g5,rectum,yes,97.7
+alive,NA,1696,72,rectosigmoid junction,no,-26348,NA,male,169,rectal adenocarcinoma,no,c19,Mar-40,no,no,13,no,mss,1,yes,mx,n1,stage iiib,t3,tumor free,yes,1.7,r1,no,g5,rectum,no,77.6
+alive,NA,804,67,rectosigmoid junction,no,-24486,NA,male,189.3,rectal mucinous adenocarcinoma,no,c19,Mar-80,no,no,26,no,mss,1,yes,mx,n1,stage iiia,t1,tumor free,yes,NA,r0,no,g5,rectum,no,118.6
+alive,NA,475,61,cecum,yes,-22379,complete remission/response,female,173,colon adenocarcinoma,yes,c18.0,Mar-40,no,yes,28,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,yes,3l,colon,no,63.3
+alive,NA,146,67,ascending colon,yes,-24523,stable disease,male,167.64,colon adenocarcinoma,no,c18.2,Mar-40,no,yes,25,no,mss,NA,no,m0,n1b,stage iiib,t4a,with tumor,yes,2,r0,yes,4n,colon,no,134
+alive,NA,385,42,descending colon,no,-15494,complete remission/response,female,167.6,colon mucinous adenocarcinoma,no,c18.6,Mar-80,no,yes,24,no,indeterminate,0,no,mx,n0,stage iia,t3,tumor free,no,NA,r0,no,4t,colon,no,107.956
+dead,49,NA,74,ascending colon,yes,-27095,progressive disease,male,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,3,NA,mss,0,no,m1b,n0,stage iv,t3,with tumor,no,550,r0,no,5m,colon,yes,NA
+dead,290,NA,40,transverse colon,yes,-14852,progressive disease,female,162,colon adenocarcinoma,no,c18.2,Mar-40,no,no,11,yes,msi-h,10,no,m1a,n2b,stage iv,t4a,with tumor,yes,2.61,r2,no,5m,colon,yes,99.1
+alive,NA,1200,76,ascending colon,no,-27870,partial remission/response,male,177,colon adenocarcinoma,no,c18.2,Mar-40,yes,no,15,no,mss,0,no,m0,n0,stage iia,t3,with tumor,no,2.91,r0,no,5m,colon,no,75.4
+dead,1331,NA,85,sigmoid colon,no,-31329,progressive disease,male,182.8,colon adenocarcinoma,yes,c18.7,Mar-40,no,NA,27,yes,mss,3,no,m1,n2,stage iv,t3,with tumor,yes,17.4,r0,yes,a6,colon,yes,67.2
+alive,NA,1419,82,NA,no,-30237,complete remission/response,female,157,colon adenocarcinoma,yes,c18.2,Mar-40,no,NA,29,yes,msi-h,1,no,m0,n1,stage iiib,t3,tumor free,no,3.4,r0,yes,a6,colon,yes,51.5
+alive,NA,1331,71,sigmoid colon,no,-26292,complete remission/response,male,175.2,colon mucinous adenocarcinoma,no,c18.7,Mar-80,no,NA,20,no,mss,7,no,m1,n2,stage iv,t3,tumor free,yes,32.8,r0,yes,a6,colon,yes,85.6
+alive,NA,1321,78,sigmoid colon,no,-28813,complete remission/response,male,160,colon adenocarcinoma,no,c18.7,Mar-40,no,no,11,no,mss,0,no,mx,n0,stage iia,t3,tumor free,no,NA,r0,yes,a6,colon,no,71.3
+dead,1305,NA,75,cecum,no,-27403,complete remission/response,female,154.9,colon adenocarcinoma,no,c18.9,Mar-40,no,NA,15,no,msi-h,0,no,m0,n0,stage iib,t4,tumor free,yes,6.3,r0,yes,a6,colon,no,45.9
+alive,NA,1286,43,transverse colon,no,-16030,complete remission/response,female,171,colon adenocarcinoma,no,c18.4,Mar-40,no,yes,26,yes,mss,2,no,m0,n1,stage iiib,t3,tumor free,yes,13.5,r0,yes,a6,colon,no,96.1
+alive,NA,1366,73,ascending colon,no,-26820,complete remission/response,female,165.1,colon adenocarcinoma,yes,c18.2,Mar-40,no,NA,16,no,mss,0,no,NA,n0,stage iib,t3,tumor free,no,15.7,r0,yes,a6,colon,no,65.9
+alive,NA,1068,72,hepatic flexure,no,-26533,complete remission/response,female,151,colon adenocarcinoma,NA,c18.3,Mar-40,no,NA,34,no,mss,0,no,m0,n0,stage ii,t3,tumor free,no,3.2,r0,yes,a6,colon,no,52.6
+dead,504,NA,57,ascending colon,no,-20871,NA,female,166.3,colon adenocarcinoma,yes,c18.2,Mar-40,yes,yes,25,no,msi-l,0,no,m1,n0,stage iv,t4,with tumor,yes,2614,r0,yes,a6,colon,no,57.5
+alive,NA,1127,75,cecum,no,-27708,NA,female,163,colon adenocarcinoma,yes,c18.9,Mar-40,no,NA,33,no,msi-l,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,yes,a6,colon,no,70.1
+alive,NA,1133,48,sigmoid colon,no,-17757,NA,female,171,colon adenocarcinoma,NA,c18.9,Mar-40,no,NA,29,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,29.5,r0,yes,a6,colon,no,77.3
+dead,1126,NA,81,cecum,no,-29623,complete remission/response,female,155,colon adenocarcinoma,no,c18.9,Mar-40,no,NA,33,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,2.2,r0,yes,a6,colon,no,61.4
+alive,NA,1054,53,sigmoid colon,yes,-19624,complete remission/response,female,163,colon adenocarcinoma,no,c18.7,Mar-40,no,no,24,yes,mss,5,no,m0,n2,stage iiic,t3,tumor free,yes,45,r0,yes,a6,colon,yes,109.5
+alive,NA,1014,73,cecum,no,-26666,complete remission/response,male,180.3,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,24,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,yes,a6,colon,no,84.5
+alive,NA,996,71,transverse colon,yes,-26274,complete remission/response,female,160,colon mucinous adenocarcinoma,no,c18.9,Mar-80,no,no,24,no,msi-h,0,no,m0,n0,stage iib,t4,tumor free,no,NA,r0,yes,a6,colon,no,102.1
+alive,NA,1111,62,sigmoid colon,no,-22999,complete remission/response,male,175,colon adenocarcinoma,yes,c18.9,Mar-40,no,NA,30,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,1.7,r0,yes,a6,colon,no,122.7
+alive,NA,987,57,ascending colon,no,-21064,complete remission/response,female,154,colon adenocarcinoma,no,c18.2,Mar-40,no,yes,28,yes,mss,2,no,m0,n1b,stage iiib,t3,tumor free,yes,1.6,r0,yes,a6,colon,no,91.8
+alive,NA,1001,74,sigmoid colon,no,-27184,complete remission/response,male,179,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,16,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,5.1,NA,yes,a6,colon,no,76.6
+alive,NA,962,65,NA,no,-23920,complete remission/response,male,172,colon adenocarcinoma,no,c18.9,Mar-40,no,no,42,yes,mss,1,no,m0,n1,stage iiib,t3,tumor free,yes,1.5,r0,yes,a6,colon,no,99.6
+alive,NA,926,82,cecum,yes,-30028,complete remission/response,male,180,colon adenocarcinoma,no,c18.2,Mar-40,no,NA,26,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,2.9,r0,yes,a6,colon,no,117.1
+alive,NA,888,73,cecum,yes,-26803,complete remission/response,male,170,colon adenocarcinoma,no,c18.2,Mar-40,no,no,23,yes,mss,11,no,m0,n2b,stage iiic,t3,tumor free,yes,0.8,NA,yes,a6,colon,yes,94.4
+alive,NA,1020,80,ascending colon,yes,-29446,complete remission/response,female,170,colon adenocarcinoma,yes,c18.2,Mar-40,no,yes,21,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,4.1,r0,yes,a6,colon,no,69.1
+alive,NA,718,46,splenic flexure,no,-16873,progressive disease,male,180,colon adenocarcinoma,no,c18.5,Mar-40,yes,yes,13,yes,mss,7,no,m1,n2,stage iva,t3,with tumor,yes,NA,NA,yes,a6,colon,yes,84.4
+alive,NA,672,80,cecum,yes,-29426,NA,male,180.3,colon adenocarcinoma,yes,c18.2,Mar-40,no,yes,18,yes,mss,5,no,mx,n2a,stage iiic,t4a,with tumor,no,17.4,NA,yes,a6,colon,yes,70.3
+alive,NA,671,84,ascending colon,yes,-30915,complete remission/response,female,157,colon adenocarcinoma,no,c18.2,Mar-40,no,yes,25,yes,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,19,r0,yes,a6,colon,no,90.8
+alive,NA,995,78,sigmoid colon,no,-28514,NA,male,193,colon adenocarcinoma,no,c18.9,Mar-40,no,no,30,no,msi-l,0,no,m0,n0,stage iic,t4b,with tumor,no,3.5,NA,yes,a6,colon,no,95.4
+alive,NA,887,40,sigmoid colon,no,-14756,complete remission/response,female,175,colon adenocarcinoma,NA,c18.7,Mar-40,no,yes,48,yes,mss,1,no,mx,n1a,stage iiib,t3,tumor free,yes,36.3,r0,yes,a6,colon,no,76
+alive,NA,824,55,hepatic flexure,no,-20095,NA,male,180.3,colon adenocarcinoma,yes,c18.2,Mar-40,no,NA,21,no,mss,0,no,m0,n1c,stage iiib,t3,tumor free,yes,2.2,NA,yes,a6,colon,no,93
+alive,NA,685,61,cecum,yes,-22523,NA,male,185.4,colon adenocarcinoma,no,c18.0,Mar-40,no,NA,24,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,2.8,NA,yes,a6,colon,no,90.7
+alive,NA,734,62,descending colon,no,-22835,complete remission/response,male,177.8,colon adenocarcinoma,no,c18.6,Mar-40,no,NA,46,no,mss,0,no,m0,n0,stage iia,t3,tumor free,yes,1.3,NA,yes,a6,colon,no,78.9
+alive,NA,255,31,cecum,NA,-11391,NA,male,177.8,colon adenocarcinoma,yes,c18.9,Mar-40,no,yes,19,no,mss,0,no,m0,n0,stage iia,t3,tumor free,yes,5,NA,yes,a6,colon,no,96.8
+alive,NA,763,56,sigmoid colon,no,-20485,progressive disease,female,162.5,colon adenocarcinoma,NA,c18.7,Mar-40,yes,yes,37,yes,mss,1,no,m1a,n1a,stage iva,t3,with tumor,yes,5.4,NA,yes,a6,colon,yes,88
+alive,NA,766,56,NA,no,-20641,NA,male,182.8,colon adenocarcinoma,NA,c18.6,Mar-40,yes,yes,21,no,mss,0,no,m1a,n0,stage iva,t3,with tumor,yes,2.5,NA,yes,a6,colon,no,87
+alive,NA,627,69,cecum,no,-25516,NA,female,162.6,colon adenocarcinoma,no,c18.2,Mar-40,no,NA,19,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,2.9,NA,yes,a6,colon,no,94.7
+alive,NA,662,55,transverse colon,yes,-20110,complete remission/response,female,162.6,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,33,yes,mss,2,no,mx,n1b,stage iiib,t3,tumor free,yes,0.4,NA,yes,a6,colon,no,88.5
+alive,NA,751,59,sigmoid colon,yes,-21638,stable disease,male,185,colon adenocarcinoma,NA,c18.7,Mar-40,no,yes,22,no,mss,0,no,m1,n0,stage iva,t3,with tumor,yes,4.8,NA,yes,a6,colon,no,137.6
+alive,NA,742,82,ascending colon,no,-29996,complete remission/response,male,182.8,colon adenocarcinoma,yes,c18.9,Mar-40,no,yes,12,no,msi-h,0,no,m0,n0,stage i,t2,tumor free,no,2.5,NA,yes,a6,colon,no,98.3
+alive,NA,726,65,descending colon,NA,-23953,complete remission/response,female,173,colon adenocarcinoma,yes,c18.9,Mar-40,no,yes,65,yes,mss,1,no,m0,n1,stage iiib,t3,tumor free,yes,2.7,NA,yes,a6,colon,no,97.4
+alive,NA,612,74,NA,no,-27250,complete remission/response,male,168,colon mucinous adenocarcinoma,yes,c18.2,Mar-80,no,NA,18,no,msi-h,0,no,mx,n0,stage iia,t3,tumor free,no,NA,NA,yes,a6,colon,no,64.1
+alive,NA,598,43,transverse colon,yes,-15842,complete remission/response,male,190.5,colon mucinous adenocarcinoma,NA,c18.9,Mar-80,no,no,30,yes,msi-h,2,no,mx,n1b,stage iiic,t4b,tumor free,yes,6.5,r0,yes,a6,colon,no,87.5
+alive,NA,617,82,transverse colon,no,-30012,complete remission/response,male,175,colon adenocarcinoma,no,c18.2,Mar-40,no,no,25,no,mss,0,no,mx,n0,stage iib,t4a,tumor free,no,2.7,NA,yes,a6,colon,NA,63.2
+dead,494,NA,34,transverse colon,yes,-12526,progressive disease,female,150,colon mucinous adenocarcinoma,no,c18.4,Mar-80,yes,NA,41,yes,msi-l,13,no,mx,n2,stage iiic,t3,with tumor,yes,71.5,rx,no,a6,colon,yes,66.7
+dead,758,NA,55,descending colon,no,-20181,progressive disease,female,160,colon mucinous adenocarcinoma,no,c18.6,Mar-80,yes,NA,13,yes,msi-l,2,no,m0,n1,stage iiib,t4,with tumor,yes,NA,r0,no,a6,colon,NA,66.1
+dead,1881,NA,56,sigmoid colon,yes,-20493,progressive disease,male,188,colon adenocarcinoma,no,c18.7,Mar-40,yes,NA,41,yes,mss,3,no,m1,n1,stage iv,t3,with tumor,no,95.8,NA,no,a6,colon,no,84
+dead,1711,NA,57,sigmoid colon,yes,-20903,NA,male,180,colon adenocarcinoma,no,c18.7,Mar-40,yes,NA,25,yes,mss,3,no,m0,n1,stage iiib,t3,tumor free,yes,13.2,r0,no,a6,colon,no,77.2
+alive,NA,293,59,transverse colon,no,-21554,complete remission/response,male,170,colon adenocarcinoma,no,c18.4,Mar-40,no,yes,60,yes,mss,1,no,m0,n1,stage iiib,t3,tumor free,yes,1.6,rx,yes,a6,colon,no,99.1
+dead,153,NA,58,sigmoid colon,NA,-21519,NA,male,NA,colon adenocarcinoma,no,c19,Mar-40,no,no,26,NA,mss,15,no,m1,n2,stage iv,t3,with tumor,NA,NA,r2,no,aa,colon,NA,NA
+dead,214,NA,75,sigmoid colon,NA,-27606,NA,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,28,NA,mss,0,no,m0,n0,stage ii,t3,with tumor,no,1.7,r0,no,aa,colon,NA,NA
+dead,92,NA,90,ascending colon,NA,-32871,NA,female,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,21,no,msi-h,0,no,m0,n0,stage ii,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,31,55,sigmoid colon,NA,-20089,NA,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,39,NA,mss,0,no,m1,n0,stage iv,t3,with tumor,NA,261.3,r2,no,aa,colon,NA,NA
+alive,NA,1127,79,hepatic flexure,NA,-28886,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,18,NA,mss,0,no,m0,n0,stage i,t2,tumor free,no,1.9,r0,no,aa,colon,NA,NA
+alive,NA,1065,73,transverse colon,NA,-26724,NA,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,31,NA,msi-l,0,no,m0,n0,stage i,t2,with tumor,no,3.7,r0,no,aa,colon,NA,NA
+alive,NA,1915,54,sigmoid colon,NA,-19786,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,27,no,mss,0,no,m0,n0,stage ii,t3,tumor free,no,2.82,r0,no,aa,colon,no,NA
+alive,NA,1946,70,transverse colon,NA,-25902,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,44,no,mss,0,no,m0,n0,stage ii,t3,tumor free,no,3.59,r0,no,aa,colon,no,NA
+alive,NA,212,64,sigmoid colon,NA,-23407,complete remission/response,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,36,yes,mss,0,no,m0,n0,stage ii,t4,tumor free,no,35.95,r0,no,aa,colon,no,NA
+alive,NA,31,81,ascending colon,NA,-29738,NA,female,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,12,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,2.3,r0,no,aa,colon,no,NA
+alive,NA,1186,60,splenic flexure,NA,-22099,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,54,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,yes,1.23,r0,no,aa,colon,no,NA
+alive,NA,31,81,cecum,NA,-29769,NA,female,NA,colon adenocarcinoma,yes,c18.0,Mar-40,no,no,27,no,msi-h,0,no,m0,n0,stage iia,t3,with tumor,NA,1.48,r0,no,aa,colon,no,NA
+alive,NA,276,63,sigmoid colon,NA,-23131,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,43,no,mss,3,no,m0,n1,stage iii,t3,tumor free,no,1.26,r0,no,aa,colon,no,NA
+alive,NA,580,57,sigmoid colon,NA,-21123,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,17,no,msi-l,0,no,m0,n0,stage i,t2,tumor free,no,2.06,r0,no,aa,colon,no,NA
+dead,0,NA,78,sigmoid colon,NA,-28609,NA,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,34,yes,msi-l,10,no,m0,n2,stage iiic,t3,with tumor,NA,17.3,r0,no,aa,colon,no,NA
+alive,NA,882,63,sigmoid colon,NA,-23133,NA,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,35,no,mss,0,no,m0,n0,stage iia,t3,with tumor,no,1.28,r0,no,aa,colon,no,NA
+alive,NA,882,78,ascending colon,NA,-28489,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,36,yes,mss,0,no,m0,n0,stage iia,t3,tumor free,no,1.56,r0,no,aa,colon,no,NA
+alive,NA,791,54,descending colon,NA,-19752,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,26,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,5.84,r0,no,aa,colon,no,NA
+alive,NA,395,69,sigmoid colon,NA,-25324,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,18,yes,mss,4,no,m0,n2,stage iiic,t3,tumor free,yes,1.93,r0,no,aa,colon,no,NA
+alive,NA,426,68,sigmoid colon,NA,-24959,complete remission/response,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,21,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,0.39,r0,no,aa,colon,no,NA
+alive,NA,1034,71,cecum,NA,-26175,complete remission/response,female,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,23,yes,mss,4,no,m0,n2,stage iiic,t3,tumor free,yes,55.01,r0,no,aa,colon,no,NA
+alive,NA,639,69,cecum,NA,-25415,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,31,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,0.76,r0,no,aa,colon,no,NA
+alive,NA,730,61,sigmoid colon,NA,-22524,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,21,no,msi-l,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,911,81,hepatic flexure,NA,-29617,complete remission/response,female,NA,colon mucinous adenocarcinoma,yes,c18.9,Mar-40,no,no,26,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,638,70,sigmoid colon,NA,-25752,complete remission/response,male,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,46,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,NA,r2,no,aa,colon,no,NA
+alive,NA,424,72,ascending colon,NA,-26420,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,50,no,mss,NA,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,1856,68,sigmoid colon,NA,-24896,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,22,no,mss,0,no,m0,n0,stage ii,t3,tumor free,no,4,r0,no,aa,colon,no,NA
+alive,NA,2375,51,sigmoid colon,NA,-18932,complete remission/response,female,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,33,no,mss,0,no,m0,n0,stage ii,t3,tumor free,no,1.37,r0,no,aa,colon,no,NA
+alive,NA,212,42,cecum,NA,-15675,complete remission/response,male,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,40,no,msi-h,0,no,m0,n0,stage ii,t3,tumor free,no,18.77,r0,no,aa,colon,no,NA
+alive,NA,1643,74,cecum,NA,-27363,NA,female,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,22,no,mss,0,no,m0,n0,stage ii,t3,with tumor,no,4.22,r0,no,aa,colon,no,NA
+dead,61,NA,68,cecum,NA,-25020,NA,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,41,no,mss,2,no,m0,n1,stage iii,t3,with tumor,NA,41.6,r0,no,aa,colon,no,NA
+alive,NA,426,36,sigmoid colon,NA,-13302,complete remission/response,female,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,22,no,msi-l,0,no,m0,n0,stage i,t2,tumor free,no,0.45,r0,no,aa,colon,no,NA
+alive,NA,1522,53,transverse colon,NA,-19509,complete remission/response,female,NA,colon adenocarcinoma,no,c18.4,Mar-40,no,no,41,no,mss,0,no,m0,n0,stage ii,t3,tumor free,no,3.89,r0,no,aa,colon,no,NA
+alive,NA,1431,84,hepatic flexure,NA,-30801,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,24,no,mss,0,no,m0,n0,stage ii,t3,tumor free,no,5.06,r0,no,aa,colon,no,NA
+alive,NA,1430,60,sigmoid colon,NA,-22219,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,26,yes,mss,1,no,m0,n1,stage iii,t2,tumor free,yes,2,r0,no,aa,colon,no,NA
+alive,NA,457,59,descending colon,NA,-21611,progressive disease,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,12,yes,mss,5,no,m1,n2,stage iv,t3,with tumor,yes,25.78,r2,no,aa,colon,no,NA
+dead,335,NA,67,cecum,NA,-24655,progressive disease,female,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,35,yes,msi-l,12,no,m1,n2,stage iv,t4,with tumor,yes,59.94,r2,no,aa,colon,no,NA
+alive,NA,182,77,cecum,NA,-28399,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.0,Mar-40,no,no,16,no,mss,2,no,m0,n1,stage iii,t3,tumor free,no,2.36,r0,no,aa,colon,no,NA
+alive,NA,0,65,cecum,NA,-23741,NA,female,NA,colon mucinous adenocarcinoma,yes,c18.0,Mar-80,no,no,10,yes,mss,9,no,m1,n2,stage iv,t4,with tumor,NA,2.28,r2,no,aa,colon,no,NA
+alive,NA,1127,69,sigmoid colon,NA,-25506,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,24,yes,mss,0,no,m0,n0,stage ii,t3,tumor free,no,8.76,r0,no,aa,colon,no,NA
+alive,NA,0,77,sigmoid colon,NA,-28459,NA,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,17,yes,mss,2,no,m1,n1,stage iv,t4,with tumor,NA,2.42,r2,no,aa,colon,no,NA
+alive,NA,0,63,cecum,NA,-23164,NA,female,NA,colon adenocarcinoma,yes,c18.0,Mar-40,no,no,33,yes,mss,6,no,m1,n2,stage iv,t3,with tumor,NA,NA,r2,no,aa,colon,no,NA
+dead,153,NA,75,sigmoid colon,yes,-27667,NA,female,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,26,no,mss,1,no,m1,n1,stage iv,t3,with tumor,no,NA,r2,no,aa,colon,no,NA
+alive,NA,821,80,hepatic flexure,NA,-29465,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,20,yes,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,5.12,r0,no,aa,colon,NA,NA
+alive,NA,0,65,descending colon,NA,-23831,NA,male,NA,colon adenocarcinoma,no,c18.6,Mar-40,no,no,18,yes,mss,12,no,m0,n2,stage iii,t3,with tumor,NA,0.88,r0,no,aa,colon,yes,NA
+dead,306,NA,84,hepatic flexure,NA,-30893,NA,female,NA,colon adenocarcinoma,no,c18.9,Mar-74,no,no,15,yes,msi-h,5,no,m0,n2,stage iii,t3,with tumor,no,3.4,r0,no,aa,colon,yes,NA
+alive,NA,1066,82,sigmoid colon,NA,-29980,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,13,yes,mss,0,no,m0,n0,stage iia,t3,tumor free,no,1.52,r0,no,aa,colon,NA,NA
+alive,NA,1005,65,cecum,NA,-23922,complete remission/response,female,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,20,yes,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,0.82,r0,no,aa,colon,NA,NA
+dead,30,NA,78,hepatic flexure,NA,-28763,NA,female,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,18,no,mss,0,no,m0,n0,stage iia,t3,with tumor,NA,3.79,r0,no,aa,colon,no,NA
+alive,NA,761,41,sigmoid colon,NA,-15280,complete remission/response,female,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,14,yes,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,1.28,r0,no,aa,colon,yes,NA
+alive,NA,31,81,hepatic flexure,NA,-29706,NA,female,NA,colon mucinous adenocarcinoma,yes,c18.2,Mar-80,no,no,13,NA,msi-h,0,no,m0,n0,stage i,t2,tumor free,no,2.14,r0,no,aa,colon,NA,NA
+alive,NA,547,66,sigmoid colon,NA,-24411,complete remission/response,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,12,yes,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,yes,NA
+alive,NA,485,63,ascending colon,NA,-23011,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,12,yes,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,yes,NA
+alive,NA,1186,67,hepatic flexure,NA,-24655,complete remission/response,male,NA,colon mucinous adenocarcinoma,yes,c18.9,Mar-80,no,no,36,yes,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,NA,NA
+alive,NA,1124,66,sigmoid colon,NA,-24230,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,24,yes,mss,0,no,m0,n0,stage iia,t3,tumor free,yes,NA,r0,no,aa,colon,yes,NA
+alive,NA,1126,51,sigmoid colon,NA,-18842,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,12,yes,mss,2,no,m0,n1,stage iiia,t2,tumor free,yes,NA,r0,no,aa,colon,yes,NA
+dead,0,NA,86,ascending colon,NA,-31593,NA,female,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,12,yes,msi-h,0,no,m0,n0,stage iia,t3,with tumor,NA,NA,r0,no,aa,colon,NA,NA
+alive,NA,518,74,sigmoid colon,NA,-27057,NA,female,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,16,yes,mss,0,no,m0,n0,stage iia,t3,with tumor,no,NA,r0,no,aa,colon,NA,NA
+dead,306,NA,82,sigmoid colon,NA,-30194,NA,female,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,12,yes,mss,6,no,m0,n2,stage iiic,t3,with tumor,no,NA,r0,no,aa,colon,yes,NA
+dead,0,NA,74,transverse colon,NA,-27090,NA,male,NA,colon adenocarcinoma,yes,c18.4,Mar-40,no,no,15,yes,mss,0,no,m0,n0,stage i,t2,with tumor,NA,NA,r0,no,aa,colon,NA,NA
+alive,NA,1006,74,ascending colon,NA,-27090,NA,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,14,yes,mss,0,no,m0,n0,stage iia,t3,with tumor,no,7.55,r0,no,aa,colon,yes,NA
+dead,0,NA,88,transverse colon,NA,-32203,NA,male,NA,colon mucinous adenocarcinoma,yes,c18.9,Mar-80,no,no,13,yes,msi-l,0,no,m0,n0,stage iia,t3,with tumor,NA,NA,r0,no,aa,colon,yes,NA
+alive,NA,1096,71,sigmoid colon,NA,-26022,complete remission/response,female,NA,colon mucinous adenocarcinoma,yes,c18.9,Mar-80,no,no,12,yes,msi-l,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,no,aa,colon,yes,NA
+alive,NA,975,72,sigmoid colon,NA,-26541,NA,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,36,yes,msi-l,0,no,m0,n0,stage i,t2,with tumor,no,NA,r0,no,aa,colon,yes,NA
+alive,NA,30,59,sigmoid colon,NA,-21670,NA,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,13,yes,mss,0,no,m0,n0,stage iia,t3,with tumor,NA,NA,r0,no,aa,colon,yes,NA
+alive,NA,945,67,sigmoid colon,NA,-24806,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,12,yes,mss,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,no,aa,colon,yes,NA
+alive,NA,914,72,cecum,NA,-26602,complete remission/response,male,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,17,yes,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,yes,NA
+alive,NA,1612,71,cecum,NA,-26237,complete remission/response,male,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,21,no,msi-h,0,no,m0,n0,stage ii,t3,tumor free,no,3.12,r0,no,aa,colon,no,NA
+alive,NA,518,78,cecum,NA,-28672,complete remission/response,female,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,23,no,msi-l,0,no,m0,n0,stage i,t2,tumor free,no,11.36,r0,no,aa,colon,no,NA
+dead,822,NA,76,cecum,NA,-28062,partial remission/response,male,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,28,yes,mss,14,no,m1,n2,stage iv,t4,with tumor,yes,NA,r2,no,aa,colon,no,NA
+alive,NA,0,45,sigmoid colon,NA,-16651,NA,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,29,yes,mss,23,no,m1,n2,stage iv,t4,with tumor,NA,NA,r2,no,aa,colon,yes,NA
+alive,NA,549,78,ascending colon,NA,-28640,NA,female,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,31,no,mss,0,no,m0,n0,stage i,t1,with tumor,no,0.87,r0,no,aa,colon,no,NA
+alive,NA,943,83,transverse colon,NA,-30377,complete remission/response,female,NA,colon mucinous adenocarcinoma,yes,c18.4,Mar-80,no,no,18,no,msi-h,0,no,m0,n0,stage i,t1,tumor free,no,5.6,r0,no,aa,colon,no,NA
+dead,61,NA,66,ascending colon,NA,-24321,progressive disease,male,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,29,yes,msi-l,24,no,m1,n2,stage iv,t3,with tumor,yes,NA,r2,no,aa,colon,yes,NA
+alive,NA,730,84,ascending colon,NA,-31015,NA,female,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,41,yes,msi-l,3,no,m1a,n1b,stage iva,t4,with tumor,no,NA,r0,no,aa,colon,no,NA
+alive,NA,1004,60,ascending colon,NA,-22035,complete remission/response,female,NA,colon mucinous adenocarcinoma,yes,c18.9,Mar-80,no,no,22,no,msi-h,0,no,m0,n0,stage iib,t4,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,791,87,ascending colon,NA,-32081,complete remission/response,female,NA,colon mucinous adenocarcinoma,no,c18.2,Mar-80,no,no,19,no,msi-h,3,no,m0,n1,stage iiib,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,638,38,descending colon,NA,-14186,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,31,yes,mss,5,no,m0,n2a,stage iiib,t2,tumor free,yes,NA,r0,no,aa,colon,no,NA
+alive,NA,1035,65,cecum,NA,-24045,NA,male,NA,colon adenocarcinoma,yes,c18.0,Mar-40,no,no,36,no,mss,0,no,m0,n0,stage iia,t3,with tumor,no,3.5,r0,no,aa,colon,no,NA
+alive,NA,61,89,hepatic flexure,NA,-32537,NA,female,NA,colon mucinous adenocarcinoma,yes,c18.9,Mar-80,no,no,14,yes,msi-h,0,no,m0,n0,stage iia,t3,with tumor,NA,NA,NA,no,aa,colon,yes,NA
+alive,NA,943,77,sigmoid colon,NA,-28216,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,33,no,mss,2,no,m0,n1,stage iiib,t3,tumor free,yes,2.27,r0,no,aa,colon,no,NA
+alive,NA,669,55,sigmoid colon,NA,-20089,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,19,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,1.55,r0,no,aa,colon,no,NA
+alive,NA,1096,65,sigmoid colon,NA,-23741,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.6,Mar-40,no,no,27,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,489,58,sigmoid colon,NA,-21518,complete remission/response,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,19,no,mss,2,no,m0,n1,stage iii,t3,tumor free,yes,1.48,r0,no,aa,colon,no,NA
+alive,NA,397,69,sigmoid colon,NA,-25536,stable disease,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,21,yes,msi-l,3,no,m1,n1,stage iv,t4,with tumor,yes,375.2,r2,no,aa,colon,yes,NA
+alive,NA,1036,80,sigmoid colon,NA,-29310,complete remission/response,male,NA,colon adenocarcinoma,no,c18.9,Mar-40,no,no,14,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,761,65,sigmoid colon,NA,-23832,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,15,no,mss,0,no,NA,n0,NA,t2,tumor free,no,NA,NA,no,aa,colon,no,NA
+alive,NA,822,89,sigmoid colon,NA,-32630,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,19,yes,mss,0,no,m0,n0,stage i,t2,tumor free,no,NA,NA,no,aa,colon,yes,NA
+alive,NA,822,75,sigmoid colon,NA,-27608,NA,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,13,yes,msi-l,3,no,m0,n1,stage iiib,t3,with tumor,no,NA,NA,no,aa,colon,yes,NA
+alive,NA,0,61,sigmoid colon,NA,-22585,NA,female,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,12,yes,mss,0,no,m0,n0,stage iia,t3,with tumor,NA,NA,r0,no,aa,colon,yes,NA
+dead,242,NA,84,transverse colon,NA,-30712,NA,male,NA,colon adenocarcinoma,yes,c18.9,Mar-40,no,no,19,yes,mss,5,no,m1,n2,stage iv,t3,with tumor,no,NA,r2,no,aa,colon,no,NA
+alive,NA,822,69,transverse colon,NA,-25323,complete remission/response,male,NA,colon mucinous adenocarcinoma,yes,c18.9,Mar-80,no,no,24,no,mss,2,no,m0,n1,stage iiib,t3,tumor free,yes,3.52,r0,no,aa,colon,no,NA
+alive,NA,424,76,sigmoid colon,NA,-27943,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,32,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,1157,80,ascending colon,NA,-29463,NA,male,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,34,no,msi-h,0,no,m0,n0,stage iia,t3,with tumor,no,NA,r0,no,aa,colon,no,NA
+alive,NA,578,70,ascending colon,NA,-25689,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,28,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,1.02,r0,no,aa,colon,no,NA
+alive,NA,913,65,ascending colon,NA,-23741,complete remission/response,male,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,41,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,10.56,r0,no,aa,colon,no,NA
+alive,NA,1035,66,sigmoid colon,NA,-24379,partial remission/response,male,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,25,yes,mss,7,no,m0,n2,stage iiic,t3,tumor free,yes,2.93,r0,no,aa,colon,no,NA
+alive,NA,549,80,ascending colon,NA,-29371,partial remission/response,male,NA,colon mucinous adenocarcinoma,yes,c18.2,Mar-80,no,no,24,yes,msi-h,2,no,m0,n1,stage iiib,t4,tumor free,yes,NA,r0,no,aa,colon,no,NA
+alive,NA,549,79,sigmoid colon,NA,-29189,NA,male,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,55,no,msi-l,0,no,m0,n0,stage iia,t3,with tumor,NA,NA,r0,no,aa,colon,no,NA
+dead,122,NA,75,cecum,NA,-27667,NA,male,NA,colon mucinous adenocarcinoma,yes,c18.0,Mar-80,no,no,21,yes,msi-l,0,no,m0,n0,stage iib,t4,with tumor,NA,9.01,r0,no,aa,colon,no,NA
+alive,NA,822,83,sigmoid colon,NA,-30316,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,40,yes,msi-l,32,no,m0,n2,stage iiic,t3,with tumor,no,3.25,r0,no,aa,colon,no,NA
+alive,NA,1278,66,sigmoid colon,NA,-24199,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,31,yes,mss,1,no,m0,n1,stage iiib,t4,tumor free,yes,89.58,r0,no,aa,colon,no,NA
+alive,NA,30,64,cecum,NA,-23528,NA,female,NA,colon adenocarcinoma,yes,c18.0,Mar-40,no,no,27,no,msi-h,0,no,m0,n0,stage i,t2,with tumor,NA,0.34,r0,no,aa,colon,no,NA
+alive,NA,518,50,ascending colon,NA,-18263,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,0,no,mss,0,no,m0,n1,stage iiib,t3,tumor free,yes,NA,r0,no,aa,colon,no,NA
+alive,NA,456,80,sigmoid colon,NA,-29311,partial remission/response,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,17,no,mss,0,no,m0,n0,stage i,t1,tumor free,no,1.22,r0,no,aa,colon,no,NA
+alive,NA,1064,46,transverse colon,NA,-16922,complete remission/response,female,NA,colon adenocarcinoma,no,c18.4,Mar-40,no,no,45,no,msi-l,0,no,m0,n0,stage iib,t4,tumor free,yes,0.2,r0,no,aa,colon,no,NA
+alive,NA,457,57,sigmoid colon,NA,-21032,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,18,yes,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,457,75,ascending colon,NA,-27729,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,31,yes,mss,3,no,m0,n1,stage iiia,t2,tumor free,no,NA,r0,no,aa,colon,no,NA
+dead,334,NA,47,sigmoid colon,NA,-17318,progressive disease,female,NA,colon mucinous adenocarcinoma,no,c19,Mar-80,no,no,12,yes,mss,12,no,m0,n2,stage iiic,t3,with tumor,yes,NA,r0,no,aa,colon,no,NA
+alive,NA,974,72,sigmoid colon,NA,-26298,NA,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,30,yes,mss,2,no,m0,n1,stage iiib,t3,with tumor,yes,NA,r0,no,aa,colon,no,NA
+alive,NA,365,63,cecum,NA,-23133,complete remission/response,male,NA,colon mucinous adenocarcinoma,no,c18.0,Mar-80,no,no,22,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,943,76,sigmoid colon,NA,-27759,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,36,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,no,aa,colon,no,NA
+alive,NA,943,74,sigmoid colon,NA,-27029,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,35,yes,mss,4,no,m0,n2,stage iiic,t3,tumor free,yes,NA,r0,no,aa,colon,no,NA
+dead,1158,NA,80,ascending colon,NA,-29554,NA,female,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,21,yes,msi-h,1,no,m0,n1,stage iii,t3,with tumor,no,1.11,r0,no,aa,colon,NA,NA
+alive,NA,31,48,ascending colon,NA,-17715,NA,female,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,16,yes,msi-h,0,no,m0,n0,stage ii,t3,with tumor,NA,1.88,r0,no,aa,colon,NA,NA
+alive,NA,1065,47,ascending colon,NA,-17289,partial remission/response,male,NA,colon mucinous adenocarcinoma,no,c18.2,Mar-80,no,no,19,yes,msi-h,9,no,m0,n2,stage iii,t3,with tumor,yes,1.83,r0,no,aa,colon,NA,NA
+alive,NA,31,47,sigmoid colon,NA,-17257,NA,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,19,NA,msi-l,1,no,m0,n1,stage iii,t3,with tumor,NA,0.82,r0,no,aa,colon,NA,NA
+alive,NA,1005,63,sigmoid colon,NA,-23192,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,15,yes,mss,1,no,m0,n1,stage iii,t3,tumor free,yes,0.7,r0,no,aa,colon,NA,NA
+alive,NA,31,59,cecum,NA,-21792,NA,male,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,15,NA,mss,0,no,m0,n0,stage i,t2,with tumor,NA,4.09,r0,no,aa,colon,NA,NA
+alive,NA,791,80,sigmoid colon,NA,-29281,NA,female,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,14,yes,mss,2,no,m0,n1,stage iii,t2,with tumor,no,11.08,rx,no,aa,colon,NA,NA
+alive,NA,1126,68,ascending colon,NA,-24990,progressive disease,male,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,12,yes,mss,0,no,m0,n0,stage ii,t3,with tumor,no,18.87,r0,no,aa,colon,NA,NA
+alive,NA,0,88,cecum,NA,-32446,NA,female,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,18,yes,msi-h,0,no,m0,n0,stage ii,t4,with tumor,NA,1.51,r0,no,aa,colon,yes,NA
+alive,NA,1581,67,cecum,NA,-24686,complete remission/response,male,NA,colon adenocarcinoma,yes,c18.0,Mar-40,no,no,27,NA,msi-l,0,no,m0,n0,stage ii,t3,tumor free,no,1.97,r0,no,aa,colon,NA,NA
+dead,90,NA,82,cecum,NA,-30256,NA,female,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,16,yes,msi-l,4,no,m1,n1,stage iv,t3,with tumor,NA,441.9,r2,no,aa,colon,yes,NA
+alive,NA,1216,68,sigmoid colon,NA,-25051,partial remission/response,female,NA,colon adenocarcinoma,no,c18.7,10-Mar,no,no,12,yes,mss,1,no,m1,n1,stage iv,t3,with tumor,yes,2.49,r2,no,aa,colon,yes,NA
+dead,61,NA,74,sigmoid colon,NA,-27362,NA,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,12,yes,mss,6,no,m1,n2,stage iv,t3,with tumor,NA,1387,r2,no,aa,colon,yes,NA
+dead,153,NA,70,sigmoid colon,NA,-25749,NA,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,13,yes,mss,0,no,m1,n0,stage iv,t3,with tumor,NA,96.57,r2,no,aa,colon,yes,NA
+dead,426,NA,50,ascending colon,NA,-18506,progressive disease,male,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,20,yes,mss,7,no,m1,n2,stage iv,t4,with tumor,yes,NA,r2,no,aa,colon,yes,NA
+alive,NA,28,82,transverse colon,NA,-30288,NA,male,NA,colon adenocarcinoma,no,c18.4,Mar-40,no,no,18,yes,mss,0,no,m0,n0,stage ii,t3,with tumor,NA,5.97,r0,no,aa,colon,no,NA
+dead,670,NA,84,cecum,NA,-30834,NA,female,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,18,yes,msi-h,0,no,m0,n0,stage iia,t3,with tumor,NA,2.67,r0,no,aa,colon,yes,NA
+alive,NA,1247,73,sigmoid colon,NA,-26693,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,12,NA,msi-l,0,no,m0,n0,stage i,t2,tumor free,no,2.96,r0,no,aa,colon,NA,NA
+alive,NA,1216,73,cecum,NA,-26724,complete remission/response,male,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,18,yes,mss,0,no,m0,n0,stage i,t2,tumor free,no,0.98,r0,no,aa,colon,yes,NA
+dead,549,NA,90,cecum,NA,-32873,NA,female,NA,colon mucinous adenocarcinoma,no,c18.0,Mar-80,no,no,29,NA,mss,4,no,m0,n2,stage iii,t3,with tumor,no,1.09,r0,no,aa,colon,NA,NA
+alive,NA,1246,65,sigmoid colon,NA,-23986,complete remission/response,female,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,34,NA,mss,0,no,m0,n0,stage i,t2,tumor free,no,2.09,r0,no,aa,colon,NA,NA
+alive,NA,370,67,ascending colon,no,-24776,complete remission/response,male,NA,colon mucinous adenocarcinoma,no,c18.2,Mar-80,NA,NA,11,no,msi-h,0,no,mx,n0,stage i,t2,tumor free,no,NA,r0,no,ad,colon,NA,NA
+dead,2532,NA,76,ascending colon,NA,NA,complete remission/response,male,NA,colon adenocarcinoma,NA,c18.2,Mar-40,no,no,16,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,yes,7.5,r0,no,ad,colon,no,NA
+alive,NA,746,65,ascending colon,yes,-23769,complete remission/response,male,NA,colon adenocarcinoma,NA,c18.2,Mar-40,no,no,22,no,mss,0,no,mx,n0,NA,t1,tumor free,no,0.8,NA,yes,ad,colon,no,NA
+dead,176,NA,84,cecum,no,-30693,complete remission/response,male,175,colon mucinous adenocarcinoma,no,c18.9,Mar-80,no,NA,20,yes,mss,17,no,mx,n2b,stage iiic,t4a,tumor free,no,6.1,NA,yes,ad,colon,yes,62
+dead,682,NA,78,cecum,no,-28579,progressive disease,male,170,colon adenocarcinoma,NA,c18.0,Mar-40,no,no,19,no,msi-l,0,no,mx,n0,NA,t3,with tumor,yes,5.9,NA,yes,ad,colon,no,69
+alive,NA,834,58,ascending colon,NA,-21294,complete remission/response,male,193,colon adenocarcinoma,NA,c18.2,Mar-40,no,no,12,no,mss,0,no,mx,n0,NA,t3,tumor free,no,5.5,NA,yes,ad,colon,no,107
+alive,NA,805,62,cecum,NA,-22853,progressive disease,male,183,colon adenocarcinoma,NA,c18.0,Mar-40,no,no,17,yes,mss,11,no,m0,n2b,stage iiic,t4a,with tumor,yes,NA,r1,yes,ad,colon,yes,95
+alive,NA,0,74,cecum,yes,-27180,NA,female,163,colon adenocarcinoma,NA,c18.0,Mar-40,NA,NA,32,no,msi-h,0,no,mx,n0,stage iia,t3,tumor free,NA,NA,r0,yes,ad,colon,no,71
+alive,NA,500,51,ascending colon,yes,-18731,complete remission/response,male,190,colon adenocarcinoma,yes,c18.2,Mar-40,no,yes,11,NA,mss,0,no,mx,n0,stage i,t2,tumor free,no,1.2,r0,yes,ad,colon,no,100
+alive,NA,14,59,sigmoid colon,no,-21902,NA,female,164,colon adenocarcinoma,no,c18.9,Mar-40,no,no,4,yes,mss,4,no,m1,n2,stage iva,t4a,tumor free,NA,176.1,r0,no,am,colon,no,98
+alive,NA,28,68,sigmoid colon,NA,-24903,NA,female,148,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,NA,no,msi-h,NA,no,m0,n0,stage iia,t3,tumor free,NA,NA,r0,no,am,colon,no,68
+alive,NA,441,80,rectosigmoid junction,no,-29460,NA,female,157,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,21,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,yes,au,colon,no,83
+alive,NA,824,69,cecum,no,-25259,NA,female,160,colon adenocarcinoma,yes,c18.0,Mar-40,no,NA,16,no,msi-h,0,no,m0,n0,stage i,t2,tumor free,NA,NA,r0,yes,au,colon,no,55
+dead,496,NA,50,cecum,no,-18621,NA,female,160,colon adenocarcinoma,no,c18.2,Mar-40,yes,no,15,yes,mss,5,no,m0,n2,stage iiic,t3,with tumor,yes,67.5,r1,no,ay,colon,yes,100.8
+dead,29,NA,63,NA,yes,-23320,NA,female,NA,NA,yes,c18.7,Mar-40,no,no,25,no,mss,0,no,NA,n0,stage i,t1,tumor free,no,6,r0,no,ay,NA,no,113.7
+alive,NA,1004,65,ascending colon,no,-23870,complete remission/response,female,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,NA,24,no,mss,1,no,m1,n1a,stage iva,t3,tumor free,yes,NA,r0,yes,ay,colon,no,61.3
+alive,NA,6,47,cecum,no,-17311,complete remission/response,male,NA,colon mucinous adenocarcinoma,no,c18.2,Mar-80,no,yes,14,yes,msi-l,12,no,NA,n2b,stage iiic,t3,tumor free,NA,5.5,r0,yes,ay,colon,no,NA
+alive,NA,652,60,cecum,no,-21957,complete remission/response,male,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,yes,16,no,msi-h,0,no,NA,n0,stage iia,t3,tumor free,no,NA,r0,yes,ay,colon,no,158
+alive,NA,542,66,cecum,yes,-24453,complete remission/response,female,153,colon adenocarcinoma,no,c18.0,Mar-40,no,no,19,no,mss,1,no,m0,n1a,stage iiib,t3,tumor free,yes,1.3,r0,yes,ay,colon,no,86
+alive,NA,525,74,transverse colon,no,-27074,partial remission/response,female,172,colon adenocarcinoma,no,c18.3,Mar-40,NA,yes,24,no,msi-l,0,no,m0,n0,stage i,t2,with tumor,no,2.5,r0,yes,ay,colon,no,68
+alive,NA,543,55,transverse colon,no,-20299,complete remission/response,female,165,colon adenocarcinoma,no,c18.4,Mar-40,no,yes,25,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,1,r0,yes,ay,colon,no,103
+alive,NA,588,54,cecum,yes,-19904,complete remission/response,female,164,colon adenocarcinoma,no,c18.0,Mar-40,no,yes,28,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,4.8,r0,yes,ay,colon,no,130
+alive,NA,573,44,sigmoid colon,no,-16140,complete remission/response,male,185,colon adenocarcinoma,no,c18.7,Mar-40,no,yes,24,yes,mss,6,no,m1,n2a,stage iva,t3,tumor free,yes,5.9,r0,yes,ay,colon,yes,86.1
+alive,NA,3324,47,sigmoid colon,NA,-17321,complete remission/response,female,NA,colon adenocarcinoma,NA,c18.7,Mar-40,NA,yes,14,yes,mss,3,no,m0,n1,stage iiib,t3,tumor free,yes,0.5,r0,no,az,colon,no,73
+alive,NA,1776,61,cecum,NA,-22340,NA,male,NA,colon adenocarcinoma,NA,c18.0,Mar-40,NA,NA,0,no,mss,NA,no,m0,n0,stage iia,t3,tumor free,no,1.5,r0,no,az,colon,no,84
+dead,43,NA,37,cecum,NA,-13755,NA,male,NA,colon adenocarcinoma,NA,c18.0,Mar-40,NA,NA,30,NA,msi-l,5,no,m1,n2,stage iv,t4,with tumor,yes,NA,NA,no,az,colon,yes,NA
+dead,172,NA,71,NA,NA,-26267,NA,female,NA,colon adenocarcinoma,NA,c18.0,Mar-40,NA,NA,4,yes,msi-l,2,no,m1,n1,stage iva,t4a,with tumor,no,49.7,r0,no,az,colon,yes,70
+alive,NA,1002,84,NA,NA,-30908,NA,male,170,colon adenocarcinoma,NA,c18.0,Mar-40,yes,NA,18,yes,msi-h,1,no,m0,n1,stage iiib,t3,with tumor,yes,2.1,rx,no,az,colon,yes,84
+dead,156,NA,82,cecum,NA,-30043,NA,female,NA,colon adenocarcinoma,NA,c18.0,Mar-40,NA,NA,23,yes,msi-l,13,no,m1,n2,stage iv,t3,with tumor,yes,NA,NA,no,az,colon,yes,NA
+dead,680,NA,61,sigmoid colon,NA,-22409,NA,male,NA,colon adenocarcinoma,NA,c19,Mar-40,NA,NA,3,no,mss,0,no,m1,n0,stage iva,t3,with tumor,yes,NA,r0,no,az,colon,no,98
+alive,NA,1977,49,NA,NA,-18252,NA,male,NA,colon adenocarcinoma,NA,c19,Mar-40,NA,NA,12,yes,msi-l,10,no,m1,n2,stage iva,t3,with tumor,no,8.9,NA,no,az,colon,NA,94
+dead,1910,NA,43,sigmoid colon,NA,-15983,NA,male,NA,colon adenocarcinoma,NA,c18.6,Mar-40,NA,NA,12,no,mss,0,no,mx,n0,stage ii,t3,with tumor,no,2.3,NA,no,az,colon,no,NA
+alive,NA,2683,51,cecum,NA,-18820,complete remission/response,female,NA,colon adenocarcinoma,NA,c18.0,Mar-40,NA,yes,16,no,mss,0,no,m0,n0,stage i,t1,tumor free,no,NA,NA,no,az,colon,no,NA
+dead,1503,NA,77,NA,NA,-28182,complete remission/response,female,NA,colon adenocarcinoma,NA,c18.2,Mar-40,NA,NA,24,no,msi-h,0,no,mx,n0,stage ii,t3,tumor free,no,7.5,NA,no,az,colon,no,NA
+dead,206,NA,72,cecum,NA,-26438,complete remission/response,male,NA,colon adenocarcinoma,NA,c18.0,Mar-40,NA,NA,25,no,mss,0,no,mx,n0,stage i,t2,tumor free,no,NA,NA,no,az,colon,no,NA
+dead,368,NA,64,hepatic flexure,NA,-23581,progressive disease,male,NA,colon adenocarcinoma,NA,c18.2,Mar-40,NA,NA,10,yes,mss,1,no,m1,n1,stage iv,t4,with tumor,yes,20.1,NA,no,az,colon,yes,NA
+dead,899,NA,77,sigmoid colon,NA,-28424,complete remission/response,female,NA,colon adenocarcinoma,NA,c18.7,Mar-40,NA,NA,3,no,mss,0,no,mx,n1,NA,t2,tumor free,no,NA,NA,no,az,colon,no,NA
+dead,159,NA,77,ascending colon,NA,-28485,stable disease,male,NA,colon adenocarcinoma,NA,c18.2,Mar-40,NA,NA,22,yes,mss,1,no,m0,n1,stage iiib,t4,tumor free,yes,2.5,NA,no,az,colon,yes,NA
+dead,357,NA,81,cecum,NA,-29704,progressive disease,male,NA,colon adenocarcinoma,NA,c18.0,Mar-40,NA,NA,17,yes,mss,10,no,m1,n2,stage iv,t4,with tumor,yes,10.6,NA,no,az,colon,yes,NA
+dead,97,NA,69,sigmoid colon,NA,-25448,progressive disease,male,NA,colon adenocarcinoma,NA,c18.7,Mar-40,NA,NA,19,yes,mss,5,no,m1,n2,stage iv,t4,with tumor,no,22.6,NA,no,az,colon,yes,NA
+alive,NA,386,42,transverse colon,NA,-15415,complete remission/response,female,154,colon adenocarcinoma,NA,c18.9,Mar-40,NA,NA,NA,NA,msi-l,NA,no,m0,n0,stage iia,t3,tumor free,yes,NA,rx,yes,ca,colon,NA,55
+alive,NA,376,45,ascending colon,NA,-16743,complete remission/response,male,172,colon adenocarcinoma,NA,c18.9,Mar-40,NA,NA,NA,NA,mss,NA,no,m0,n0,stage iia,t3,tumor free,yes,NA,rx,yes,ca,colon,NA,56
+alive,NA,379,54,hepatic flexure,NA,-19785,complete remission/response,female,160,colon adenocarcinoma,no,c18.9,Mar-40,no,no,NA,NA,mss,NA,no,m0,n0,stage iia,t3,tumor free,yes,NA,r0,yes,ca,colon,NA,52
+alive,NA,377,52,ascending colon,NA,-19353,complete remission/response,female,NA,colon mucinous adenocarcinoma,NA,c18.2,Mar-80,NA,NA,NA,NA,mss,NA,no,m0,n0,stage iia,t3,tumor free,yes,NA,r0,yes,ca,colon,NA,NA
+alive,NA,383,56,sigmoid colon,NA,-20662,complete remission/response,male,NA,colon adenocarcinoma,NA,c18.9,Mar-40,NA,NA,NA,NA,mss,NA,no,m0,n0,stage iia,t3,tumor free,yes,NA,r0,yes,ca,colon,NA,NA
+alive,NA,383,63,sigmoid colon,NA,-23075,complete remission/response,male,158,colon adenocarcinoma,NA,c18.7,Mar-60,NA,NA,2,NA,mss,1,no,m0,n1,stage iiib,t3,tumor free,yes,NA,rx,yes,ca,colon,NA,57
+alive,NA,371,65,ascending colon,NA,-23943,complete remission/response,male,167,colon adenocarcinoma,NA,c18.2,Mar-60,NA,NA,NA,NA,mss,NA,no,m0,n0,stage iia,t3,tumor free,yes,NA,rx,yes,ca,colon,NA,58
+alive,NA,388,57,ascending colon,NA,-20984,complete remission/response,male,168,colon mucinous adenocarcinoma,NA,c18.2,Mar-80,NA,NA,NA,NA,mss,NA,no,m0,n0,stage iia,t3,tumor free,yes,NA,rx,yes,ca,colon,NA,58
+dead,306,NA,46,ascending colon,NA,-17109,progressive disease,male,168,colon adenocarcinoma,NA,c18.9,Mar-40,NA,NA,NA,NA,mss,NA,no,m0,n0,stage iia,t3,with tumor,no,NA,rx,yes,ca,colon,NA,63
+alive,NA,435,77,descending colon,NA,-28343,progressive disease,male,172,colon adenocarcinoma,NA,c18.6,Mar-40,NA,NA,NA,NA,msi-l,NA,no,m0,n0,stage iia,t3,with tumor,no,NA,rx,yes,ca,colon,NA,61
+alive,NA,534,46,sigmoid colon,no,-16980,NA,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,NA,12,NA,mss,3,no,m0,n1,stage iiib,t4,with tumor,no,2.5,rx,NA,ck,colon,NA,NA
+alive,NA,4502,45,sigmoid colon,no,-16736,complete remission/response,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,no,20,NA,msi-l,3,no,m0,n1,stage iii,t3,tumor free,no,1.2,r0,NA,ck,colon,NA,NA
+alive,NA,2599,68,cecum,no,-24944,complete remission/response,female,NA,colon mucinous adenocarcinoma,no,c18.0,Mar-80,no,NA,18,no,mss,1,no,m0,n1,stage iiib,t3,tumor free,yes,NA,r1,NA,ck,colon,no,NA
+dead,2134,NA,79,ascending colon,no,-28982,NA,female,NA,colon mucinous adenocarcinoma,yes,c18.0,Mar-80,no,NA,30,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,6.2,r1,NA,ck,colon,yes,NA
+alive,NA,475,48,ascending colon,no,-17826,NA,female,NA,colon mucinous adenocarcinoma,no,c18.2,Mar-80,no,no,31,no,mss,5,no,m0,n2,stage iiic,t4,tumor free,NA,NA,rx,NA,ck,colon,no,NA
+alive,NA,1561,58,cecum,no,-21399,complete remission/response,female,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,yes,NA,no,msi-h,NA,no,mx,n0,stage iia,t3,tumor free,no,0.6,rx,NA,ck,colon,no,NA
+alive,NA,669,81,sigmoid colon,no,-29586,NA,male,NA,colon adenocarcinoma,no,c18.7,Mar-40,no,NA,NA,no,mss,NA,no,mx,n1,stage iiib,t3,tumor free,NA,NA,rx,NA,ck,colon,no,NA
+alive,NA,0,63,sigmoid colon,yes,-23040,NA,male,NA,colon adenocarcinoma,yes,c18.7,Mar-40,no,NA,NA,no,mss,NA,no,mx,n0,stage i,t2,tumor free,NA,NA,rx,NA,ck,colon,no,NA
+dead,643,NA,71,cecum,no,-26024,progressive disease,female,NA,colon adenocarcinoma,yes,c18.2,Mar-40,no,NA,NA,yes,msi-h,NA,no,m0,n0,stage i,t1,with tumor,no,3.2,rx,NA,ck,colon,no,NA
+alive,NA,-2,84,cecum,no,-30957,NA,female,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,yes,NA,no,msi-h,NA,no,mx,n0,stage iib,t4b,tumor free,no,NA,rx,NA,ck,colon,no,NA
+alive,NA,2523,87,cecum,no,-32052,complete remission/response,female,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,NA,NA,no,msi-h,NA,no,mx,n0,stage iia,t3,tumor free,no,0.9,rx,NA,ck,colon,no,NA
+alive,NA,61,45,sigmoid colon,no,-16529,NA,female,NA,colon mucinous adenocarcinoma,no,c18.7,Mar-80,yes,no,NA,no,mss,NA,no,m1,n1,stage iv,t3,with tumor,no,400.26,rx,NA,ck,colon,no,NA
+alive,NA,3780,88,ascending colon,no,-32354,NA,female,NA,colon mucinous adenocarcinoma,no,c18.2,Mar-80,no,NA,NA,no,mss,NA,no,mx,n0,stage i,t2,tumor free,no,1.3,rx,NA,ck,colon,no,NA
+alive,NA,701,69,hepatic flexure,no,-25291,complete remission/response,male,167,colon adenocarcinoma,no,c18.2,Mar-40,no,no,27,yes,msi-h,0,no,m0,n0,stage iia,t3,tumor free,yes,4,r0,no,cm,colon,no,84.4
+alive,NA,609,69,cecum,yes,-25506,complete remission/response,male,183,colon adenocarcinoma,yes,c18.0,Mar-40,no,no,28,yes,mss,0,no,m0,n0,stage i,t2,tumor free,no,0.9,r0,no,cm,colon,yes,89.7
+alive,NA,1126,61,sigmoid colon,yes,-22403,complete remission/response,male,175,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,17,no,msi-h,0,no,m0,n0,stage i,t2,tumor free,no,2.2,r0,no,cm,colon,no,98
+alive,NA,761,47,cecum,yes,-17198,stable disease,male,188,colon adenocarcinoma,yes,c18.0,Mar-40,no,yes,29,yes,msi-l,2,no,m1a,n1b,stage iva,t4a,tumor free,yes,2.6,r0,no,cm,colon,no,76.7
+alive,NA,792,53,transverse colon,no,-19509,complete remission/response,male,176,colon mucinous adenocarcinoma,yes,c18.4,Mar-80,no,yes,23,yes,mss,1,no,m0,n1a,stage iiib,t4a,tumor free,yes,2,r0,no,cm,colon,yes,89.8
+alive,NA,244,34,NA,yes,-12478,complete remission/response,female,173,colon adenocarcinoma,yes,c19,Mar-40,no,yes,52,yes,msi-l,2,no,m0,n1b,stage iiia,t1,tumor free,yes,1,r0,no,cm,colon,no,84.5
+alive,NA,822,62,cecum,no,-22891,complete remission/response,male,183,colon adenocarcinoma,no,c18.0,Mar-40,no,no,48,yes,mss,3,no,m0,n1b,stage iiib,t3,tumor free,yes,4.2,r0,no,cm,colon,yes,115
+alive,NA,396,58,ascending colon,no,-21519,complete remission/response,male,163,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,23,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,2.2,r0,no,cm,colon,no,71.2
+alive,NA,884,82,sigmoid colon,no,-30163,NA,female,145,colon adenocarcinoma,yes,c18.7,Mar-40,no,no,18,yes,mss,1,no,m0,n1a,stage iiia,t2,tumor free,yes,16.7,r0,yes,cm,colon,no,80.2
+alive,NA,670,39,sigmoid colon,yes,-14426,NA,female,156,colon adenocarcinoma,yes,c18.7,Mar-40,no,yes,108,yes,mss,3,no,m0,n1b,stage iiib,t3,tumor free,yes,1.9,r0,yes,cm,colon,no,64.9
+alive,NA,699,72,cecum,yes,-26543,NA,male,163,colon adenocarcinoma,yes,c18.0,Mar-40,no,no,19,yes,mss,1,no,m0,n1a,stage iiib,t3,tumor free,no,3.6,r0,no,cm,colon,no,85.5
+alive,NA,915,68,cecum,no,-24867,NA,female,156,colon adenocarcinoma,no,c18.0,Mar-40,no,yes,21,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,3,r0,yes,cm,colon,no,54.4
+alive,NA,974,44,ascending colon,no,-16344,NA,male,182,colon adenocarcinoma,no,c18.2,Mar-40,no,no,44,no,mss,0,no,m0,n0,stage iia,t3,tumor free,yes,3,r0,yes,cm,colon,yes,100.7
+alive,NA,457,63,cecum,no,-23253,NA,female,164,colon adenocarcinoma,no,c18.0,Mar-40,no,no,28,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,3.2,r0,yes,cm,colon,no,122
+dead,153,NA,80,ascending colon,yes,-29493,NA,male,162.5,colon adenocarcinoma,no,c18.2,Mar-40,yes,no,24,no,mss,1,no,m1a,n1a,stage iva,t3,with tumor,no,10,r0,yes,cm,colon,yes,77.6
+alive,NA,457,60,ascending colon,no,-22127,NA,female,150,colon mucinous adenocarcinoma,no,c18.2,Mar-80,no,no,12,no,mss,3,no,m0,n1b,stage iiib,t3,tumor free,yes,4.7,r0,yes,cm,colon,yes,103.4
+alive,NA,457,60,cecum,no,-22219,NA,male,180,colon adenocarcinoma,no,c18.0,Mar-40,no,yes,33,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,2.8,r0,yes,cm,colon,no,103
+alive,NA,518,59,sigmoid colon,no,-21672,NA,female,171,colon adenocarcinoma,no,c18.7,Mar-40,yes,no,17,yes,mss,1,no,m1a,n1a,stage iva,t4a,with tumor,yes,93,r0,yes,cm,colon,yes,99.8
+alive,NA,457,36,sigmoid colon,yes,-13363,NA,female,174,colon adenocarcinoma,no,c18.7,Mar-40,no,yes,31,no,msi-l,0,no,m0,n0,stage i,t2,tumor free,no,0.4,r0,yes,cm,colon,no,65.6
+alive,NA,365,48,ascending colon,yes,-17624,NA,female,171,colon mucinous adenocarcinoma,no,c18.2,Mar-80,no,yes,46,yes,msi-h,1,no,m0,n1a,stage iiib,t3,tumor free,yes,1.1,r0,yes,cm,colon,yes,109
+alive,NA,427,74,sigmoid colon,yes,-27150,NA,male,179,colon adenocarcinoma,no,c18.7,Mar-40,no,no,23,no,mss,0,no,m0,n0,stage i,t1,tumor free,no,8.8,r0,yes,cm,colon,yes,75.8
+alive,NA,883,46,sigmoid colon,no,-16802,NA,female,150,colon adenocarcinoma,no,c18.7,Mar-40,no,yes,14,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,9.6,r0,no,cm,colon,yes,59
+alive,NA,488,74,sigmoid colon,no,-27302,NA,male,189,colon adenocarcinoma,no,c18.7,Mar-40,no,no,20,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,1.9,r0,yes,cm,colon,no,100.7
+alive,NA,669,48,ascending colon,no,-17807,NA,female,153,colon adenocarcinoma,no,c18.2,Mar-40,no,yes,33,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,1.3,r0,no,cm,colon,no,45
+alive,NA,456,57,cecum,yes,-21031,NA,female,174,colon adenocarcinoma,no,c18.0,Mar-40,no,yes,40,yes,mss,11,no,m0,n2b,stage iiic,t3,tumor free,yes,5.5,r0,yes,cm,colon,yes,89
+alive,NA,395,84,ascending colon,no,-30834,NA,female,149,colon adenocarcinoma,no,c18.2,Mar-40,no,no,31,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,7.8,r0,yes,cm,colon,yes,52.5
+alive,NA,396,67,cecum,no,-24564,NA,male,176,colon adenocarcinoma,no,c18.0,Mar-40,no,no,19,yes,mss,0,no,m0,n0,stage iia,t3,tumor free,yes,4.6,r0,yes,cm,colon,yes,109.3
+alive,NA,457,73,descending colon,yes,-26663,NA,female,145,colon adenocarcinoma,yes,c18.6,Mar-40,no,no,12,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,0.8,r0,yes,cm,colon,no,85.8
+alive,NA,427,77,ascending colon,no,-28307,NA,female,162,colon adenocarcinoma,no,c18.2,Mar-40,no,no,28,no,msi-h,0,no,m0,n0,stage i,t2,tumor free,no,2,r0,yes,cm,colon,no,71.2
+alive,NA,335,70,sigmoid colon,no,-25902,NA,female,151,colon adenocarcinoma,no,c18.7,Mar-40,no,no,17,no,mss,1,no,m0,n1a,stage iiib,t3,tumor free,yes,2.8,r0,yes,cm,colon,no,77.6
+alive,NA,394,39,hepatic flexure,no,-14368,NA,male,167,colon adenocarcinoma,no,c18.3,Mar-40,no,yes,43,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,1.1,r0,yes,cm,colon,no,80.7
+alive,NA,397,35,cecum,no,-12935,NA,male,187,colon adenocarcinoma,no,c18.0,Mar-40,no,yes,72,no,mss,12,no,m1b,n2b,stage ivb,t3,with tumor,yes,2,r0,yes,cm,colon,yes,93.9
+alive,NA,337,82,sigmoid colon,no,-30223,NA,male,165,colon adenocarcinoma,no,c18.7,Mar-40,no,no,17,yes,msi-l,0,no,m0,n0,stage i,t2,tumor free,no,4.5,r0,yes,cm,colon,no,100
+alive,NA,337,75,hepatic flexure,yes,-27575,NA,female,167,colon adenocarcinoma,no,c18.3,Mar-40,no,no,20,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,3.7,r0,yes,cm,colon,no,99.5
+alive,NA,335,63,sigmoid colon,no,-23070,NA,female,157,colon adenocarcinoma,no,c18.7,Mar-40,yes,no,19,no,mss,0,no,m1a,n1c,stage iva,t4a,with tumor,yes,286.6,r0,yes,cm,colon,no,59
+alive,NA,306,58,sigmoid colon,no,-21519,NA,male,178,colon adenocarcinoma,no,c18.7,Mar-40,no,yes,21,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,2.3,r0,yes,cm,colon,no,106.5
+alive,NA,366,78,cecum,no,-28701,NA,female,150,colon adenocarcinoma,no,c18.0,Mar-40,no,no,17,no,mss,4,no,m0,n2a,stage iiib,t3,tumor free,no,1.4,r0,yes,cm,colon,no,72.4
+dead,1381,NA,83,ascending colon,yes,-30505,progressive disease,male,168,colon adenocarcinoma,no,c18.9,Mar-40,no,no,10,no,mss,7,no,mx,n2,stage iia,t3,with tumor,no,NA,rx,yes,d5,colon,no,75
+dead,1661,NA,60,cecum,no,-21974,progressive disease,female,165,colon adenocarcinoma,no,c18.0,Mar-40,no,no,6,no,mss,3,no,m0,n1b,stage iiib,t3,with tumor,yes,4.11,r0,yes,d5,colon,no,70
+alive,NA,596,60,ascending colon,NA,-22097,NA,male,168,colon mucinous adenocarcinoma,NA,c18.2,Mar-80,no,NA,4,yes,mss,1,no,m0,n1,stage iiia,t3,with tumor,yes,5.1,r0,yes,d5,colon,NA,83
+alive,NA,1706,73,cecum,no,-26972,complete remission/response,male,175,colon adenocarcinoma,no,c18.0,Mar-40,no,no,12,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,1.7,r0,yes,d5,colon,no,83
+alive,NA,1701,63,sigmoid colon,no,-23109,complete remission/response,male,170,colon adenocarcinoma,no,c18.7,Mar-40,no,no,8,no,mss,1,no,m0,n1a,stage iiib,t3,tumor free,yes,2.3,r0,yes,d5,colon,no,81
+alive,NA,614,69,NA,no,-25394,NA,male,176,colon adenocarcinoma,NA,c18.9,Mar-40,no,NA,19,no,msi-l,0,no,m0,n0,stage iia,t3,with tumor,no,8.4,r0,yes,d5,colon,no,106
+alive,NA,621,53,NA,no,-19591,NA,male,182,colon adenocarcinoma,NA,c18.0,Mar-40,no,NA,15,no,msi-h,0,no,m0,n0,stage i,t2,tumor free,no,3.5,r0,yes,d5,colon,no,89
+alive,NA,540,75,hepatic flexure,NA,-27633,NA,male,167,colon adenocarcinoma,no,c18.3,Mar-40,no,no,4,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,1.9,r0,yes,d5,colon,no,60
+alive,NA,555,61,sigmoid colon,NA,-22344,NA,male,174,colon adenocarcinoma,no,c18.7,Mar-40,no,NA,10,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,1.7,r0,yes,d5,colon,no,92
+alive,NA,775,68,transverse colon,no,-24971,complete remission/response,female,156,colon adenocarcinoma,no,c18.4,Mar-40,no,no,8,no,mss,0,no,m0,n0,NA,t4b,tumor free,yes,228.8,r0,yes,d5,colon,no,51
+alive,NA,1316,62,ascending colon,yes,-22778,complete remission/response,female,170,colon mucinous adenocarcinoma,yes,c18.9,Mar-80,no,NA,22,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,0.9,r0,yes,d5,colon,no,94
+alive,NA,460,80,ascending colon,yes,-29278,NA,female,157,colon adenocarcinoma,no,c18.9,Mar-40,no,NA,6,yes,mss,1,no,mx,n1,stage iiib,t3,tumor free,no,66.7,rx,yes,d5,colon,no,65
+alive,NA,543,73,sigmoid colon,no,-26890,NA,male,165,colon adenocarcinoma,NA,c18.9,Mar-40,no,NA,14,no,mss,0,no,m0,n0,stage iia,t3,with tumor,no,NA,r0,yes,d5,colon,no,83
+dead,146,NA,64,transverse colon,yes,-23381,NA,male,176,colon adenocarcinoma,NA,c18.4,Mar-40,no,NA,11,yes,mss,1,no,mx,n1a,stage iiib,t3,with tumor,no,2.7,r0,yes,d5,colon,no,80
+alive,NA,521,79,hepatic flexure,no,-29194,NA,female,152,colon adenocarcinoma,no,c18.3,Mar-40,no,no,14,no,msi-l,10,no,m0,n2,stage iiib,t3,tumor free,yes,23.5,r0,yes,d5,colon,yes,57
+alive,NA,380,45,transverse colon,NA,-16703,NA,female,165,colon adenocarcinoma,NA,c18.4,Mar-40,no,NA,12,no,mss,0,no,m0,n0,NA,t3,tumor free,no,1.1,r0,yes,d5,colon,no,63
+alive,NA,491,66,cecum,yes,-24282,NA,male,186,colon mucinous adenocarcinoma,no,c18.0,Mar-80,no,NA,13,no,msi-h,0,no,m0,n0,stage i,t2,tumor free,no,2,r0,yes,d5,colon,no,86
+alive,NA,474,49,splenic flexure,NA,-18029,NA,male,174,colon adenocarcinoma,NA,c18.5,Mar-40,no,no,13,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,2,r0,yes,d5,colon,no,85
+alive,NA,229,51,sigmoid colon,no,-18874,NA,female,164,colon adenocarcinoma,no,c18.9,Mar-40,no,no,8,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,8.1,r0,yes,d5,colon,no,100
+alive,NA,377,77,sigmoid colon,no,-28124,NA,female,160,colon adenocarcinoma,no,c18.7,Mar-40,no,no,5,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,1.7,r0,yes,d5,colon,no,73
+alive,NA,308,76,sigmoid colon,no,-27771,NA,male,175,colon adenocarcinoma,no,c18.7,Mar-40,no,no,8,yes,mss,1,no,m0,n1,stage iiia,t3,tumor free,no,4.3,r0,yes,d5,colon,no,83
+alive,NA,378,57,sigmoid colon,no,-21118,NA,male,187,colon adenocarcinoma,no,c18.7,Mar-40,no,no,11,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,1.8,r0,yes,d5,colon,no,109
+alive,NA,435,68,sigmoid colon,no,-24964,NA,male,165,colon adenocarcinoma,no,c18.7,Mar-40,no,no,8,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,3.1,r0,yes,d5,colon,no,85
+alive,NA,275,65,sigmoid colon,no,-23768,NA,male,175,colon adenocarcinoma,no,c18.7,Mar-40,no,no,34,no,mss,3,no,m0,n1,stage iiib,t4a,tumor free,yes,2.2,r0,yes,d5,colon,no,82
+alive,NA,287,34,transverse colon,no,-12737,NA,male,177,colon adenocarcinoma,no,c18.7,Mar-40,no,no,16,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,0.9,r0,yes,d5,colon,no,76
+alive,NA,354,80,ascending colon,no,-29411,NA,male,174,colon mucinous adenocarcinoma,no,c18.3,Mar-80,no,no,18,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,1.8,r0,yes,d5,colon,no,93
+alive,NA,408,49,sigmoid colon,no,-17919,NA,female,167,colon adenocarcinoma,no,c18.9,Mar-40,no,no,12,yes,msi-l,1,no,m1,n1,stage iv,t3,tumor free,yes,4.5,r0,yes,d5,colon,no,80
+alive,NA,406,67,ascending colon,yes,-24764,complete remission/response,male,184,colon mucinous adenocarcinoma,no,c18.0,Mar-80,no,no,20,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,3,r0,yes,d5,colon,no,90
+alive,NA,365,77,transverse colon,no,-28292,NA,male,178,colon adenocarcinoma,no,c18.9,Mar-40,no,no,14,yes,mss,4,no,m0,n2,stage iiic,t4b,tumor free,no,6.9,r0,yes,d5,colon,no,70
+alive,NA,346,69,transverse colon,yes,-25466,NA,male,168,colon adenocarcinoma,no,c18.9,Mar-40,no,no,11,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,3.8,r0,yes,d5,colon,no,75
+alive,NA,312,79,cecum,no,-28913,NA,female,154,colon mucinous adenocarcinoma,no,c18.0,Mar-80,no,NA,14,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,2.4,r0,yes,d5,colon,no,60
+alive,NA,3641,71,NA,yes,-26217,NA,female,170,colon adenocarcinoma,no,c18.2,Mar-40,yes,NA,16,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,86
+dead,743,NA,65,NA,yes,-23966,NA,male,160,colon adenocarcinoma,no,c18.0,Mar-40,yes,NA,11,no,msi-l,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,62
+dead,1162,NA,68,NA,NA,-25032,NA,female,170,NA,no,c18.7,Mar-40,yes,NA,22,no,msi-l,4,no,m0,n2,stage iiic,t3,NA,NA,NA,NA,no,dm,colon,no,85
+alive,NA,3974,79,sigmoid colon,NA,-28875,NA,female,170,colon adenocarcinoma,no,c18.7,Mar-40,yes,NA,10,no,mss,2,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,65
+dead,2821,NA,80,cecum,NA,-29403,NA,male,171,colon adenocarcinoma,NA,c18.0,Mar-40,no,NA,15,no,msi-l,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,59
+dead,1518,NA,88,splenic flexure,NA,-32302,NA,male,173,colon mucinous adenocarcinoma,no,c18.5,Mar-80,yes,NA,6,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,80
+dead,405,NA,82,sigmoid colon,NA,-30142,NA,male,175,NA,NA,c18.7,Mar-80,yes,NA,15,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,75
+dead,383,NA,50,ascending colon,NA,-18311,NA,female,158,colon adenocarcinoma,no,c18.2,Mar-40,yes,NA,15,NA,mss,1,no,NA,n1,NA,t3,NA,NA,NA,NA,no,dm,colon,NA,65
+alive,NA,4270,67,cecum,yes,-24514,NA,female,153,colon adenocarcinoma,no,c18.0,Mar-40,no,NA,28,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,98
+dead,228,NA,71,cecum,NA,-26169,NA,female,163,colon adenocarcinoma,NA,c18.0,Mar-40,yes,NA,13,NA,msi-l,5,no,m0,n2,stage iiic,t3,NA,NA,NA,NA,no,dm,colon,NA,62
+dead,1348,NA,68,sigmoid colon,NA,-24888,NA,male,167,colon adenocarcinoma,NA,c18.7,Mar-40,yes,NA,7,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,75
+alive,NA,4000,82,ascending colon,yes,-30272,NA,male,163,colon adenocarcinoma,yes,c18.2,Mar-40,yes,NA,17,NA,mss,4,no,m0,n2,stage iiic,t3,NA,NA,NA,NA,no,dm,colon,NA,67
+alive,NA,4126,75,transverse colon,no,-27708,NA,male,168,NA,no,c18.4,Mar-80,yes,NA,11,no,msi-h,1,no,m0,n1,stage iiib,t3,NA,NA,NA,NA,no,dm,colon,no,70
+dead,236,NA,70,ascending colon,no,-25649,NA,female,159,colon mucinous adenocarcinoma,no,c18.2,Mar-80,yes,NA,10,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,63
+alive,NA,4233,60,hepatic flexure,no,-22265,NA,female,153,colon adenocarcinoma,no,c18.3,Mar-80,yes,NA,16,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,44
+dead,427,NA,68,cecum,NA,-25084,NA,male,170,colon mucinous adenocarcinoma,no,c18.0,Mar-80,yes,NA,22,no,mss,4,no,m0,n2,stage iiic,t3,NA,NA,NA,NA,no,dm,colon,no,85
+dead,805,NA,78,cecum,NA,-28833,NA,male,172,colon adenocarcinoma,no,c18.0,Mar-40,yes,NA,15,no,mss,6,no,m0,n2,stage iiic,t3,NA,NA,NA,NA,no,dm,colon,no,72
+dead,2475,NA,74,sigmoid colon,yes,-27073,NA,male,180,colon adenocarcinoma,no,c18.7,Mar-40,no,NA,11,NA,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,NA,70
+alive,NA,3648,72,sigmoid colon,yes,-26602,NA,female,150,colon adenocarcinoma,no,c18.7,Mar-40,yes,NA,15,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,75
+dead,1094,NA,73,sigmoid colon,yes,-26856,NA,male,182,colon adenocarcinoma,yes,c18.7,Mar-40,yes,NA,23,NA,mss,1,no,m0,n1,stage iiib,t3,NA,NA,NA,NA,no,dm,colon,NA,83
+dead,1849,NA,75,ascending colon,yes,-27641,NA,male,170,colon adenocarcinoma,no,c18.2,Mar-40,yes,NA,25,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,90
+alive,NA,3561,50,cecum,NA,-18325,NA,male,178,colon adenocarcinoma,no,c18.0,Mar-40,yes,NA,12,no,msi-l,8,no,m0,n2,stage iiic,t3,NA,NA,NA,NA,no,dm,colon,no,87
+alive,NA,2988,75,hepatic flexure,NA,-27428,NA,male,174,colon mucinous adenocarcinoma,no,c18.3,Mar-80,no,NA,17,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,78
+alive,NA,2895,63,descending colon,NA,-23043,NA,male,172,colon adenocarcinoma,no,c18.6,Mar-40,yes,NA,13,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dm,colon,no,90
+dead,262,NA,61,sigmoid colon,no,-22574,NA,female,162,colon adenocarcinoma,no,c18.7,Mar-40,no,no,6,no,mss,6,no,m0,n2a,stage iiib,t3,tumor free,no,NA,r0,yes,f4,colon,no,55
+dead,972,NA,51,sigmoid colon,no,-18637,progressive disease,female,168,colon adenocarcinoma,no,c18.7,Mar-40,no,no,6,no,mss,1,no,m0,n1,stage iiib,t3,with tumor,yes,NA,r0,yes,f4,colon,no,73
+dead,338,NA,41,hepatic flexure,no,-15151,NA,female,151,colon adenocarcinoma,no,c18.9,Mar-40,no,no,5,no,mss,5,no,m0,n2,stage iiic,t4b,with tumor,no,NA,r0,yes,f4,colon,no,57
+alive,NA,1087,51,transverse colon,NA,-18804,complete remission/response,male,174,colon mucinous adenocarcinoma,NA,c18.4,Mar-80,no,NA,18,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,yes,f4,colon,no,62
+alive,NA,1087,60,transverse colon,NA,-22203,complete remission/response,male,180,colon adenocarcinoma,NA,c18.9,Mar-40,no,NA,19,no,mss,0,no,m0,n0,stage i,t2,tumor free,yes,NA,r0,yes,f4,colon,no,60
+dead,188,NA,78,transverse colon,NA,-28772,NA,female,159,colon adenocarcinoma,NA,c18.9,Mar-40,no,NA,16,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,yes,f4,colon,no,59
+alive,NA,1456,64,ascending colon,no,-23644,complete remission/response,male,172,colon adenocarcinoma,no,c18.2,Mar-40,NA,NA,12,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,yes,f4,colon,no,84
+alive,NA,47,60,sigmoid colon,no,-21949,NA,male,183,colon mucinous adenocarcinoma,no,c18.7,Mar-80,no,yes,18,no,mss,13,no,mx,n2b,stage iiic,t3,tumor free,NA,14.9,r0,yes,f4,colon,no,163
+alive,NA,1047,58,descending colon,no,-21241,complete remission/response,female,162,colon adenocarcinoma,no,c18.9,Mar-40,no,no,NA,no,mss,NA,no,m0,n0,stage iia,t3,tumor free,yes,NA,r0,yes,f4,colon,no,60
+alive,NA,1260,59,sigmoid colon,no,-21625,partial remission/response,female,172,colon adenocarcinoma,no,c18.7,Mar-40,no,no,5,no,mss,0,no,m0,n0,stage i,t2,with tumor,yes,NA,r0,yes,f4,colon,no,70
+alive,NA,1309,51,hepatic flexure,no,-18690,complete remission/response,female,166,colon adenocarcinoma,no,c18.9,Mar-40,no,no,12,no,mss,12,no,m0,n2b,stage iiic,t3,tumor free,yes,NA,r0,yes,f4,colon,no,57
+alive,NA,1024,54,sigmoid colon,no,-19803,complete remission/response,female,166,colon adenocarcinoma,no,c18.7,Mar-40,no,no,3,no,mss,0,no,m0,n0,stage i,t1,tumor free,no,NA,r0,yes,f4,colon,no,70
+dead,403,NA,52,sigmoid colon,no,-19039,NA,female,150,colon adenocarcinoma,NA,c18.7,Mar-40,no,no,12,no,mss,3,no,m1,n1,stage iva,t3,with tumor,no,NA,r0,yes,f4,colon,no,88
+alive,NA,16,77,sigmoid colon,no,-28272,complete remission/response,female,170,colon adenocarcinoma,no,c18.7,Mar-40,no,no,8,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,yes,f4,colon,no,66
+alive,NA,1442,70,sigmoid colon,no,-25890,complete remission/response,female,167,colon adenocarcinoma,NA,c18.7,Mar-40,NA,NA,12,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,yes,f4,colon,no,80
+alive,NA,1074,45,cecum,NA,-16519,complete remission/response,male,160,colon mucinous adenocarcinoma,NA,c18.0,Mar-80,no,NA,21,no,msi-h,0,no,m0,n0,stage i,t2,tumor free,yes,NA,r0,yes,f4,colon,no,61
+alive,NA,4051,49,transverse colon,yes,-18076,complete remission/response,female,150,colon adenocarcinoma,no,c18.4,Mar-40,no,yes,26,no,msi-l,1,no,m0,n1,stage iii,t3,tumor free,yes,NA,r0,no,g4,colon,no,64.5
+alive,NA,254,70,cecum,yes,-25758,NA,female,NA,colon adenocarcinoma,no,c18.0,Mar-40,no,no,23,no,msi-l,0,no,m0,n0,stage ii,t3,tumor free,no,NA,NA,no,g4,colon,no,59
+alive,NA,2506,55,cecum,yes,-20103,NA,female,NA,colon adenocarcinoma,yes,c18.0,Mar-40,no,no,36,yes,mss,6,no,m1,n2,stage iv,t3,with tumor,yes,NA,r0,no,g4,colon,yes,64
+alive,NA,2268,69,descending colon,no,-25318,NA,male,130,colon adenocarcinoma,no,c18.6,Mar-40,no,no,17,yes,mss,8,no,m0,n2,stage iiic,t3,tumor free,yes,NA,r0,no,g4,colon,yes,88
+dead,2047,NA,90,cecum,yes,-32872,NA,female,152.5,colon mucinous adenocarcinoma,no,c18.0,Mar-80,no,no,15,yes,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,g4,colon,yes,57
+dead,2003,NA,54,sigmoid colon,yes,-19800,NA,female,NA,colon adenocarcinoma,no,c18.7,Mar-40,yes,no,25,yes,msi-l,1,no,m1,n1,stage iv,t3,with tumor,no,3.8,r0,no,g4,colon,yes,69
+alive,NA,1631,66,transverse colon,no,-24172,NA,female,NA,colon adenocarcinoma,no,c18.4,Mar-40,no,no,25,no,msi-h,0,no,m0,n0,stage iib,t4,tumor free,yes,4.4,r0,no,g4,colon,no,57
+alive,NA,1359,71,ascending colon,no,-26163,NA,male,170,colon adenocarcinoma,yes,c18.2,Mar-40,no,no,17,NA,mss,0,no,m0,n0,NA,t2,tumor free,no,2.7,r0,no,g4,colon,NA,110
+alive,NA,1674,37,sigmoid colon,yes,-13648,NA,female,166,colon adenocarcinoma,NA,c18.7,Mar-40,no,NA,17,yes,mss,2,no,m0,n1,stage iiib,t3,tumor free,yes,10.2,r0,no,g4,colon,yes,71
+alive,NA,2600,40,sigmoid colon,yes,-14729,complete remission/response,female,176,colon adenocarcinoma,no,c18.7,Mar-40,no,yes,24,no,msi-h,2,no,m0,n1,stage iiib,t3,tumor free,yes,NA,r0,no,g4,colon,no,65.4
+alive,NA,1199,80,ascending colon,no,-29297,NA,male,173.5,colon adenocarcinoma,no,c18.2,Mar-40,no,yes,37,yes,mss,1,no,mx,n1,stage iii,t3,tumor free,yes,0.9,r0,no,g4,colon,yes,69.9
+alive,NA,1883,66,descending colon,yes,-24174,complete remission/response,male,170,colon adenocarcinoma,no,c18.6,Mar-40,yes,no,82,no,mss,1,no,m1,n1,stage iv,t3,tumor free,yes,43.4,r0,no,g4,colon,no,58
+alive,NA,1095,51,sigmoid colon,no,-18822,NA,female,162,colon adenocarcinoma,no,c18.7,Mar-40,yes,yes,109,NA,msi-l,6,no,mx,n2,stage iiic,t3,tumor free,yes,NA,r0,no,g4,colon,NA,95.3
+alive,NA,804,73,hepatic flexure,yes,-26840,NA,male,193,colon adenocarcinoma,no,c18.3,Mar-40,no,no,65,yes,msi-h,2,no,mx,n1,stage iii,t3,tumor free,yes,2.7,r0,no,g4,colon,yes,139.7
+alive,NA,792,65,descending colon,yes,-23825,NA,male,182,colon mucinous adenocarcinoma,no,c18.6,Mar-80,no,no,26,yes,msi-l,2,no,mx,n1,stage iiib,t3,with tumor,yes,4.2,r0,no,g4,colon,yes,90.9
+alive,NA,419,50,cecum,no,-18334,NA,male,171.5,colon adenocarcinoma,no,c18.0,Mar-40,no,no,24,no,mss,0,no,mx,n0,stage ia,tis,tumor free,no,0.9,r0,no,g4,colon,no,88.4
+dead,1422,NA,90,ascending colon,no,-32871,NA,male,NA,colon adenocarcinoma,no,c18.2,Mar-40,no,no,16,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,g4,colon,no,59
+alive,NA,2275,84,ascending colon,yes,-30697,complete remission/response,male,176,colon adenocarcinoma,no,c18.2,Mar-40,no,no,16,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,1.8,r0,no,g4,colon,no,80
+alive,NA,553,68,splenic flexure,no,-25089,complete remission/response,female,160.02,colon adenocarcinoma,no,c18.5,Mar-40,no,NA,10,no,mss,0,no,mx,n0,stage iia,t3,tumor free,no,1.4,r0,yes,nh,colon,no,73.5
+dead,334,NA,42,cecum,yes,-15450,NA,male,172.7,colon mucinous adenocarcinoma,NA,c18.0,Mar-80,yes,NA,17,no,mss,0,no,m1a,n0,stage iva,t4a,with tumor,yes,NA,r0,yes,nh,colon,no,88.5
+alive,NA,588,69,cecum,no,-25467,complete remission/response,male,167.6,colon adenocarcinoma,NA,c18.0,Mar-40,no,no,35,no,msi-l,4,no,m0,n2a,stage iiib,t3,tumor free,yes,NA,r0,yes,nh,colon,no,65.9
+alive,NA,588,90,transverse colon,no,-32872,NA,female,158.5,colon adenocarcinoma,yes,c18.4,Mar-40,no,NA,12,no,msi-h,0,no,mx,n0,stage iia,t3,tumor free,no,11.8,r0,yes,nh,colon,no,49.5
+dead,302,NA,58,ascending colon,no,-21313,progressive disease,male,162.6,colon adenocarcinoma,NA,c18.2,Mar-40,yes,NA,33,yes,mss,4,no,mx,n2a,stage iiic,t4a,with tumor,yes,NA,r0,yes,nh,colon,yes,92
+alive,NA,476,71,transverse colon,no,-26100,progressive disease,female,167.6,colon adenocarcinoma,NA,c18.4,Mar-40,yes,no,13,no,mss,7,no,mx,n2b,stage iiic,t3,with tumor,yes,NA,r0,yes,nh,colon,no,83
+alive,NA,389,66,descending colon,no,-24355,NA,female,165.1,colon mucinous adenocarcinoma,NA,c18.6,Mar-80,yes,NA,19,no,mss,3,no,m1b,n1b,stage ivb,t4b,NA,yes,NA,r0,yes,nh,colon,no,107
+dead,511,NA,79,ascending colon,no,-29185,NA,male,172.7,colon adenocarcinoma,yes,c18.2,Mar-40,yes,no,22,yes,mss,15,no,m1,n2b,stage iv,t4a,with tumor,yes,24.9,r0,yes,nh,colon,yes,74
+alive,NA,1301,64,sigmoid colon,no,-23499,complete remission/response,female,173,colon adenocarcinoma,no,c18.7,Mar-40,no,no,33,no,mss,1,no,mx,n1a,stage iiic,t4b,tumor free,yes,15.04,r0,no,qg,colon,no,109.226
+alive,NA,896,55,cecum,no,-20391,NA,female,170,colon mucinous adenocarcinoma,no,c18.0,Mar-40,no,yes,15,no,msi-l,11,no,mx,n2b,stage iiic,t3,tumor free,yes,11.37,r0,no,qg,colon,no,84.37
+alive,NA,1003,61,sigmoid colon,yes,-22617,complete remission/response,female,163,colon adenocarcinoma,no,c18.7,Mar-40,no,yes,13,no,msi-l,0,no,mx,n0,stage iia,t3,tumor free,yes,2.04,r0,no,qg,colon,yes,68.49
+dead,256,NA,71,sigmoid colon,no,-26220,NA,male,NA,colon adenocarcinoma,no,c19,Mar-40,no,no,38,yes,msi-l,3,no,mx,n1b,stage iiib,t3,tumor free,no,5.3,r0,no,qg,colon,yes,91.1
+alive,NA,952,61,cecum,yes,-22367,complete remission/response,male,183,colon adenocarcinoma,no,c18.0,Mar-40,no,no,23,no,msi-h,0,no,m0,n0,stage i,t2,tumor free,no,1.52,r0,no,qg,colon,no,97.5
+alive,NA,666,84,cecum,NA,-30914,complete remission/response,female,NA,colon adenocarcinoma,NA,c18.2,Mar-40,NA,NA,13,NA,mss,0,no,mx,n0,stage i,t2,tumor free,no,NA,NA,no,ql,colon,NA,NA
+alive,NA,1177,51,cecum,no,-18975,progressive disease,male,187.96,colon adenocarcinoma,no,c18.0,Mar-40,yes,no,21,NA,mss,5,no,mx,n2a,stage iiib,t3,with tumor,yes,24.6,r0,no,ru,colon,NA,125
+alive,NA,1829,44,cecum,no,-16416,progressive disease,female,167,colon adenocarcinoma,no,c18.0,Mar-40,no,no,25,yes,mss,0,no,m0,n0,stage iib,t4a,with tumor,yes,0,r0,no,ss,colon,yes,97.5
+alive,NA,362,82,sigmoid colon,no,-30058,progressive disease,male,180,colon adenocarcinoma,no,c18.7,Mar-40,no,no,13,no,mss,NA,no,m0,n0,stage iia,t3,with tumor,no,NA,r0,yes,t9,colon,no,63.9
+alive,NA,2130,52,cecum,no,NA,complete remission/response,female,152,colon mucinous adenocarcinoma,yes,c18.0,Mar-80,NA,yes,13,no,msi-h,0,no,mx,n0,stage iia,t3,tumor free,no,NA,rx,no,ws,colon,no,34
+alive,NA,1427,57,rectum,no,-21098,complete remission/response,male,163,rectal adenocarcinoma,no,c19,Mar-40,no,NA,16,yes,mss,6,no,m0,n2,stage iiic,t3,tumor free,yes,5.3,r0,yes,af,rectum,no,68.2
+dead,1201,NA,41,rectosigmoid junction,no,-15082,progressive disease,female,163,rectal adenocarcinoma,no,c19,Mar-40,yes,no,32,yes,mss,6,no,m1,n2,stage iv,t3,with tumor,yes,6,r0,yes,af,rectum,no,55.5
+dead,524,NA,76,rectum,no,-28119,NA,female,160,rectal adenocarcinoma,no,c20,Mar-40,no,NA,24,yes,mss,3,no,m0,n2,stage iiic,t3,tumor free,no,4.2,r0,yes,af,rectum,yes,54.5
+alive,NA,1309,48,rectum,no,-17759,complete remission/response,female,167.6,rectal adenocarcinoma,no,c19,Mar-40,no,no,17,no,mss,0,no,m0,n0,stage i,t1,tumor free,no,1.3,r0,yes,af,rectum,no,52.4
+alive,NA,412,54,NA,yes,-19830,NA,female,170,NA,no,c20,Mar-40,yes,no,12,no,mss,0,no,m0,n0,stage iia,t3,with tumor,no,10.6,r0,yes,af,NA,no,64.4
+alive,NA,1155,75,sigmoid colon,no,-27443,NA,male,180.3,NA,no,c19,Mar-40,no,no,30,no,mss,0,no,mx,n0,stage i,t2,tumor free,no,4,NA,yes,af,NA,no,107.6
+alive,NA,1049,54,rectosigmoid junction,yes,-19826,complete remission/response,male,177.8,rectal mucinous adenocarcinoma,no,c19,Mar-80,no,no,32,no,mss,0,no,m0,n0,stage iia,t3,tumor free,yes,2.8,r0,yes,af,rectum,no,85.4
+alive,NA,1148,48,rectum,yes,-17609,progressive disease,male,180.3,rectal adenocarcinoma,NA,c20,Mar-40,no,no,18,yes,msi-l,9,no,mx,n2,stage iiic,t3,with tumor,yes,1.1,NA,yes,af,rectum,no,94.5
+alive,NA,1146,39,rectosigmoid junction,no,-14426,progressive disease,male,172.7,rectal adenocarcinoma,no,c19,Mar-40,no,no,55,yes,mss,5,no,m0,n2a,stage iiib,t3,with tumor,yes,1.4,r0,yes,af,rectum,yes,64.2
+alive,NA,912,77,rectosigmoid junction,yes,-28289,complete remission/response,male,188,NA,no,c20,Mar-40,no,no,34,yes,mss,21,no,mx,n2b,stage iva,t4a,tumor free,yes,28.7,r0,yes,af,NA,yes,92
+dead,512,NA,73,rectosigmoid junction,no,-26738,NA,female,165,rectal adenocarcinoma,no,c19,Mar-40,no,yes,24,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,yes,af,rectum,no,96.6
+alive,NA,741,72,rectosigmoid junction,no,-26490,progressive disease,female,161.3,rectal adenocarcinoma,no,c19,Mar-40,NA,yes,52,yes,mss,2,no,mx,n1b,stage iiib,t3,with tumor,yes,18.3,NA,yes,af,rectum,yes,67.2
+alive,NA,609,66,rectum,no,-24417,complete remission/response,male,173,rectal adenocarcinoma,yes,c19,Mar-40,no,yes,29,yes,mss,2,no,m0,n1,stage iiia,t2,tumor free,no,1.6,r0,yes,af,rectum,no,53.2
+alive,NA,748,43,rectosigmoid junction,no,-15965,progressive disease,male,172.7,rectal adenocarcinoma,yes,c19,Mar-40,yes,no,37,yes,mss,18,no,mx,n2b,stage iv,t4a,with tumor,yes,9.6,NA,yes,af,rectum,no,93.8
+alive,NA,2635,56,sigmoid colon,no,-20527,complete remission/response,male,182.5,rectal adenocarcinoma,no,c19,Mar-40,no,NA,44,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,0.5,r0,no,af,rectum,no,145.5
+alive,NA,2007,48,sigmoid colon,no,-17734,complete remission/response,female,159,rectal adenocarcinoma,no,c19,Mar-40,NA,yes,23,yes,mss,10,no,m0,n2,stage iiic,t3,tumor free,yes,3.2,rx,no,af,rectum,no,74.3
+alive,NA,360,47,rectum,no,-17480,complete remission/response,female,165.1,rectal adenocarcinoma,no,c19,Mar-40,NA,yes,33,no,mss,0,no,m0,n0,stage iia,t3,tumor free,yes,9.5,r0,yes,af,rectum,no,78.1
+dead,1096,NA,89,rectum,no,-32781,NA,female,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,18,no,mss,0,no,m0,n0,stage ii,t3,with tumor,no,4.59,r0,no,ag,rectum,no,NA
+alive,NA,365,51,rectum,NA,-18932,complete remission/response,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,31,no,mss,0,no,m0,n0,stage ii,t3,tumor free,no,0.83,r0,no,ag,rectum,no,NA
+alive,NA,974,76,rectum,NA,-27851,complete remission/response,female,NA,rectal mucinous adenocarcinoma,yes,c19,Mar-80,no,no,25,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,1.39,r0,no,ag,rectum,no,NA
+alive,NA,215,63,rectum,NA,-23345,complete remission/response,male,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,33,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,0.65,r0,no,ag,rectum,no,NA
+dead,1096,NA,75,rectum,NA,-27636,NA,male,NA,rectal adenocarcinoma,no,c18.9,Mar-40,no,no,28,no,mss,1,no,m1,n1,stage iv,t3,with tumor,no,612.1,r2,no,ag,rectum,no,NA
+dead,610,NA,66,rectum,NA,-24107,NA,male,NA,rectal mucinous adenocarcinoma,no,c19,Mar-40,no,no,34,yes,msi-l,9,no,m1,n2,stage iv,t3,with tumor,no,90.73,r2,no,ag,rectum,no,NA
+dead,730,NA,60,rectum,NA,-22189,progressive disease,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,34,yes,mss,20,no,m1,n2,stage iv,t3,with tumor,yes,36.7,r2,no,ag,rectum,yes,NA
+alive,NA,31,72,rectum,NA,-26542,NA,female,NA,NA,no,c19,Mar-80,no,no,19,yes,mss,4,no,m0,n2,stage iii,t3,with tumor,NA,1.86,r0,no,ag,rectum,no,NA
+alive,NA,1400,65,rectum,NA,-24075,NA,male,NA,rectal adenocarcinoma,no,c20,Mar-40,NA,no,17,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,1.41,r0,no,ag,rectum,no,NA
+alive,NA,1035,66,rectum,NA,-24167,complete remission/response,female,NA,rectal adenocarcinoma,yes,c19,Mar-40,no,no,16,no,mss,0,no,m0,n0,stage iia,t3,tumor free,yes,15.72,r0,no,ag,rectum,no,NA
+alive,NA,1035,68,rectum,NA,-25141,complete remission/response,male,NA,rectal adenocarcinoma,yes,c19,Mar-40,no,no,32,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,0.96,r0,no,ag,rectum,no,NA
+alive,NA,1035,72,rectum,NA,-26480,complete remission/response,female,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,38,no,mss,0,no,m0,n0,stage iia,t3,tumor free,yes,9.76,r0,no,ag,rectum,no,NA
+dead,61,NA,77,rectum,NA,-28277,NA,male,NA,rectal mucinous adenocarcinoma,yes,c19,Mar-80,no,no,25,no,mss,0,no,m0,n0,stage iia,t3,with tumor,no,2.99,r0,no,ag,rectum,no,NA
+alive,NA,1522,69,rectum,NA,-25324,complete remission/response,male,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,65,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,4.76,r0,no,ag,rectum,no,NA
+alive,NA,366,70,rectum,NA,-25749,complete remission/response,male,NA,NA,no,c19,Mar-80,no,no,12,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,3.36,r0,no,ag,rectum,no,NA
+alive,NA,184,62,rectum,NA,-22767,complete remission/response,male,NA,rectal adenocarcinoma,yes,c19,Mar-40,no,no,45,yes,mss,31,no,m0,n2,stage iiic,t3,tumor free,yes,48.85,r0,no,ag,rectum,no,NA
+alive,NA,0,68,rectum,NA,-24837,NA,male,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,17,yes,msi-l,2,no,m0,n1,stage iiib,t4,with tumor,NA,47.92,r2,no,ag,rectum,no,NA
+alive,NA,0,66,rectum,NA,-24350,NA,female,NA,rectal adenocarcinoma,yes,c19,Mar-40,no,no,31,yes,mss,5,no,m0,n2,stage iiic,t3,with tumor,NA,66.9,r0,no,ag,rectum,no,NA
+alive,NA,30,85,rectum,NA,-31078,NA,female,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,13,yes,mss,3,no,m1,n1,stage iv,t3,with tumor,NA,23.09,r2,no,ag,rectum,yes,NA
+alive,NA,485,79,rectum,NA,-29008,complete remission/response,female,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,16,no,indeterminate,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,ag,rectum,no,NA
+alive,NA,608,65,rectum,NA,-23925,complete remission/response,female,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,42,yes,mss,4,no,m0,n2,stage iiic,t3,tumor free,yes,NA,r0,no,ag,rectum,no,NA
+alive,NA,638,90,rectum,NA,-32872,partial remission/response,female,NA,rectal adenocarcinoma,yes,c19,Mar-40,no,no,18,yes,mss,5,no,m0,n2,stage iii,t3,tumor free,no,6.08,r0,no,ag,rectum,yes,NA
+alive,NA,243,63,rectum,NA,-23345,complete remission/response,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,34,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,3.98,r0,no,ag,rectum,no,NA
+alive,NA,30,78,rectum,NA,-28641,NA,female,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,25,yes,mss,2,no,m0,n1,stage iii,t3,with tumor,NA,1.1,r0,no,ag,rectum,no,NA
+alive,NA,912,73,rectum,NA,-26906,NA,male,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,19,no,mss,3,no,m0,n1,stage iiib,t3,with tumor,yes,1.89,r0,no,ag,rectum,no,NA
+alive,NA,1126,65,rectum,NA,-23923,complete remission/response,male,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,34,NA,msi-l,3,no,m1,n1,stage iv,t3,tumor free,yes,32.08,r2,no,ag,rectum,NA,NA
+alive,NA,1003,78,rectum,NA,-28521,complete remission/response,female,NA,rectal adenocarcinoma,no,c19,Mar-40,no,NA,12,yes,mss,0,no,m0,n0,stage i,t2,tumor free,yes,1.21,r0,no,ag,rectum,no,NA
+alive,NA,30,85,rectum,NA,-31078,NA,female,NA,rectal adenocarcinoma,no,c18.9,Mar-40,no,no,18,NA,mss,0,no,m0,n0,stage i,t1,with tumor,NA,13.78,r0,no,ag,rectum,NA,NA
+alive,NA,30,64,rectum,NA,-23527,NA,male,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,15,no,mss,0,no,m0,n0,stage i,t2,with tumor,NA,1.15,r0,no,ag,rectum,no,NA
+alive,NA,579,83,rectum,NA,-30467,complete remission/response,female,NA,NA,no,c80.1,Mar-80,no,no,30,yes,mss,0,no,m0,n0,stage iia,t3,tumor free,no,16,NA,no,ag,rectum,yes,NA
+alive,NA,608,66,rectum,NA,-24198,complete remission/response,female,NA,rectal adenocarcinoma,no,c18.9,Mar-40,no,no,18,yes,mss,0,no,m0,n0,stage i,t2,tumor free,no,0.33,r0,no,ag,rectum,yes,NA
+alive,NA,31,69,rectum,NA,-25415,NA,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,15,yes,mss,0,no,m0,n0,stage i,t2,with tumor,NA,2.39,r0,no,ag,rectum,yes,NA
+alive,NA,546,71,rectum,NA,-26145,complete remission/response,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,19,yes,mss,3,no,m0,n1,stage iiib,t3,tumor free,yes,NA,r0,no,ag,rectum,yes,NA
+alive,NA,1124,68,rectum,NA,-24960,progressive disease,male,NA,rectal mucinous adenocarcinoma,yes,c20,Mar-80,no,no,14,yes,mss,0,no,m0,n0,stage iia,t3,with tumor,yes,NA,r0,no,ag,rectum,yes,NA
+alive,NA,548,66,rectum,NA,-24411,complete remission/response,female,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,13,yes,msi-h,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,no,ag,rectum,NA,NA
+alive,NA,396,57,rectum,NA,-20880,complete remission/response,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,17,NA,mss,0,no,m0,n0,stage i,t1,tumor free,no,NA,r0,no,ag,rectum,NA,NA
+alive,NA,1065,74,rectum,NA,-27272,complete remission/response,male,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,14,yes,mss,1,no,m0,n1,stage iiib,t3,tumor free,yes,NA,r0,no,ag,rectum,NA,NA
+alive,NA,426,65,rectum,NA,-23954,complete remission/response,male,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,15,yes,mss,0,no,m0,n0,stage iia,t3,tumor free,yes,NA,r0,no,ag,rectum,yes,NA
+alive,NA,31,85,rectum,NA,-31046,NA,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,12,yes,mss,0,no,m0,n0,stage i,t2,with tumor,NA,NA,r0,no,ag,rectum,yes,NA
+alive,NA,1461,61,rectum,NA,-22492,complete remission/response,male,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,21,no,mss,0,no,m0,n0,stage iia,t3,with tumor,no,1.98,r0,no,ag,rectum,no,NA
+alive,NA,761,67,rectum,NA,-24502,NA,female,NA,rectal mucinous adenocarcinoma,no,c19,Mar-80,no,no,20,yes,mss,2,no,m0,n1,stage iiib,t3,with tumor,no,0.6,r0,no,ag,rectum,no,NA
+alive,NA,974,61,rectum,NA,-22492,complete remission/response,male,NA,rectal adenocarcinoma,yes,c19,Mar-40,no,no,17,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,8.14,r0,no,ag,rectum,no,NA
+alive,NA,608,67,rectum,NA,-24806,complete remission/response,female,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,26,no,msi-h,0,no,m0,n0,stage i,t2,tumor free,no,2.4,r0,no,ag,rectum,no,NA
+alive,NA,608,69,rectum,no,-25537,complete remission/response,female,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,35,yes,mss,3,no,m0,n1,stage iiib,t3,tumor free,yes,NA,r0,no,ag,rectum,no,NA
+alive,NA,853,61,rectum,no,-22311,progressive disease,female,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,32,yes,mss,20,no,m0,n2,stage iiic,t3,tumor free,yes,9.67,r0,no,ag,rectum,yes,NA
+alive,NA,1096,74,rectum,NA,-27302,complete remission/response,female,NA,rectal adenocarcinoma,no,c19,Mar-40,no,no,29,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,ag,rectum,no,NA
+alive,NA,427,64,rectum,NA,-23407,complete remission/response,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,40,yes,mss,7,no,m1,n2,stage iv,t3,tumor free,yes,31.52,r0,no,ag,rectum,yes,NA
+alive,NA,31,87,rectum,NA,-31776,NA,male,NA,rectal adenocarcinoma,no,c18.9,Mar-40,no,no,34,yes,msi-l,5,no,m1,n2,stage iv,t4,with tumor,NA,3.65,r2,no,ag,rectum,no,NA
+alive,NA,426,83,rectum,NA,-30559,complete remission/response,male,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,16,yes,mss,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,no,ag,rectum,yes,NA
+alive,NA,0,85,rectum,NA,-31291,NA,female,NA,rectal adenocarcinoma,no,c18.9,Mar-40,no,no,24,yes,mss,0,no,m0,n0,stage iia,t3,with tumor,NA,NA,r0,no,ag,rectum,no,NA
+dead,121,NA,84,rectum,NA,-31015,progressive disease,female,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,17,yes,mss,5,no,m1,n2,stage iv,t3,with tumor,no,3101,r2,no,ag,rectum,yes,NA
+alive,NA,1400,59,rectum,NA,-21823,complete remission/response,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,12,yes,mss,0,no,m0,n0,stage ii,t3,tumor free,yes,1.03,r0,no,ag,rectum,yes,NA
+alive,NA,638,35,rectum,NA,-13090,complete remission/response,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,34,NA,mss,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,no,ag,rectum,NA,NA
+alive,NA,424,50,rectum,NA,-18416,complete remission/response,female,NA,rectal mucinous adenocarcinoma,yes,c20,Mar-80,no,no,28,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,NA,r0,no,ag,rectum,no,NA
+alive,NA,183,49,rectum,NA,-18201,complete remission/response,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,24,yes,mss,1,no,m0,n1,stage iiib,t3,tumor free,yes,4.31,r0,no,ag,rectum,no,NA
+alive,NA,700,68,rectum,NA,-24837,complete remission/response,male,NA,rectal adenocarcinoma,yes,c20,Mar-40,no,no,31,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,4.21,r0,no,ag,rectum,no,NA
+alive,NA,1126,80,rectum,NA,-29463,complete remission/response,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,14,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,ag,rectum,no,NA
+alive,NA,276,55,rectum,NA,-20178,progressive disease,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,19,yes,mss,4,no,m1,n2,stage iv,t3,with tumor,yes,NA,r2,no,ag,rectum,no,NA
+alive,NA,31,59,rectum,NA,-21581,NA,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,23,no,mss,0,no,m0,n0,stage iia,t3,with tumor,NA,NA,r0,no,ag,rectum,no,NA
+alive,NA,0,58,rectum,NA,-21369,NA,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,47,yes,mss,2,no,m0,n1,stage iiib,t3,with tumor,NA,NA,r0,no,ag,rectum,no,NA
+alive,NA,0,67,rectum,NA,-24745,NA,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,20,yes,mss,0,no,m0,n0,stage ii,t3,with tumor,NA,2.07,r0,no,ag,rectum,yes,NA
+alive,NA,0,49,rectum,NA,-18112,NA,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,17,yes,mss,0,no,m0,n0,stage ii,t3,with tumor,NA,5.85,r0,no,ag,rectum,NA,NA
+alive,NA,31,57,rectum,NA,-20851,NA,female,NA,rectal mucinous adenocarcinoma,no,c20,Mar-80,no,no,12,yes,mss,1,no,m0,n1,stage iii,t3,with tumor,NA,1.43,r0,no,ag,rectum,NA,NA
+alive,NA,1520,62,rectum,NA,-22952,NA,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,11,NA,mss,0,no,m0,n0,stage i,t1,with tumor,NA,0.75,r0,no,ag,rectum,NA,NA
+dead,59,NA,66,rectum,NA,-24413,NA,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,15,yes,mss,0,no,m0,n0,stage ii,t4,with tumor,NA,9.65,r1,no,ag,rectum,yes,NA
+dead,1185,NA,66,rectum,NA,-24259,partial remission/response,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,16,yes,mss,3,no,m1,n1,stage iv,t2,with tumor,yes,2.32,r2,no,ag,rectum,yes,NA
+alive,NA,1885,67,rectum,NA,-24687,NA,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,12,yes,msi-h,0,no,m0,n0,stage ii,t3,with tumor,NA,2.07,r0,no,ag,rectum,NA,NA
+alive,NA,1247,77,rectum,NA,-28399,NA,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,15,yes,mss,0,no,m0,n0,stage i,t2,with tumor,NA,8.14,r0,no,ag,rectum,yes,NA
+alive,NA,1157,68,rectum,NA,-24865,partial remission/response,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,16,yes,mss,2,no,m0,n1,stage iiib,t3,with tumor,yes,7.77,r0,no,ag,rectum,yes,NA
+alive,NA,3562,71,rectum,NA,-26206,complete remission/response,male,NA,rectal adenocarcinoma,no,c20,Mar-40,no,no,30,NA,mss,18,no,m0,n2,stage iii,t3,tumor free,yes,2.2,r0,no,ag,rectum,NA,NA
+alive,NA,1173,60,rectosigmoid junction,NA,-21977,stable disease,male,177.8,rectal adenocarcinoma,yes,c19,Mar-40,yes,no,20,NA,mss,3,no,m1,n1,NA,t3,with tumor,yes,2497.4,NA,no,ah,rectum,NA,91
+dead,76,NA,79,rectosigmoid junction,yes,-29030,complete remission/response,female,NA,rectal adenocarcinoma,yes,c19,Mar-40,no,no,21,no,mss,0,no,mx,n0,NA,t3,tumor free,no,NA,NA,no,ah,rectum,no,NA
+alive,NA,532,66,rectum,yes,-24337,complete remission/response,male,NA,rectal adenocarcinoma,yes,c20,Mar-40,NA,NA,NA,NA,msi-l,NA,no,mx,nx,NA,t3,tumor free,no,1.8,rx,no,ah,rectum,NA,NA
+dead,1314,NA,50,rectosigmoid junction,no,-18273,progressive disease,male,180.5,rectal adenocarcinoma,no,c19,Mar-40,no,no,15,no,mss,8,no,m0,n2b,stage iiic,t3,with tumor,yes,NA,r0,no,ah,rectum,no,84.4
+alive,NA,838,73,rectosigmoid junction,no,-26892,complete remission/response,male,NA,rectal adenocarcinoma,yes,c19,Mar-40,NA,NA,15,no,msi-l,0,no,mx,nx,NA,t3,tumor free,no,NA,NA,no,ah,rectum,no,NA
+alive,NA,804,48,rectosigmoid junction,no,-17536,complete remission/response,male,180.5,rectal adenocarcinoma,no,c19,Mar-40,NA,no,14,no,msi-l,0,no,m0,n0,stage i,t2,tumor free,no,1.23,r0,no,ah,rectum,no,86.4
+alive,NA,592,46,rectosigmoid junction,no,-17030,complete remission/response,male,183,rectal mucinous adenocarcinoma,no,c19,Mar-80,no,no,18,no,mss,3,no,m0,n1b,stage iiib,t3,tumor free,yes,3.51,r0,yes,ah,rectum,no,74.8
+alive,NA,184,41,rectum,NA,-15322,NA,male,NA,rectal adenocarcinoma,NA,c20,Mar-40,NA,NA,NA,NA,mss,NA,no,m1,n1c,stage iv,t3,NA,NA,52.7,NA,no,ci,rectum,NA,NA
+alive,NA,1009,41,rectum,NA,-15322,progressive disease,female,NA,rectal adenocarcinoma,NA,c20,Mar-40,NA,NA,NA,NA,mss,NA,no,m1,n1,stage iva,t3,with tumor,yes,NA,NA,no,ci,rectum,NA,NA
+alive,NA,419,63,rectum,NA,-23240,NA,male,NA,rectal adenocarcinoma,NA,c20,Mar-40,NA,NA,2,NA,mss,0,no,mx,n1,stage iiib,t3,NA,yes,NA,NA,no,ci,rectum,NA,NA
+alive,NA,1362,74,rectum,NA,-27336,NA,male,NA,rectal adenocarcinoma,NA,c20,Mar-40,NA,NA,24,yes,mss,0,no,m0,n0,stage iib,t4,tumor free,yes,NA,NA,no,ci,rectum,yes,NA
+alive,NA,1443,44,rectum,NA,-16177,NA,male,NA,rectal adenocarcinoma,NA,c20,Mar-40,NA,NA,NA,no,mss,NA,no,m0,n0,stage i,t1,tumor free,NA,5.9,NA,no,ci,rectum,no,NA
+alive,NA,1466,53,rectosigmoid junction,NA,-19419,NA,female,NA,rectal adenocarcinoma,NA,c20,Mar-40,NA,NA,NA,no,mss,NA,no,m0,n0,stage i,t2,NA,NA,7,NA,no,ci,rectum,no,NA
+dead,NA,NA,79,NA,NA,-29081,NA,female,NA,rectal adenocarcinoma,NA,c20,Mar-40,NA,NA,14,NA,mss,2,no,m0,n1,NA,t3,NA,yes,NA,NA,NA,cl,rectum,NA,NA
+alive,NA,2376,71,rectosigmoid junction,yes,-26084,complete remission/response,female,NA,rectal adenocarcinoma,yes,c19,Mar-40,no,NA,NA,yes,mss,NA,no,mx,n2,stage iiic,t3,tumor free,no,0.6,rx,NA,cl,rectum,yes,NA
+alive,NA,218,90,rectosigmoid junction,no,-32873,complete remission/response,female,NA,rectal adenocarcinoma,no,c20,Mar-40,no,NA,NA,no,mss,NA,no,mx,n0,stage iia,t3,tumor free,no,2.2,rx,NA,cl,rectum,no,NA
+alive,NA,639,49,rectosigmoid junction,no,-17958,complete remission/response,female,165,rectal adenocarcinoma,yes,c19,Mar-40,no,yes,22,no,mss,1,no,m0,n1a,stage iiib,t3,tumor free,yes,1.6,r0,no,dc,rectum,no,93.8
+alive,NA,762,57,rectosigmoid junction,no,-21092,complete remission/response,male,179,rectal adenocarcinoma,no,c19,Mar-40,no,no,16,yes,mss,0,no,m0,n0,stage i,t2,tumor free,no,1.3,r0,no,dc,rectum,yes,87.1
+alive,NA,792,69,rectosigmoid junction,no,-25202,NA,male,165,rectal adenocarcinoma,no,c19,Mar-40,no,no,18,no,mss,0,no,m0,n0,stage i,t1,tumor free,no,2,r0,yes,dc,rectum,no,69.4
+alive,NA,943,62,rectum,no,-22676,NA,female,170,rectal adenocarcinoma,no,c20,Mar-40,no,no,19,no,mss,1,no,m0,n1a,stage iiib,t3,tumor free,no,3.6,r0,yes,dc,rectum,no,62.4
+alive,NA,365,57,rectosigmoid junction,no,-21093,NA,female,162,rectal adenocarcinoma,no,c19,Mar-40,no,no,39,yes,msi-h,8,no,m1,n2b,stage iva,t4a,tumor free,yes,16.3,r0,yes,dc,rectum,yes,59.4
+alive,NA,425,31,rectosigmoid junction,no,-11381,NA,female,163,rectal adenocarcinoma,no,c19,Mar-40,no,yes,31,no,mss,3,no,m0,n1b,stage iiia,t2,tumor free,yes,1.3,r0,yes,dc,rectum,yes,55.3
+alive,NA,943,62,rectosigmoid junction,no,-22706,progressive disease,male,175,rectal adenocarcinoma,no,c19,Mar-40,yes,no,22,yes,mss,7,no,m1a,n2b,stage iva,t4a,with tumor,yes,129.7,r0,yes,dc,rectum,yes,86.1
+alive,NA,1581,48,rectosigmoid junction,no,-17807,NA,male,185,rectal adenocarcinoma,no,c19,Mar-40,no,no,21,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,2.2,r0,no,dc,rectum,no,116
+dead,334,NA,70,rectum,no,-25842,NA,male,160,rectal adenocarcinoma,no,c20,Mar-40,no,no,1,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,1.7,r0,yes,dc,rectum,yes,71.7
+alive,NA,1339,68,rectosigmoid junction,yes,-24990,NA,male,175.4,rectal adenocarcinoma,no,c19,Mar-40,no,no,8,no,mss,0,no,m0,n0,stage i,t2,tumor free,no,5.2,r0,no,dc,rectum,yes,100.1
+alive,NA,790,70,rectosigmoid junction,no,-25659,NA,female,151,rectal adenocarcinoma,no,c19,Mar-40,yes,no,24,yes,mss,7,no,m1a,n2a,stage iva,t3,tumor free,yes,7.9,r0,yes,dc,rectum,yes,63.1
+alive,NA,762,57,rectosigmoid junction,no,-21062,NA,male,184,rectal adenocarcinoma,no,c19,Mar-40,no,no,24,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,13.8,r0,yes,dc,rectum,no,172.4
+alive,NA,762,43,rectosigmoid junction,no,-15918,NA,male,183,rectal adenocarcinoma,no,c19,Mar-40,no,yes,27,no,mss,3,no,m0,n1b,stage iiib,t3,tumor free,yes,11.1,r0,yes,dc,rectum,yes,82.6
+alive,NA,384,51,rectum,NA,-18669,complete remission/response,male,NA,rectal mucinous adenocarcinoma,NA,c20,Mar-80,NA,NA,NA,NA,mss,NA,no,m0,n0,stage ii,t3,tumor free,no,NA,rx,yes,dt,rectum,NA,NA
+alive,NA,3846,57,rectosigmoid junction,NA,-21115,NA,female,159,rectal adenocarcinoma,no,c19,Mar-40,yes,NA,14,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dy,rectum,no,64
+dead,1258,NA,72,rectosigmoid junction,NA,-26436,NA,female,NA,rectal adenocarcinoma,NA,c19,Mar-40,yes,NA,16,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dy,rectum,no,68
+dead,1741,NA,77,rectosigmoid junction,NA,-28159,NA,female,156,rectal adenocarcinoma,NA,c19,Mar-40,yes,NA,16,NA,msi-l,1,no,m0,n1,stage iiib,t3,NA,NA,NA,NA,no,dy,rectum,NA,42
+alive,NA,3932,56,rectum,NA,-20504,NA,female,160,rectal adenocarcinoma,no,c20,Mar-40,yes,NA,14,no,mss,0,no,m0,n0,stage iia,t3,NA,NA,NA,NA,no,dy,rectum,no,70
+dead,734,NA,73,rectosigmoid junction,NA,-26763,NA,female,156,rectal adenocarcinoma,NA,c19,Mar-40,yes,NA,15,NA,msi-l,5,no,m0,n2,stage iiic,t3,NA,NA,NA,NA,no,dy,rectum,NA,75
+dead,1566,NA,75,rectum,yes,-27396,NA,male,175,rectal adenocarcinoma,no,c20,Mar-40,yes,NA,8,NA,mss,2,no,m1,n1,stage iva,t3,NA,NA,NA,NA,no,dy,rectum,NA,86
+dead,992,NA,77,rectum,NA,-28459,NA,female,160,rectal adenocarcinoma,NA,c20,Mar-40,yes,NA,7,NA,mss,1,no,m0,n1,stage iiia,t2,NA,NA,NA,NA,no,dy,rectum,NA,40
+alive,NA,106,54,rectum,no,-19802,NA,male,182,rectal adenocarcinoma,no,c20,Mar-40,no,no,NA,no,mss,NA,no,m0,n0,stage iib,t4a,tumor free,no,NA,r0,no,ef,rectum,no,93
+alive,NA,127,72,rectum,NA,-26331,NA,male,162,rectal adenocarcinoma,NA,c20,Mar-40,no,NA,NA,NA,mss,NA,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,no,ef,rectum,NA,60
+alive,NA,625,78,rectosigmoid junction,no,-28587,NA,female,162,rectal adenocarcinoma,no,c20,11-Mar,no,NA,19,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,2.8,r0,yes,ei,rectum,no,65
+alive,NA,607,60,rectum,no,-22176,NA,male,176,rectal adenocarcinoma,no,c20,Mar-80,no,no,25,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,10.7,r0,yes,ei,rectum,no,54
+alive,NA,636,48,rectosigmoid junction,no,-17827,NA,female,159,rectal adenocarcinoma,NA,c20,Mar-63,no,NA,15,yes,mss,1,no,m0,n1a,stage iiib,t3,tumor free,yes,0.6,r0,yes,ei,rectum,no,66
+alive,NA,517,53,rectosigmoid junction,no,-19666,NA,male,178,rectal adenocarcinoma,no,c20,Mar-63,no,no,10,yes,mss,7,no,m0,n2b,stage iiic,t3,with tumor,yes,2.8,r0,yes,ei,rectum,no,82
+alive,NA,556,77,rectosigmoid junction,no,-28328,NA,female,150,rectal adenocarcinoma,NA,c20,Mar-63,no,NA,3,no,msi-l,0,no,mx,n0,NA,t2,tumor free,no,11.2,r0,yes,ei,rectum,no,59
+alive,NA,482,52,rectum,yes,-19237,NA,male,165,rectal adenocarcinoma,no,c20,Mar-63,no,NA,18,yes,mss,4,no,m0,n1,stage iiib,t3,tumor free,yes,14.9,r0,yes,ei,rectum,no,69
+alive,NA,538,64,rectosigmoid junction,no,-23537,NA,female,170,rectal adenocarcinoma,no,c20,Mar-63,no,no,17,no,mss,1,no,m0,n1,stage iiib,t3,tumor free,yes,1,r0,yes,ei,rectum,no,61
+alive,NA,497,59,rectosigmoid junction,yes,-21776,NA,male,175,rectal adenocarcinoma,no,c20,Mar-63,no,no,13,no,mss,2,no,m0,n1,stage iiib,t3,tumor free,no,1,r0,yes,ei,rectum,no,78
+alive,NA,496,59,sigmoid colon,no,-21618,NA,female,NA,rectal adenocarcinoma,no,c20,Mar-63,no,no,8,no,mss,0,no,m0,n0,stage iia,t3,tumor free,yes,5.5,r0,yes,ei,rectum,no,NA
+alive,NA,499,60,rectosigmoid junction,no,-22057,NA,male,176,rectal adenocarcinoma,no,c20,Mar-63,no,no,18,no,mss,1,no,m0,n1,stage iiia,t3,tumor free,yes,60.3,r0,yes,ei,rectum,no,86
+alive,NA,262,59,rectosigmoid junction,no,-21682,NA,male,178,rectal mucinous adenocarcinoma,no,c20,Mar-55,no,no,21,no,msi-h,0,no,m0,n0,stage iia,t3,tumor free,no,1.3,r0,yes,ei,rectum,no,108
+alive,NA,350,63,rectosigmoid junction,no,-23268,NA,male,180,rectal adenocarcinoma,no,c20,11-Mar,no,no,16,no,mss,0,no,m0,n0,stage iic,t3,tumor free,yes,1.6,r0,yes,ei,rectum,no,73
+alive,NA,328,71,rectosigmoid junction,no,-25995,NA,male,166,rectal adenocarcinoma,no,c20,11-Mar,no,no,8,no,mss,3,no,m0,n1,stage iiia,t3,tumor free,yes,10.7,r0,yes,ei,rectum,no,73
+alive,NA,415,57,rectosigmoid junction,no,-21140,NA,female,164,rectal adenocarcinoma,no,c20,11-Mar,no,no,13,yes,mss,2,no,m1,n1b,stage iv,t3,with tumor,yes,7868,r0,yes,ei,rectum,no,53
+alive,NA,531,33,rectum,no,-12113,NA,male,176,rectal adenocarcinoma,no,c20,Mar-55,no,no,14,no,mss,3,no,m0,n1,stage iiia,t3,tumor free,yes,2.1,r0,yes,ei,rectum,no,80
+alive,NA,364,58,rectum,no,-21192,NA,male,185,rectal adenocarcinoma,no,c20,11-Mar,no,no,13,yes,msi-l,7,no,m1,n2,stage iv,t3,tumor free,yes,140,r0,yes,ei,rectum,no,93
+alive,NA,257,37,rectosigmoid junction,no,-13566,NA,female,172,rectal mucinous adenocarcinoma,no,c19,Mar-80,no,no,30,yes,mss,30,no,m0,n2b,NA,t4a,tumor free,yes,3.2,r0,yes,ei,rectum,no,88
+dead,303,NA,77,rectum,no,-28168,NA,female,159,rectal adenocarcinoma,no,c19,Mar-40,no,no,4,no,mss,4,no,m0,n2a,stage iiic,t4b,NA,no,NA,r0,yes,f5,rectum,no,68
+alive,NA,1506,64,rectosigmoid junction,no,-23432,complete remission/response,female,170,rectal adenocarcinoma,NA,c19,Mar-40,NA,NA,12,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,yes,f5,rectum,no,62
+alive,NA,1288,62,rectum,no,-22666,stable disease,female,166,rectal adenocarcinoma,no,c20,Mar-40,no,no,2,no,msi-l,0,no,m0,n0,stage iia,t3,with tumor,no,NA,r0,yes,f5,rectum,no,80
+dead,869,NA,71,rectosigmoid junction,no,-26123,progressive disease,male,172,rectal adenocarcinoma,NA,c19,Mar-40,NA,NA,12,no,mss,1,no,m1,n1,stage iva,t3,with tumor,no,NA,r0,yes,f5,rectum,no,76
+alive,NA,12,71,NA,no,-25987,NA,male,165,rectal adenocarcinoma,no,c20,Mar-40,no,NA,3,no,mss,0,NA,NA,NA,NA,NA,NA,NA,NA,r0,NA,f5,rectum,no,55
+alive,NA,979,72,rectosigmoid junction,NA,-26575,complete remission/response,female,165,rectal adenocarcinoma,no,c19,Mar-40,NA,NA,8,no,msi-l,0,no,m0,n0,stage iia,t3,tumor free,no,NA,NA,yes,f5,rectum,no,88
+alive,NA,1110,67,rectum,no,-24490,complete remission/response,male,188,rectal adenocarcinoma,no,c49.4,Mar-40,no,no,1,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,yes,f5,rectum,no,90
+dead,598,NA,70,rectum,no,-25651,NA,male,174,rectal adenocarcinoma,no,c49.4,Mar-40,no,no,12,no,mss,12,no,m0,n2,stage iiic,t4a,with tumor,no,NA,r0,yes,f5,rectum,no,85
+alive,NA,1131,57,rectum,no,-20828,complete remission/response,male,175,rectal adenocarcinoma,no,c20,Mar-40,no,NA,18,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,yes,f5,rectum,no,61
+alive,NA,1160,60,rectum,no,-21936,complete remission/response,female,162,rectal adenocarcinoma,no,c20,Mar-40,no,no,8,no,mss,0,no,m0,n0,stage iia,t3,tumor free,no,NA,r0,yes,f5,rectum,no,64
+dead,361,NA,71,rectum,no,-25936,progressive disease,female,166,rectal adenocarcinoma,no,c20,Mar-40,no,no,6,no,msi-l,3,no,m0,n1,stage iiib,t4a,with tumor,no,NA,r0,yes,f5,rectum,no,77
+alive,NA,379,74,rectum,NA,-27058,complete remission/response,female,157,rectal adenocarcinoma,NA,c20,Mar-40,no,NA,4,no,msi-l,4,no,m0,n2a,stage iiib,t3,tumor free,yes,NA,r0,yes,f5,rectum,no,78
+dead,1432,NA,56,rectosigmoid junction,no,-20475,NA,male,185.4,rectal adenocarcinoma,no,c19,Mar-40,no,no,22,no,mss,0,no,NA,NA,NA,NA,tumor free,no,1.7,NA,no,g5,rectum,no,140

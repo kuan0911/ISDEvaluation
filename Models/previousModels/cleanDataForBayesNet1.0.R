@@ -109,10 +109,10 @@ createTimeSplit <- function(data, timesplit,assumption = F,includeNa = F) {
     tempData$TIMEPOINT <- factor(timepoint)
     tempData$PREVTIMEPOINT <- previousTimepoint
     previousTimepoint = tempData$TIMEPOINT
-    tempData$TIMEPOINT[tempData$PREVTIMEPOINT == 0 & tempData$TIMEPOINT == 1 & tempData$delta == 0] = NA
+    #tempData$TIMEPOINT[tempData$PREVTIMEPOINT == 0 & tempData$delta == 0] = 0
     #CENSORED == 'false' or tempData$TIMEPOINT == not dead
     if(assumption == F & includeNa == F) {
-      tempData <- tempData[tempData$delta == 1| is.na(tempData$TIMEPOINT) | tempData$TIMEPOINT == 0,]
+      tempData <- tempData[tempData$delta == 1 | tempData$TIMEPOINT == 0,]
     }
     # newTempData = tempData
     # 
@@ -142,7 +142,7 @@ createTimeSplit <- function(data, timesplit,assumption = F,includeNa = F) {
     # tempData = newTempData
     
     tempData$time <- NULL
-    #tempData$delta <- NULL
+    tempData$delta <- NULL
     #make sure TIMEPOINT has two levels
     levels(tempData$TIMEPOINT) = c('0','1')
     levels(tempData$PREVTIMEPOINT) = c('0','1')

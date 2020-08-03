@@ -2,7 +2,7 @@
 #Cumulative model with seperate network at each timepoint
 #add number of timepoint
 #structure em
-#connected to BayesianNet Upper
+#independent t_i
 #
 #------------------------------------------------------------
 
@@ -12,20 +12,15 @@ library(gtools)
 library(e1071)
 source("Models/cleanDataForBayesNet.R")
 
-BayesianNet = function(training, testing, BayesianC1 = 1, timesplit = 0,debug = FALSE){
+BayesianNet = function(training, testing){
   originalTraining = training
   originalTesting = testing
   
+  numTimepoint = 10
   queryMethod = 'predict'
-  prior = T
+  prior = F
   
-  if(timesplit == 0) {
-    #numTimepoint = floor(sqrt(nrow(training)))
-    numTimepoint = 10
-    timesplit = timeSplitFunction(numTimepoint = numTimepoint, method = 'quantile', data = training, debug=T)
-  }
-  print(timesplit)
-  
+  timesplit = timeSplitFunction(numTimepoint = numTimepoint, method = 'quantile', data = training, debug=T)
   numTimepoint = length(timesplit)
   
   allData = rbind(testing,training)
@@ -34,20 +29,7 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timesplit = 0,debug = 
   testing = cleaned$test
   training = cleaned$train
   noCensorTraining = training[training$delta == 1,]
-  imputeTraining = training
-  maxTime = max(imputeTraining$time)
-  for(i in 1:nrow(training)) {
-    if(imputeTraining[i,]$delta == 0) {
-      imputeTime = runif(1, imputeTraining[i,]$time, maxTime)
-      imputeTraining[i,]$time = imputeTime
-      imputeTraining[i,]$delta = 1
-    }
-  }
-  dataList = createTimeSplit(training,timesplit,assumption = F,includeNa = F)
-  #dataListNA = createTimeSplit(training,timesplit,includeNa = T)
-  print(length(dataList))
-  
-  numTimepoint = length(dataList)
+  dataList = createTimeSplit(training,timesplit,includeNa = F)
   
   #learning structure and parameter
   fitList <- vector("list", numTimepoint)
@@ -56,76 +38,73 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timesplit = 0,debug = 
   childrenList <- vector("list", numTimepoint)
   print('learn starting graph')
   data = training
-  discretize_level = 8
+  discretize_level = 10
   breaks = seq(0,100,100/discretize_level)
   breakList = c(-Inf, unique(quantile(data$time, probs = breaks[2:discretize_level]/100)), Inf)
   data$time = cut(data$time,breaks = breakList,labels = 1:(length(breakList)-1))
   data$delta = NULL
   data$TIMEPOINT = data$time
-  data$PREVTIMEPOINT = data$time
+  #data$PREVTIMEPOINT = data$time
   data$time = NULL
-  blackliststart = blacklistFunctionStart(colnames(dataList[[1]]))
   start = hc(data,score='bic')
-  
   
   #plotDag(start)
   
   blackList = blacklistFunction(colnames(dataList[[1]]))
   
-  #dataList[[floor(numTimepoint/2)]]$PREVTIMEPOINT = NULL
-  data = dataList[[floor(numTimepoint/2)]]
-  data$PREVTIMEPOINT = NULL
-  start = structural.em(data, maximize = "hc",maximize.args = list(blacklist=NULL,whitelist=NULL), fit = "mle",impute='bayes-lw',return.all = T,start = NULL, max.iter = 10, debug = FALSE)
-  start = start$dag
-  #plotDag(start)
-
-  allmb = c()
   #whiteList = c('PREVTIMEPOINT','TIMEPOINT')
   for(i in 1:numTimepoint) {
-    if(isTRUE(debug)){cat(i)
-      cat(' ')}
+    print(i)
     
     data = dataList[[i]]
-    rcount = nrow(data[data$PREVTIMEPOINT == 0,])
-    #rcount = nrow(data)
-    data = data[data$PREVTIMEPOINT == 0,]
-    data$PREVTIMEPOINT = NULL
-    
-    # if(i>1 & i<numTimepoint) {
-    #   structureData = rbind(dataList[[i-1]],dataList[[i]])
-    #   structureData = rbind(structureData,dataList[[i+1]])
-    # }else if(i==1) {
-    #   structureData = rbind(dataList[[i]],dataList[[i+1]])
-    # }else if(i==numTimepoint) {
-    #   structureData = rbind(dataList[[i-1]],dataList[[i]])
+    # if(i<numTimepoint) {
+    #   data$NEXT = dataList[[i+1]]$TIMEPOINT
     # }
-    structureData = dataList[[i]]
-    structureData$PREVTIMEPOINT = NULL
-    #structureData = rbind(structureData,data)
-    #structureData = data
     
-
-    #dag = hc(structureData,restart=50,blacklist=NULL,whitelist = NULL,start=NULL,score='bic')
+    #data = data[data$PREVTIMEPOINT == 0,]
+    # if(i>2 & i < numTimepoint-1){
+    #   datap = dataList[[i-1]]
+    #   datap = datap[datap$PREVTIMEPOINT == 0,]
+    #   datan = dataList[[i+1]]
+    #   datan = datan[datan$PREVTIMEPOINT == 0,]
+    #   data = rbind(datap,dataList[[i]])
+    #   data = rbind(data,datan)
+    # }else if(i==1){
+    #   datan = dataList[[i+1]]
+    #   datan = datan[datan$PREVTIMEPOINT == 0,]
+    #   data = rbind(dataList[[i]],datan)
+    # }else if(i==numTimepoint){
+    #   datap = dataList[[i-1]]
+    #   datap = datap[datap$PREVTIMEPOINT == 0,]
+    #   data = rbind(datap,dataList[[i]])
+    # }
+    #data = data[data[,'PREVTIMEPOINT']==0,]
+    #data$PREVTIMEPOINT = NULL
+    #numMissing = nrow(data)/numTimepoint - nrow(data[data$TIMEPOINT==1,])
+    #print(numMissing)
+    #print(nrow(data[data$TIMEPOINT==0,])/(nrow(data[data$TIMEPOINT==1,])+nrow(data[data$TIMEPOINT==0,])))
+    #censoredData = training[originalTraining$delta == 0 && originalTraining$time<timesplit[i]]
+    #topname = independent_test(data)
+    #topname = c(topname,'PREVTIMEPOINT')
+    #whiteList = matrix(ncol = 2, nrow = length(topname))
+    #for(j in 1:length(topname)) {
+    #  whiteList[j,] = c(topname[j],"TIMEPOINT")
+    #}
+    dag = hc(data,start=NULL,score='bic')
     #dag = cextend(dag, strict = TRUE, debug = FALSE)
     
-    #dag = structural.em(dataListNA[[i]], maximize = "hc",maximize.args = list(restart=100,blacklist=blackList,whitelist=c('PREVTIMEPOINT','TIMEPOINT')), fit = "mle",impute='bayes-lw',return.all = T,start = start, max.iter = 1000, debug = FALSE)
+    #dag = structural.em(data, maximize = "hc",maximize.args = list(restart = 5,blacklist=NULL), fit = "mle",impute='bayes-lw',return.all = T,start = NULL, max.iter = 5, debug = FALSE)
     #dag = dag$dag
-    #dag = cextend(dag, strict = TRUE, debug = FALSE)
-    #dag = start
-    #dagList[[i]] = dag 
+    dag = cextend(dag, strict = TRUE, debug = FALSE)
+    dagList[[i]] = dag 
     #start = dag
-    fit = bn.fit(start, data,method='bayes',iss=50)
-    #fit = bn.fit(dag, data, method='bayes')
+    fit = bn.fit(dag, data, method='mle')
     fitList[[i]] <- fit
-    #data = dataListNA[[i]]
-    nbdata=data
-    #nbdata$PREVTIMEPOINT = NULL
-    nb_model = naiveBayes(as.factor(TIMEPOINT) ~., nbdata, laplace = 10)
+    nb_model = naiveBayes(as.factor(TIMEPOINT) ~., data=data)
     nbList[[i]] <- nb_model
     childrenList[[i]] <- children(fitList[[i]],'TIMEPOINT')
-    #print(mb(fitList[[i]],'TIMEPOINT'))
-    allmb = unique(c(allmb,mb(fitList[[i]],'TIMEPOINT')))
-    #plotDag(dag)
+    #print(parents(fitList[[i]],'TIMEPOINT'))
+    plotDag(dag)
   }
   
   # for(i in 1:length(dataList)) {
@@ -144,10 +123,8 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timesplit = 0,debug = 
   #   fit = bn.fit(dag, data, method='mle')
   #   fitList[[i]] <- fit
   # }
-
   
   if(prior) {
-    
     print('Impose prior to TIMEPOINT')
     for(i in 1:length(dataList)) {
       data = dataList[[i]]
@@ -166,13 +143,12 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timesplit = 0,debug = 
         timepoint2 = eval(parse(text=codeStringTotal2))
         numData = nrow(data)
         weight = 5
-        nalive = nrow(data[data$TIMEPOINT==0,])
-        nalive = 1-(1/(numTimepoint-i+1))
         for(j in 1:length(timepoint1)) {
-          timepoint1[j] = rbeta(1,(numTimepoint-1)*weight*15+timepoint1[j]*5,1*weight*15+timepoint2[j]*5)
-          timepoint1[j] = nalive
-          #timepoint1[j] = rbeta(1,floor(nalive*5000)+timepoint1[j]*5,floor((1-nalive)*5000)+timepoint2[j]*5)
-          #timepoint1[j] = nrow(data[data$TIMEPOINT])
+          timepoint1[j] = rbeta(1,(numTimepoint-1)*weight*5+timepoint1[j]*5,1*weight*5+timepoint2[j]*5)
+          #while(timepoint1[j]<0.5){
+          #print(timepoint1[j])
+          #  timepoint1[j] = rbeta(1,9+timepoint1[j]*5,1+timepoint2[j]*5)
+          #}
         }
         
         codeString1 = paste0('newcpt[',commaString[1],']=','timepoint1',collapse = '')
@@ -190,8 +166,8 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timesplit = 0,debug = 
   #plotDag(dagList[[1]])
   print('start predict')
   #prediction
-  survivalFunctionTesting = predictFunction(fitList,nbList,childrenList,testing,timesplit,method = queryMethod,dataList)
-  survivalFunctionTraining = predictFunction(fitList,nbList,childrenList,training,timesplit,method = queryMethod,dataList)
+  survivalFunctionTesting = predictFunction(fitList,nbList,childrenList,testing,timesplit,method = queryMethod)
+  survivalFunctionTraining = predictFunction(fitList,nbList,childrenList,training,timesplit,method = queryMethod)
   
   testCurvesToReturn = survivalFunctionTesting
   timesAndCensTest = cbind.data.frame(time = originalTesting$time, delta = originalTesting$delta)
@@ -201,14 +177,15 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timesplit = 0,debug = 
   return(list(TestCurves = testCurvesToReturn, TestData = timesAndCensTest,TrainData = timesAndCensTrain,TrainCurves= trainingCurvesToReturn))  
 }
 
-predictFunction <- function(fitList,nbList,childrenList,testing,timesplit,method,dataList) {
+predictFunction <- function(fitList,nbList,childrenList,testing,timesplit,method) {
   testing$time = NULL
   testing$delta = NULL
-  #testing$PREVTIMEPOINT = factor(integer(nrow(testing)),levels = c('0','1'))
+  testing$PREVTIMEPOINT = factor(integer(nrow(testing)),levels = c('0','1'))
   numTimepoint = length(timesplit)
   numReturnNA = 0
+  numTooLow = 0
   numNotDecreasing = 0
-  threshold = 0.000001
+  threshold = 0.05
   
   #first value in cpt
   previousTimepointProb = rep(1,nrow(testing))
@@ -222,64 +199,39 @@ predictFunction <- function(fitList,nbList,childrenList,testing,timesplit,method
   for(i in 1:numTimepoint) {
     tempFit = fitList[[i]]
     tempNb = nbList[[i]]
-    cat(i)
-    cat(' ')
-    
-    data = dataList[[i]]
-    data = data[data$PREVTIMEPOINT == 0,]    
-    alive = nrow(data[data$TIMEPOINT==0,])
-    dead = nrow(data[data$TIMEPOINT==1&data$delta==1,])
-    cencered = nrow(data[is.na(data$TIMEPOINT),])
-    total = alive + dead + 0.5*cencered
-    
+    print(i)
     for(j in 1:nrow(testing)) {
       
       if(method == 'lw') {
         eviList = as.list(testing[j,])
         prob = cpquery(tempFit, event = (TIMEPOINT == 0), evidence = as.list(testing[j,]),method = 'lw')
-      }else if(method == 'ls') {
-        evi = generateEvidenceString(colnames(testing),testing[j,])
-        evi <<- evi
-        prob = cpquery(tempFit, event = (TIMEPOINT == 0), evidence = eval(parse(text=evi)),n = 10000,method = 'ls')
-        #print(evi)
-        #prob = cpquery(tempFit, event = (TIMEPOINT == 0), evidence = (BOX1_SCORE==-0.847670404481496)&(BOX2_SCORE==0.0849319942719063)&(BOX3_SCORE==4)&(PERFORMANCE_STATUS==-0.221318340332475)&(BMI==7)&(NO_PROBLEM==1.08932317940723)&(SITE_BRUNCHUS_LUNG==1.62055863299408),n = 1000,method = 'ls')
-        
       }else if(method == 'predict') {
         evidence = testing[j,]
-        #predicted = predict(tempFit, node="TIMEPOINT", evidence,method = "parents", prob = TRUE, n=500)
+        predicted = predict(tempFit, node="TIMEPOINT", evidence,method = "bayes-lw", prob = TRUE, n=5000)
         #attr(predicted, "prob")
-        #prob = attr(predicted, "prob")[1]
-        prob = 0.5
+        prob = attr(predicted, "prob")[1]
       }else if(method == 'naivebayes') {
         evidence = testing[j,]
-        predicted = predict(tempFit, node="TIMEPOINT", evidence,method = "parents", prob = TRUE)
+        predicted = predict(tempFit, node="TIMEPOINT", evidence,method = "parents", prob = TRUE, n=1000)
         ap = attr(predicted, "prob")
-
-        p0 = 1
-        p1 = 1
+        
+        p0 = 0
+        p1 = 0
         variables = childrenList[[i]]
         for(v in variables) {
           e = as.integer(evidence[[v]])
           t = tempNb$tables[v]
-          t = tempFit[[v]][['prob']]
-          temp_evidence = evidence
-          temp_evidence[[v]] = NULL
-          temp_evidence$TIMEPOINT = factor(0,levels = c('0','1'))
-          t1 = predict(tempFit, node=v, temp_evidence,method = "parents", prob = TRUE)
-          t1 = attr(t1, "prob")
-          temp_evidence$TIMEPOINT = factor(1,levels = c('0','1'))
-          t2 = predict(tempFit, node=v, temp_evidence,method = "parents", prob = TRUE)
-          t2 = attr(t2, "prob")
           
-          if(t1[e]>threshold) {rawp0=t1[e]} else {rawp0=threshold}
-          if(t2[e]>threshold) {rawp1=t2[e]} else {rawp1=threshold}
-          p0 = p0 * rawp0
-          p1 = p1 * rawp1
+          if(t[[v]][1,e]>threshold) {rawp0=t[[v]][1,e]} else {rawp0=threshold}
+          if(t[[v]][2,e]>threshold) {rawp1=t[[v]][2,e]} else {rawp1=threshold}
+          p0 = p0 + log(rawp0)
+          p1 = p1 + log(rawp1)
         }
-        #print(t)
-        p0 = p0 * ap[1]
-        p1 = p1 * ap[2]
-        p0_Prob = p0/(p0+p1)
+        
+        
+        p0 = p0 + log(ap[1])
+        p1 = p1 + log(ap[2])
+        p0_Prob = exp(p0)/(exp(p0)+exp(p1))
         
         prob = p0_Prob
       }else{
@@ -290,42 +242,36 @@ predictFunction <- function(fitList,nbList,childrenList,testing,timesplit,method
       previousProb3[j] = previousProb2[j]
       previousProb2[j] = previousProb[j]
       previousProb[j] = prob
-      #prob = (previousProb3[j]+previousProb2[j]*2+previousProb[j]*3)/3
+      #prob = (previousProb3[j]+previousProb2[j]*2+previousProb[j]*3)/6
       #prob = previousProb[j]
-      
-      #prob  = 1-(1/(numTimepoint-i+2))
-      
-      #prob = (numTimepoint-1)/numTimepoint
-      
-      prob = 1 - (dead/total)
       
       survivalFunction[i,j] = prob*previousTimepointProb[j]
       #survivalFunction[i,j] = prob
-      
       
       if(is.na(survivalFunction[i,j])) {
         survivalFunction[i,j] = previousTimepointProb[j]-0.01
         if(survivalFunction[i,j] <0){survivalFunction[i,j] = 0}
         numReturnNA = numReturnNA+1
       }
-      
-      if(previousTimepointProb[j]<survivalFunction[i,j]){
-        survivalFunction[i,j] = previousTimepointProb[j]-0.0001
+      if(i==1 & survivalFunction[i,j]<0.6){
+        survivalFunction[i,j] = 0.6
+        numTooLow = numTooLow+1
+      }
+      if(previousTimepointProb[j]<=survivalFunction[i,j]){
+        survivalFunction[i,j] = previousTimepointProb[j]-0.00001
         if(survivalFunction[i,j] <0){survivalFunction[i,j] = 0}
         numNotDecreasing = numNotDecreasing+1
         #print('probability not decreasing')
       }
-      
       previousTimepointProb[j] = survivalFunction[i,j]
       
     }
   }
   if(numReturnNA>0) {cat('return NA: ',numReturnNA)}
+  if(numTooLow>0) {cat('too Low: ',numTooLow)}
   if(numNotDecreasing>0) {cat('Not decreasing: ',numNotDecreasing)}
-  #survivalFunction = rbind(rep(1,nrow(testing)),survivalFunction)
-  
   colnames(survivalFunction) = 1:nrow(testing)
-  #survivalFunction = cbind(time = c(0,timesplit), survivalFunction) 
+  survivalFunction = cbind(time = timesplit, survivalFunction) 
   return(survivalFunction)
 }
 
@@ -341,31 +287,8 @@ blacklistFunction <- function(nodeNames){
   blackList3 = matrix(ncol = 2, nrow = length(nodeNames))
   for(i in 1:length(nodeNames)) {
     blackList[i,] = c(nodeNames[i],"PREVTIMEPOINT")
-    blackList2[i,] = c(nodeNames[i],"TIMEPOINT")
+    blackList2[i,] = c("TIMEPOINT", nodeNames[i])
     blackList3[i,] = c("PREVTIMEPOINT", nodeNames[i])
-  }
-  blackList = blackList[blackList[,1] != 'PREVTIMEPOINT',]
-  blackList2 = blackList2[blackList2[,1] != 'TIMEPOINT',]
-  blackList2 = blackList2[blackList2[,1] != 'PREVTIMEPOINT',]
-  blackList3 = blackList3[blackList3[,2] != 'TIMEPOINT',]
-  blackList3 = blackList3[blackList3[,2] != 'PREVTIMEPOINT',]
-  
-  #blackList = rbind(blackList, blackList2)
-  #blackList = rbind(blackList, blackList3)
-  
-  return(blackList2)
-}
-
-blacklistFunctionStart <- function(nodeNames){
-  blackList = matrix(ncol = 2, nrow = length(nodeNames))
-  blackList2 = matrix(ncol = 2, nrow = length(nodeNames))
-  blackList3 = matrix(ncol = 2, nrow = length(nodeNames))
-  blackList4 = matrix(ncol = 2, nrow = length(nodeNames))
-  for(i in 1:length(nodeNames)) {
-    blackList[i,] = c(nodeNames[i],"PREVTIMEPOINT")
-    blackList2[i,] = c("TIMEPOINT",nodeNames[i])
-    blackList3[i,] = c("PREVTIMEPOINT", nodeNames[i])
-    blackList4[i,] = c(nodeNames[i],"TIMEPOINT")
   }
   blackList = blackList[blackList[,1] != 'PREVTIMEPOINT',]
   blackList2 = blackList2[blackList2[,2] != 'TIMEPOINT',]
@@ -373,9 +296,8 @@ blacklistFunctionStart <- function(nodeNames){
   blackList3 = blackList3[blackList3[,2] != 'TIMEPOINT',]
   blackList3 = blackList3[blackList3[,2] != 'PREVTIMEPOINT',]
   
-  blackList = rbind(blackList, blackList2)
+  #blackList = rbind(blackList, blackList2)
   blackList = rbind(blackList, blackList3)
-  blackList = rbind(blackList, blackList4)
   
   return(blackList)
 }
@@ -398,44 +320,22 @@ commaStringFunction <- function(p){
   return(list(commaString1,commaString2,commaString3,commaString4))
 }
 
-generateEvidenceString <- function(nodeNames,dataInstance) {
-  colnamelist = nodeNames
-  for(k in 1:length(colnamelist)) {
-    if(class(dataInstance[,k]) == 'factor') {
-      colnamelist[k] = paste(colnamelist[k], dataInstance[1,k], sep="==")
-    }else {
-      colnamelist[k] = paste(colnamelist[k], dataInstance[1,k], sep="=")
-    }
-  }
-  evi = paste(colnamelist,collapse = ')&(')
-  evi = paste( c( '(' , evi , ')' ), collapse = '')
+independent_test <-function(data){
   
-  return(evi)
-}
-
-fixtime <- function(curve) {
-  newcurve = curve
-  newcurve[1,1] = curve[1,1]/2
-  for(i in 2:nrow(curve)) {
-    newcurve[i,1] = (curve[i-1,1] + curve[i,1])/2
-  }
-  return(newcurve)
-}
-
-smoothCurve <-function(survivalCurve) {
-  newSurvivalCurve = survivalCurve
-  for(i in 2:(nrow(survivalCurve)-1)) {
-    for(j in 2:ncol(survivalCurve)) {
-      newSurvivalCurve[i,j] = (survivalCurve[i-1,j]+survivalCurve[i,j]+survivalCurve[i+1,j])/3
+  independence_test = data.frame(matrix(ncol = ncol(data), nrow = 3))
+  names(independence_test) = names(data)
+  independence_test$TIMEPOINT = NULL
+  row.names(independence_test) = c('mi','df','p.value')
+  for(c in names(data)) {
+    if(c != 'TIMEPOINT') {
+      res = ci.test(x="TIMEPOINT", y=c, data = data, test = "mi")
+      independence_test[[c]] = c(res$statistic, res$parameter, res$p.value)
     }
   }
-  for(j in 2:ncol(newSurvivalCurve)) {
-    for(i in 1:(nrow(newSurvivalCurve)-1)) {
-      if(newSurvivalCurve[i+1,j] > newSurvivalCurve[i,j]){
-        print('fix curve')
-        newSurvivalCurve[i+1,j] = newSurvivalCurve[i,j]
-      }
-    }
+  
+  topname = names(independence_test)[independence_test['mi',]>100]
+  if(length(topname)==0) {
+    topname = names(independence_test)[head(order(independence_test['mi',],decreasing=TRUE),3)]
   }
-  return(newSurvivalCurve)
+  return(topname)
 }
