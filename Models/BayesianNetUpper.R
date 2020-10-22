@@ -11,19 +11,32 @@ BayesianNetUpper = function(training,testing){
   print('bestC1')
   print(bestC1)
   
-  m = floor(sqrt(nrow(training))+1)
-  #m = 20
+  #m = floor(sqrt(nrow(training))+1)
+  #m = floor(nrow(training)^(1/3)+1)
+  #if(m>20) {m=20}
+  m = 10
   quantileVals = seq(0,1,length.out = m+2)[-c(1,m+2)]
   #quantileVals = seq(0,1,length.out = m+2)[-1]
   timePoints = unname(quantile(training$time, quantileVals))
   timePoints = timePoints[!duplicated(timePoints)]
-  #timePoints = timeSplitFunction(numTimepoint = m+1, method = 'even', data = training, debug=T)
+  fillup = seq(max(timePoints),max(training$time),tail(timePoints, n=2)[2]-tail(timePoints, n=2)[1])
+  timePoints = c(timePoints,fillup)
+  #timePoints = c(timePoints,quantile(training$time,0.99))
+  timePoints = timePoints[!duplicated(timePoints)]
+  #timePoints = timeSplitFunction(numTimepoint = 2, method = 'fixrate', data = training, debug=T)
   #timePoints = timePoints[-1]
-  
+  m = length(timePoints)
+ 
   
   #timePoints = timeSplitFunction(numTimepoint = m, method = 'quantile', data = training, debug=T)
   
-  mod = BayesianNet(training, testing,bestC1,timesplit=timePoints,debug=T)
+  mod = BayesianNet(training, testing,bestC1,timePoints,debug=T)
+  
+  # m=20
+  # quantileVals = seq(0,1,length.out = m+2)[-c(1,m+2)]
+  # #quantileVals = seq(0,1,length.out = m+2)[-1]
+  # timePoints = unname(quantile(training$time, quantileVals))
+  # timePoints = timePoints[!duplicated(timePoints)]
   
   #timePoints = fixtime(timePoints)
   survivalFunctionTesting = mod$TestCurves

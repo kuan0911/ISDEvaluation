@@ -1,7 +1,3 @@
-survivalDataset <- read.csv(file = "Data/All_Data_updated_may2011_CLEANED.csv")
-names(survivalDataset)[c(1,2)] = c("time", "delta")
-survivalDataset$delta = 1 - survivalDataset$delta 
-
 survivalDataset <- read.csv(file = "Data/NACD_colorectal.csv")
 names(survivalDataset)[c(1,2)] = c("time", "delta")
 survivalDataset$delta = 1 - survivalDataset$delta 
@@ -26,8 +22,13 @@ survivalDataset = read.csv(file = "http://pssp.srv.ualberta.ca/system/predictors
 names(survivalDataset)[c(1,2)] = c("time", "delta")
 survivalDataset$delta = 1 - survivalDataset$delta 
 
+survivalDataset <- read.csv(file = "Data/All_Data_updated_may2011_CLEANED.csv")
+names(survivalDataset)[c(1,2)] = c("time", "delta")
+survivalDataset$delta = 1 - survivalDataset$delta 
+
 survivalDataset = loadCOADREAD()
 
+dataNoCensor = survivalDataset[survivalDataset$delta==1,]
 rm(list = ls())
 
 source('analysisMaster.R')
@@ -84,6 +85,17 @@ verbose = T
 numberOfFolds =2
 i = 1
 
+survivalDataset = survivalDataset[survivalDataset$LDH_SERUM<800,]
+#survivalDataset = survivalDataset[survivalDataset$LDH_SERUM>400,]
+survivalDataset = survivalDataset[survivalDataset$NO_PROBLEM==0,]
+survivalDataset = survivalDataset[survivalDataset$STAGE_4==1,]
+maxTime = max(survivalDataset$time)
+for(i in 1:nrow(survivalDataset)) {
+  if(survivalDataset[i,'delta']==0) {
+    survivalDataset[i,'time'] = runif(1, survivalDataset[i,'time'], maxTime)
+  }
+}
+cor(survivalDataset$time, survivalDataset$SITE_HEAD_AND_NECK,  method = "pearson", use = "complete.obs")
 
 
 loadCOADREAD = function() {

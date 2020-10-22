@@ -93,7 +93,7 @@ source("Plotting/plotSurvivalCurves.R")
 
 analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
                           CoxKP = F,CoxKPEN = F, KaplanMeier = F, RSFModel = F, AFTModel = F, MTLRModel = T, BayesianNetModel = T, #Models
-                          DCal = T, OneCal = T, Concor = T, L1Measure = T, BrierInt = T, BrierSingle = T, #Evaluations
+                          DCal = T, OneCal = T, Concor = T,ConcorCurve = T, L1Measure = T, BrierInt = T, BrierSingle = T, #Evaluations
                           DCalBins = 10, OneCalTime = NULL,  concordanceTies = "All", #Evaluation args
                           SingleBrierTime = NULL, IntegratedBrierTimes = NULL, numBrierPoints = 1000, Ltype = "Hinge", #Evaluation args
                           Llog = F, typeOneCal = "DN", oneCalBuckets = 10, survivalPredictionMethod = "Median", #Evaluation args
@@ -109,6 +109,7 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
   evaluationResults = data.frame()
   combinedTestResults = list(Cox = list(),CoxEN = list(), KM = list(), AFT = list(), RSF = list(), MTLR = list(), BayesianNet = list())
   coxTimes = NULL;coxENTimes = NULL; kmTimes = NULL; rsfTimes = NULL; aftTimes = NULL; mtlrTimes = NULL; bayesianNetTimes = NULL;
+  ConcordanceCurve = NULL
   for(i in 1:numberOfFolds){
     if(verbose){
       print(Sys.time())
@@ -211,6 +212,49 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
       bayesConc = Concordance(bayesianNetMod, concordanceTies,survivalPredictionMethod)
       
       ConcordanceResults = rbind(coxConc,coxENConc, kmConc, rsfConc, aftConc, mtlrConc, bayesConc)
+    }
+    if(ConcorCurve){
+      if(verbose){
+        print("Staring Evaluation: Concordance Curve")
+      }
+      coxConCurve = Concordance(coxMod, concordanceTies,survivalPredictionMethod)
+      coxENConCurve = Concordance(coxENMod, concordanceTies,survivalPredictionMethod)
+      kmConCurve = Concordance(kmMod, concordanceTies,survivalPredictionMethod)
+      rsfConCurve = Concordance(rsfMod, concordanceTies,survivalPredictionMethod)
+      aftConCurve = Concordance(aftMod, concordanceTies,survivalPredictionMethod)
+      mtlrConCurve = Concordance(mtlrMod, concordanceTies,survivalPredictionMethod)
+      bayesConCurve = Concordance(bayesianNetMod, concordanceTies,survivalPredictionMethod)
+      
+      timeOfInterest = unname(quantile(validatedData$time,c(.1,.2,.3,.4,.5,.6,.7,.8,.9)))
+      #timeOfInterest = seq(0,quantile(validatedData$time,0.95),(quantile(validatedData$time,0.95)-0)/8 )
+      for(timepoint in timeOfInterest) {
+        TestCurve = mtlrMod[[1]]
+        TestData = mtlrMod[[2]]
+        if(sum(TestData$time>timepoint)<1 | max(TestCurve$time)<timepoint) {mtlrConCurve = c(mtlrConCurve,0);next;}
+        TestCurve = TestCurve[,c(TRUE,TestData$time>timepoint)]
+        TestData = TestData[TestData$time>timepoint,]
+        TestCurve = TestCurve[TestCurve[,1]>timepoint,]
+        mtlrModSlice = list(TestCurve=TestCurve,TestData=TestData)
+        mtlrConc = Concordance(mtlrModSlice, concordanceTies,survivalPredictionMethod)
+        mtlrConCurve = c(mtlrConCurve,mtlrConc)
+      }
+      for(timepoint in timeOfInterest) {
+        TestCurve = bayesianNetMod[[1]]
+        TestData = bayesianNetMod[[2]]
+        if(sum(TestData$time>timepoint)<1 | max(TestCurve$time)<timepoint) {bayesConCurve = c(bayesConCurve,0);next;}
+        TestCurve = TestCurve[,c(TRUE,TestData$time>timepoint)]
+        TestData = TestData[TestData$time>timepoint,]
+        TestCurve = TestCurve[TestCurve[,1]>timepoint,]
+        bayesModSlice = list(TestCurve=TestCurve,TestData=TestData)
+        bayesConc = Concordance(bayesModSlice, concordanceTies,survivalPredictionMethod)
+        bayesConCurve = c(bayesConCurve,bayesConc)
+      }
+      
+      ConcordanceCurveResults = rbind(mtlrConCurve, bayesConCurve)
+      if(is.null(ConcordanceCurve)) {ConcordanceCurve = rbind(timeOfInterest,ConcordanceCurveResults)}
+      else{ConcordanceCurve = rbind(ConcordanceCurve,ConcordanceCurveResults)}
+      print(ConcordanceCurve)
+      
     }
     if(BrierInt){
       if(verbose){
@@ -326,7 +370,7 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
   combinedBins$MTLR =colSums(ldply(lapply(seq_along(combinedTestResults$MTLR), function(x) getBinned(combinedTestResults$MTLR[[x]], DCalBins)), rbind))
   combinedBins$BayesianNet =colSums(ldply(lapply(seq_along(combinedTestResults$BayesianNet), function(x) getBinned(combinedTestResults$BayesianNet[[x]], DCalBins)), rbind))
     
-  return(list(datasetUsed = validatedData, survivalCurves = survivalCurves, results = evaluationResults, DcalHistogram = combinedBins))
+  return(list(datasetUsed = validatedData, survivalCurves = survivalCurves, results = evaluationResults, DcalHistogram = combinedBins, ConCurve = ConcordanceCurve))
 }
 
 

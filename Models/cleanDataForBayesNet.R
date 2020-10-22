@@ -57,7 +57,12 @@ cleanDataType <- function(numTesting, allData, allDiscrete=T, discretize_level =
           allData[[c]] = factor(allData[[c]])
         }else {
           breaks = seq(0,100,100/discretize_level)
-          breakList = c(-Inf, unique(quantile(allData[[c]], probs = breaks[2:discretize_level]/100)), Inf)
+          quantileVals = seq(0,1,length.out = discretize_level+1)[-c(1,discretize_level+1)]
+          breakList = c(-Inf, unique(quantile(allData[[c]],quantileVals)), Inf)
+          
+          #breakList = seq(quantile(allData[[c]],0.10),quantile(allData[[c]],0.90),(quantile(allData[[c]],0.90)-quantile(allData[[c]],0.10))/(discretize_level-2) )
+          #breakList = c(-Inf,breakList,Inf)
+          
           allData[[c]] = cut(allData[[c]],breaks = breakList,labels = 1:(length(breakList)-1))
         }
       }else{
@@ -88,6 +93,8 @@ cleanDataType <- function(numTesting, allData, allDiscrete=T, discretize_level =
 }
 
 createTimeSplit <- function(data, timesplit,assumption = F,includeNa = F) {
+  
+  data$id = 1:nrow(data)
   
   dataList <- vector("list", length(timesplit))
   
@@ -141,7 +148,7 @@ createTimeSplit <- function(data, timesplit,assumption = F,includeNa = F) {
     # }
     # tempData = newTempData
     
-    tempData$time <- NULL
+    #tempData$time <- NULL
     #tempData$delta <- NULL
     #make sure TIMEPOINT has two levels
     levels(tempData$TIMEPOINT) = c('0','1')
@@ -185,4 +192,16 @@ createTimeSplitIntegrated <- function(data, timesplit) {
   }
   
   return(newData)
+}
+
+variableTypes = function(data,maxFactorLevel) {
+  variableList = c()
+  for(c in names(data)) {
+    if(dim(table(data[[c]])) < maxFactorLevel) {
+      variableList[c] = FALSE
+    }else {
+      variableList[c] = TRUE
+    }
+  }
+  return(variableList)
 }

@@ -88,19 +88,29 @@ predictMedianSurvivalTimeSpline = function(survivalCurve, predictedTimes){
   if(all(survivalCurve==1)){
     return(Inf)
   }
+  if(all(survivalCurve<0.001)){
+    return(0)
+  }
   spline = splinefun(predictedTimes, survivalCurve, method = "hyman")
   minProb = min(spline(predictedTimes))
-  if(minProb < .5){
-    maximumSmallerThanMedian = predictedTimes[min(which(survivalCurve <.5))]
-    minimumGreaterThanMedian = predictedTimes[max(which(survivalCurve >.5))]
+  
+  if(is.na(minProb)){return(0)}
+  
+  cut = (max(survivalCurve)+min(survivalCurve))/2
+  
+  if(minProb < cut){
+    maximumSmallerThanMedian = predictedTimes[min(which(survivalCurve <cut))]
+    minimumGreaterThanMedian = predictedTimes[max(which(survivalCurve >cut))]
     splineInv = splinefun(spline(seq(minimumGreaterThanMedian, maximumSmallerThanMedian, length.out = 1000)),
                           seq(minimumGreaterThanMedian, maximumSmallerThanMedian, length.out = 1000))
-    medianProbabilityTime = splineInv(0.5)
+    medianProbabilityTime = splineInv(cut)
   }
   else{
     maxTime = max(predictedTimes)
-    slope = (1-spline(maxTime))/(0 - max(predictedTimes))
-    medianProbabilityTime = maxTime + (0.5-spline(maxTime))/slope
+    slope = (max(survivalCurve)-spline(maxTime))/(min(predictedTimes) - max(predictedTimes))
+    medianProbabilityTime = maxTime + (cut-spline(maxTime))/slope
   }
   return(medianProbabilityTime)
 }
+
+
