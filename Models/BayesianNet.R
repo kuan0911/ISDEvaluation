@@ -56,7 +56,8 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timePoints = 0,debug =
   
   print(length(dataList))
   
-  mLess = floor(length(timePoints)/2)
+  #mLess = floor(length(timePoints)/2)
+  mLess = 2
   quantileVals = seq(0,1,length.out = mLess+2)[-c(1)]
   #quantileVals = seq(0,1,length.out = m+2)[-1]
   timesplitLess = unname(quantile(training$time, quantileVals))
@@ -152,7 +153,7 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timePoints = 0,debug =
         structureData$id = NULL
         
         #blackList = blacklistFunction(names(variableList[variableList==T&names(variableList)!='time']))
-        start = structural.em(structureData, maximize = "hc",maximize.args = list(restart=20,blacklist=NULL,whitelist=NULL), fit = "bayes",fit.args=list(iss=20),impute='bayes-lw',return.all = T,start = NULL, max.iter = 1, debug = FALSE)
+        #start = structural.em(structureData, maximize = "hc",maximize.args = list(restart=20,blacklist=NULL,whitelist=NULL), fit = "bayes",fit.args=list(iss=20),impute='bayes-lw',return.all = T,start = NULL, max.iter = 1, debug = FALSE)
         #plotDag(start$dag)
         #print(parents(dag$dag,'TIMEPOINT'))
         #print(children(dag$dag,'TIMEPOINT'))
@@ -168,7 +169,7 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timePoints = 0,debug =
       #if(i==1) {dag = structural.em(data, maximize = "hc",maximize.args = list(restart=100,blacklist=NULL,whitelist=NULL), fit = "bayes",fit.args=list(iss=2),impute='bayes-lw',return.all = T,start = start$dag, max.iter = 1, debug = FALSE)}
       #else {dag = structural.em(data, maximize = "hc",maximize.args = list(restart=10,blacklist=NULL,whitelist=NULL), fit = "bayes",fit.args=list(iss=2),impute='bayes-lw',return.all = T,start = start$dag, max.iter = 1, debug = FALSE)}
       #dag = structural.em(data, maximize = "tabu",maximize.args = list(tabu=200,blacklist=NULL,whitelist=NULL), fit = "bayes",fit.args=list(iss=2),impute='bayes-lw',return.all = T,start = start$dag, max.iter = 1, debug = FALSE)
-      dag = hc(dataComplete,restart=100)
+      dag = hc(dataComplete,restart=100,start = start$dag)
       #dag = start
       # if(length(mb(dag$dag,'TIMEPOINT'))<length(mb(start$dag,'TIMEPOINT'))) {
       #   dag = start

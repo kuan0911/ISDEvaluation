@@ -10,7 +10,7 @@ survivalDataset <- read.csv(file = "Data/LifeExpectancyData.csv")
 
 source('Data/synthesizeData.R')
 source('Data/synthesizeData2.R')
-sythesize2(n=15000)
+sythesize2(n=5000)
 survivalDataset <- read.csv(file = "Data/syntheticData.csv")
 survivalDataset$X = NULL
 #lapply(survivalDataset, as.double)
@@ -19,9 +19,9 @@ source('analysisMaster.R')
 
 ISD = analysisMaster(survivalDataset, MTLRModel=F,BayesianNetModel=T,KaplanMeier = F, FS = T, numberOfFolds = 5)
 
-ISD = analysisMaster(survivalDataset, MTLRModel=T,BayesianNetModel=T,KaplanMeier = F, FS = T, numberOfFolds = 5)
+ISD = analysisMaster(survivalDataset, MTLRModel=T,BayesianNetModel=F,KaplanMeier = F, FS = T, numberOfFolds = 5)
 
-ISD = analysisMaster(survivalDataset, CoxKP = T,CoxKPEN = F, KaplanMeier = F, RSFModel = F, AFTModel = F, MTLRModel = F, BayesianNetModel = F, numberOfFolds = 5)
+ISD = analysisMaster(survivalDataset, CoxKP = F,CoxKPEN = F, KaplanMeier = F, RSFModel = T, AFTModel = F, MTLRModel = F, BayesianNetModel = F, numberOfFolds = 5)
 
 plotSurvivalCurves(ISD$survivalCurves$Bayes, 1:10)
 

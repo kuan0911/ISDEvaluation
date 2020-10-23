@@ -4,7 +4,7 @@ source("Models/bayesianNetHelper.R")
 sythesize2 = function(n=5000) {
   
   
-  timePoints = c(3, 5.6, 8.8, 13, 20.6, 24.7, 32.1, 44.3)
+  timePoints = c(5, 13, 24, 32, 44, 57)
   m = length(timePoints)
   
   # data generation.
@@ -19,15 +19,15 @@ sythesize2 = function(n=5000) {
   TIMEPOINT = a
   TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.85, 0.15), replace = TRUE)
   TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.95, 0.05), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.7, 0.3), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.8, 0.2), replace = TRUE)
   
   b = TIMEPOINT
   b[b == 0] = sample(LV3, length(which(b == 0)), prob = c(0.6, 0.2, 0.2), replace = TRUE)
-  b[b == 1] = sample(LV3, length(which(b == 1)), prob = c(0.2, 0.3, 0.5), replace = TRUE)
+  b[b == 1] = sample(LV3, length(which(b == 1)), prob = c(0.15, 0.15, 0.7), replace = TRUE)
   
   g = TIMEPOINT
   g[g == 0] = sample(LV3, length(which(g == 0)), prob = c(0.5, 0.4, 0.1), replace = TRUE)
-  g[g == 1] = sample(LV3, length(which(g == 1)), prob = c(0.4, 0.3, 0.3), replace = TRUE)
+  g[g == 1] = sample(LV3, length(which(g == 1)), prob = c(0.1, 0.4, 0.5), replace = TRUE)
   
   syndata1 = data.frame(
     TIMEPOINT = factor(TIMEPOINT, levels = LorD),
@@ -46,16 +46,20 @@ sythesize2 = function(n=5000) {
   
   TIMEPOINT = d
   TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.95, 0.05), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.5, 0.5), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.7, 0.3), replace = TRUE)
   TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.6, 0.4), replace = TRUE)
   
   e = TIMEPOINT
-  e[e == 0] = sample(c(1, 2), length(which(e == 0)), prob = c(0.6, 0.5), replace = TRUE)
+  e[e == 0] = sample(c(1, 2), length(which(e == 0)), prob = c(0.5, 0.5), replace = TRUE)
   e[e == 1] = sample(c(1, 2), length(which(e == 1)), prob = c(0.3, 0.7), replace = TRUE)
+  
+  # g = TIMEPOINT
+  # g[g == 0] = sample(LV3, length(which(g == 0)), prob = c(0.5, 0.4, 0.1), replace = TRUE)
+  # g[g == 1] = sample(LV3, length(which(g == 1)), prob = c(0.1, 0.7, 0.2), replace = TRUE)
   
   g = TIMEPOINT
   g[g == 0] = sample(LV3, length(which(g == 0)), prob = c(0.5, 0.4, 0.1), replace = TRUE)
-  g[g == 1] = sample(LV3, length(which(g == 1)), prob = c(0.1, 0.7, 0.2), replace = TRUE)
+  g[g == 1] = sample(LV3, length(which(g == 1)), prob = c(0.1, 0.4, 0.5), replace = TRUE)
   
   syndata2 = data.frame(
     TIMEPOINT = factor(TIMEPOINT, levels = LorD),
@@ -106,12 +110,12 @@ sythesize2 = function(n=5000) {
   
   fitList[[1]] = fit1
   fitList[[2]] = fit1
-  fitList[[3]] = fit1
+  fitList[[3]] = fit2
   fitList[[4]] = fit2
-  fitList[[5]] = fit2
-  fitList[[6]] = fit2
-  fitList[[7]] = fit2
-  fitList[[8]] = fit3
+  fitList[[5]] = fit3
+  fitList[[6]] = fit3
+  #fitList[[7]] = fit2
+  #fitList[[8]] = fit3
   
   covariateDag = empty.graph(c('A','B','C','D','E','G'))
   covariateFit = bn.fit(covariateDag, covariateData, method='bayes',iss=5)
@@ -125,8 +129,9 @@ sythesize2 = function(n=5000) {
     for(k in 1:nrow(covariateSim)) {
       if(is.na(time[k])) {
         covariate = covariateSim[k,]
-        predicted = predict(fitList[[i]], "TIMEPOINT", covariate, method = "bayes-lw", prob = TRUE)
-        if(runif(1,0,1)>attr(predicted, "prob")[1]) {
+        #predicted = predict(object = fitList[[i]], node = "TIMEPOINT", data = covariate, method = "bayes-lw", n=2000, prob = TRUE)
+        prob = BnExactInference(fitList[[i]],covariate,threshold=0.0005,kmprob=NULL)
+        if(runif(1,0,1)>prob) {
           time[k] = runif(1,timePointsWithZero[i], timePointsWithZero[i+1])
         }
       }
@@ -143,7 +148,7 @@ sythesize2 = function(n=5000) {
   }
   
   for(k in 1:nrow(syntheticData)) {
-    if(runif(1,0,1)<0.15) {
+    if(runif(1,0,1)<0.4) {
       censoreTime = runif(1,0.1,timePoints[m])
       if(censoreTime<syntheticData[k,'time']) {
         syntheticData[k,'delta'] = as.integer(0)
