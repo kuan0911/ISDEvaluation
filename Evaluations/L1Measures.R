@@ -71,6 +71,8 @@ L1 = function(survMod, type = "Margin", logScale = F, method = "Median"){
   uncensoredPiece = ifelse(!logScale,
                            sum(abs(trueDeathTimes[as.logical(censorStatus)] - averageUncensored)),
                            sum(abs(log(trueDeathTimes[as.logical(censorStatus)]) - log(averageUncensored))))
+  uncensoredPiece = sum(trueDeathTimes[as.logical(censorStatus)] < averageUncensored)
+  #uncensoredPiece = sum(trueDeathTimes[as.logical(censorStatus)] - averageUncensored)
   L1Measure = switch(type,
                      Uncensored = {
                        L1Measure = (1/sum(censorStatus))*uncensoredPiece
@@ -97,12 +99,17 @@ L1 = function(survMod, type = "Margin", logScale = F, method = "Median"){
                                                               rel.tol = .01)[[1]]/KMLinearPredict(time)))
                        bestGuess[censorTimes > KMLinearZero] = censorTimes[censorTimes > KMLinearZero]
                        weights = 1- KMLinearPredict(censorTimes)
+                       #weights = rep(1,length(KMLinearPredict(censorTimes)))
                        marginPiece = ifelse(!logScale,
                                             #Use weights!=0 incase there is an infinitiy, we don't get NaN.
                                             sum(weights*(abs(bestGuess - averageCensored))),
                                             sum(weights*(abs(log(bestGuess) - log(averageCensored))))
                        )
+                       
+                       #marginPiece = sum(weights*(bestGuess < averageCensored))
+                       #marginPiece = sum(weights*(bestGuess - averageCensored))
                        L1Measure = (1/sum(censorStatus))*(uncensoredPiece) + (1/sum(weights))*marginPiece
+                       #L1Measure = (uncensoredPiece+marginPiece)/(sum(censorStatus)+sum(weights))
                      }
   )
   return(L1Measure)

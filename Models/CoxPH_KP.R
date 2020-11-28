@@ -87,6 +87,7 @@ CoxPH_KP = function(training, testing,ElasticNet=F, numFolds = 5){
     #Sometimes the coxPH-KP failed to converge so we catch that here.
     tryCatch({
       coxModel = coxph(Surv(time,delta)~., data = training,singular.ok = T)
+      print(coxModel)
       survivalCurves = survfit(coxModel, testing, type = "kalbfleisch-prentice")
       survivalCurvesTrain = survfit(coxModel, training, type = "kalbfleisch-prentice")
       

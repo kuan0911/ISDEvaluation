@@ -1,82 +1,3 @@
-predictSingle <- function(fitList,childrenList,timesplit,evidence,time,method='naivebayes') {
-  evidence$time = NULL
-  evidence$TIMEPOINT = NULL
-  evidence$PREVTIMEPOINT = NULL
-  evidence$delta = NULL
-  #testing$PREVTIMEPOINT = factor(integer(nrow(testing)),levels = c('0','1'))
-  threshold = 0.000001
-  
-  #first value in cpt
-  previousTimepointProb = 1
-  
-  survivalFunction = rep(0,length(fitList))
-  for(i in 1:length(fitList)) {
-    tempFit = fitList[[i]]
-    
-    if(method == 'lw') {
-      eviList = as.list(evidence)
-      prob = cpquery(tempFit, event = (TIMEPOINT == 0), evidence = as.list(testing[j,]),method = 'lw')
-    }else if(method == 'predict') {
-      predicted = predict(tempFit, node="TIMEPOINT", evidence,method = "parents", prob = TRUE, n=500)
-      attr(predicted, "prob")
-      prob = attr(predicted, "prob")[1]
-    }else if(method == 'naivebayes') {
-      predicted = predict(tempFit, node="TIMEPOINT", evidence,method = "parents", prob = TRUE)
-      ap = attr(predicted, "prob")
-      
-      p0 = 1
-      p1 = 1
-      variables = childrenList[[i]]
-      for(v in variables) {
-        e = as.integer(evidence[[v]])
-        t = tempFit[[v]][['prob']]
-        temp_evidence = evidence
-        temp_evidence[[v]] = NULL
-        temp_evidence$TIMEPOINT = factor(0,levels = c('0','1'))
-        t1 = predict(tempFit, node=v, temp_evidence,method = "parents", prob = TRUE)
-        t1 = attr(t1, "prob")
-        temp_evidence$TIMEPOINT = factor(1,levels = c('0','1'))
-        t2 = predict(tempFit, node=v, temp_evidence,method = "parents", prob = TRUE)
-        t2 = attr(t2, "prob")
-        
-        if(t1[e]>threshold) {rawp0=t1[e]} else {rawp0=threshold}
-        if(t2[e]>threshold) {rawp1=t2[e]} else {rawp1=threshold}
-        p0 = p0 * rawp0
-        p1 = p1 * rawp1
-      }
-      #print(t)
-      p0 = p0 * ap[1]
-      p1 = p1 * ap[2]
-      p0_Prob = p0/(p0+p1)
-      
-      prob = p0_Prob
-    }else{
-      print('No such query method')
-    }
-    
-    survivalFunction[i] = prob*previousTimepointProb
-    if(time<timesplit[i]) {
-      toReturn = previousTimepointProb + (survivalFunction[i]-previousTimepointProb) * (time - timesplit[i-1])/(timesplit[i] - timesplit[i-1])
-      return(toReturn)
-    }
-    
-    
-    if(is.na(survivalFunction[i])) {
-      survivalFunction[i] = previousTimepointProb-0.01
-      if(survivalFunction[i] <0){survivalFunction[i] = 0}
-    }
-    
-    if(previousTimepointProb<survivalFunction[i]){
-      survivalFunction[i] = previousTimepointProb[j]-0.0001
-      if(survivalFunction[i] <0){survivalFunction[i] = 0}
-      #print('probability not decreasing')
-    }
-    
-    previousTimepointProb = survivalFunction[i]
-  }
-  return(survivalFunction[length(fitList)])
-}
-
 convertToFlatIndex = function(index,dimension) {
   flatIndex = 0
   index = as.integer(index)
@@ -104,17 +25,22 @@ convertToFlatIndexMultiple = function(index,dimension) {
   return(flatIndexVec)
 }
 
-BnExactInference = function(tempFit,evidence,threshold=0.0005,kmprob=NULL){
-  evidence$time = NULL
-  evidence$TIMEPOINT = NULL
-  evidence$PREVTIMEPOINT = NULL
-  evidence$delta = NULL
-  evidence$id = NULL
+BnExactInference = function(tempFit,evidence,kmprob=NULL,noise=F,lev=NULL){
+  #threshold=0.0005
+  evidence[c('PREVTIMEPOINT','TIMEPOINT','time','delta','id')] = NULL
   
   cpt = tempFit[["TIMEPOINT"]][['prob']]
   p = colnames(as.data.frame(cpt))
   p = p[p!="Freq"]
-  if(p=='Var1') {p=c('TIMEPOINT')}
+  if(length(p)==1){
+    if(p=='Var1') {p=c('TIMEPOINT')}
+  }
+  if(noise) {
+    if(runif(1,0,1)<0.1) {
+      index = sample(1:length(evidence), 1)
+      evidence[index] = sample(lev[[index]],1)
+    }
+  }
   temp_evidence = evidence
   temp_evidence$TIMEPOINT = factor(0,levels = c('0','1'))
   ap1 = cpt[convertToFlatIndex(temp_evidence[p],dim(cpt))]
@@ -129,14 +55,14 @@ BnExactInference = function(tempFit,evidence,threshold=0.0005,kmprob=NULL){
     p = colnames(as.data.frame(cpt))
     p = p[p!="Freq"]
     temp_evidence = evidence
-    temp_evidence$TIMEPOINT = factor(0,levels = c('0','1'))
+    temp_evidence$TIMEPOINT = factor(0,levels = c(0,1))
     t1 = cpt[convertToFlatIndex(temp_evidence[p],dim(cpt))]
-    temp_evidence$TIMEPOINT = factor(1,levels = c('0','1'))
+    temp_evidence$TIMEPOINT = factor(1,levels = c(0,1))
     t2 = cpt[convertToFlatIndex(temp_evidence[p],dim(cpt))]
+    if(is.na(t2)|is.na(t2)) {'BnExactInference: t1 or t2 is NA'}
     
-    
-    if(t1>threshold) {rawp0=t1} else {rawp0=threshold}
-    if(t2>threshold) {rawp1=t2} else {rawp1=threshold}
+    if(t1>0.0005) {rawp0=t1} else {rawp0=0.0005}
+    if(t2>0.0005) {rawp1=t2} else {rawp1=0.0005}
     p0 = p0 + log(rawp0)
     p1 = p1 + log(rawp1)
     
@@ -147,25 +73,21 @@ BnExactInference = function(tempFit,evidence,threshold=0.0005,kmprob=NULL){
   return(p0_Prob)
 }
 
-BnExactInferenceCumulated <- function(fitList,evidence) {
-  evidence$time = NULL
-  evidence$TIMEPOINT = NULL
-  evidence$PREVTIMEPOINT = NULL
-  evidence$delta = NULL
-  evidence$id = NULL
+BnExactInferenceCumulated <- function(fitList,evidenceList,currentTime) {
+  if(currentTime==0){return(1)}
   #testing$PREVTIMEPOINT = factor(integer(nrow(testing)),levels = c('0','1'))
-
   cumulatedProb = 1
-  curve = rep(1,length(fitList))
-  
-  for(i in 1:length(fitList)) {
+  curve = rep(1,currentTime)
+
+  for(i in 1:currentTime) {
     tempFit = fitList[[i]]
-    
+    evidence = evidenceList[[i]]
+    if(is.null(tempFit)|is.null(evidence)) {print('BnExactInferenceCumulated: error. lenth not match')}
+    evidence[c('PREVTIMEPOINT','TIMEPOINT','time','delta','id')] = NULL
     cumulatedProb = cumulatedProb * BnExactInference(tempFit,evidence)
-    curve[i]=cumulatedProb
-    
+    curve[i] = cumulatedProb
   }
-  return(curve)
+  return(curve[currentTime])
 }
 
 plotDag <-function(dag){
@@ -174,3 +96,297 @@ plotDag <-function(dag){
   graph::nodeRenderInfo(g) <- list(fontsize=80)
   Rgraphviz::renderGraph(g)
 }
+
+timepointFixer <- function(fit,data,weight=NULL,iss=5) {
+  if(!is.null(data$PREVTIMEPOINT)) {print('Warning : timepointFixer data include missing data in PREVTIMEPOINT')}
+  if(!is.null(weight)) {if(anyNA(data)) {print('Warning : timepointFixer include missing data')}}
+  data[,c('time','delta','id')] = NULL
+  dataComplete = data[complete.cases(data),]
+  dataComplete$PREVTIMEPOINT = NULL
+  
+  cpt = coef(fit$TIMEPOINT)
+  p = colnames(as.data.frame(cpt))
+  p = p[p!="Freq"]
+  if(p=='Var1') {p=c('TIMEPOINT')}
+  newcpt = table(dataComplete[,p])
+  
+  if(!is.null(weight)) {
+    for(k in 1:nrow(data)) {
+      index = data[k,p]
+      flatIndex = convertToFlatIndex(index,dim(newcpt))
+      newcpt[flatIndex] = newcpt[flatIndex] - (1-weight[k])
+    }
+  }
+  
+  multipleFlateIndex = convertToFlatIndexMultiple(c(1,rep(NA,length(p)-1)),dim(newcpt))
+  timepoint1 = newcpt[multipleFlateIndex]
+  multipleFlateIndex = convertToFlatIndexMultiple(c(2,rep(NA,length(p)-1)),dim(newcpt))
+  timepoint2 = newcpt[multipleFlateIndex]
+  
+  timepointNACount = timepoint1
+  for(k in 1:length(timepointNACount)){timepointNACount[k]=0}
+  
+  for(k in 1:nrow(data)) {
+    if(is.na(data[k,'TIMEPOINT'])) {
+      index = data[k,p[-1]]
+      if(length(index)==0) {
+        timepointNACount = timepointNACount + 1
+      }else {
+        flatIndex = convertToFlatIndex(index,dim(timepointNACount))
+        timepointNACount[flatIndex] = timepointNACount[flatIndex] + 1
+      }
+    }
+  }
+  
+  alive = sum(data$TIMEPOINT==0,na.rm=T)
+  dead = sum(data$TIMEPOINT==1,na.rm=T)
+  censored = sum(is.na(data$TIMEPOINT))
+  iss_dead = iss * (dead/(alive+dead+0.5*censored))
+    
+  timepointProb = timepoint1
+  for(k in 1:length(timepointProb)){timepointProb[k]=0}
+    
+  for(j in 1:length(timepointProb)) {
+    if(length(timepoint2)>1) {
+      survivalRate = 1 - (timepoint2[j]+iss_dead)/(timepoint1[j]+timepoint2[j]+0.5*timepointNACount[j]+iss)
+    }else {
+      survivalRate = 1 - (timepoint2+iss_dead)/(timepoint1+timepoint2+0.5*timepointNACount+iss)
+    }
+    if(is.nan(survivalRate)) {
+      survivalRate = 1-(iss_dead/iss)
+      print('divided by zero')
+    }
+    timepointProb[j] = survivalRate
+  }
+
+  multipleFlateIndex = convertToFlatIndexMultiple(c(1,rep(NA,length(p)-1)),dim(newcpt))
+  newcpt[multipleFlateIndex] = timepointProb
+  multipleFlateIndex = convertToFlatIndexMultiple(c(2,rep(NA,length(p)-1)),dim(newcpt))
+  newcpt[multipleFlateIndex] = 1 - timepointProb
+  
+  fit$TIMEPOINT = newcpt
+  return(fit)
+}
+
+childrenFixer <- function(fit,data,weight=NULL,iss=1) {
+  if(!is.null(data$PREVTIMEPOINT)) {print('Warning : timepointFixer data include missing data in PREVTIMEPOINT')}
+  if(!is.null(weight)) {if(anyNA(data)) {print('Warning : timepointFixer include missing data')}}
+  data[,c('time','delta','id')] = NULL
+  dataComplete = data[complete.cases(data),]
+  dataComplete$PREVTIMEPOINT = NULL
+  
+  #print('Weighted fitting')
+  for(node in children(fit,'TIMEPOINT')) {
+    cpt = coef(fit[[node]])
+    p = colnames(as.data.frame(cpt))
+    p = p[p!="Freq"]
+    newcpt = cpt
+    for(k in 1:length(newcpt)){newcpt[k]=0}
+    if(is.null(weight)) {weight = rep(1,nrow(dataComplete))}
+    
+    for(k in 1:nrow(dataComplete)) {
+      index = dataComplete[k,p]
+      flatIndex = convertToFlatIndex(index,dim(newcpt))
+      newcpt[flatIndex] = newcpt[flatIndex] + weight[k]
+      
+    }
+
+    newcpt = newcpt + iss
+    
+    normal = as.table(array(integer(prod(dim(newcpt)[-1])),dim=dim(newcpt)[-1]))
+    for(z in 1:length(normal)){normal[z]=0}
+    for(j in 1:dim(newcpt)[1]) {
+      multipleFlateIndex = convertToFlatIndexMultiple(c(j,rep(NA,length(p)-1)),dim(newcpt))
+      normal = normal + newcpt[multipleFlateIndex]
+    }
+    
+    for(j in 1:dim(newcpt)[1]) {
+      multipleFlateIndex = convertToFlatIndexMultiple(c(j,rep(NA,length(p)-1)),dim(newcpt))
+      newcpt[multipleFlateIndex] = newcpt[multipleFlateIndex]/normal
+    }
+    
+    sumOther = as.table(array(integer(prod(dim(newcpt)[-1])),dim=dim(newcpt)[-1]))
+    for(z in 1:length(sumOther)){sumOther[z]=0}
+    for(j in 1:dim(newcpt)[1]) {
+      if(j != dim(newcpt)[1]) {
+        multipleFlateIndex = convertToFlatIndexMultiple(c(j,rep(NA,length(p)-1)),dim(newcpt))
+        sumOther = sumOther + newcpt[multipleFlateIndex]
+      }else if(j == dim(newcpt)[1]) {
+        multipleFlateIndex = convertToFlatIndexMultiple(c(j,rep(NA,length(p)-1)),dim(newcpt))
+        newcpt[multipleFlateIndex] = 1 - sumOther
+      }
+    }
+    
+    fit[[node]] = newcpt
+  }
+  return(fit)
+}
+
+customScoreFunction = function(node, parents, data, args) {
+  if(!is.null(args$weight)) {weight = args$weight}
+  else {weight = rep(1,nrow(data))}
+  kpenalty = (log(nrow(data))/2)
+  #kpenalty = 1
+  df = as.data.frame(data[,node])
+  if(length(parents)==0){
+    t = table(df)
+    for(k in 1:nrow(df)) {
+      index = as.factor(df[k,node])
+      t[index] = t[index] - (1-weight)
+    }
+    td = table(df)/nrow(df)
+    totalloglike = sum(log(td)*t) - kpenalty*(length(t)-1)
+  }else {
+    e = empty.graph(c(node,parents))
+    m = matrix(parents,nrow=length(parents),ncol=2)
+    m[,2] = node
+    arcs(e) = m
+    df = as.data.frame(data[,c(node,parents),drop=FALSE])
+    fit = bn.fit(e,df)
+    totalloglike = 0
+    cpt = coef(fit[[node]])
+    p = colnames(as.data.frame(cpt))
+    p = p[p!="Freq"]
+    indexarray = df[,p]
+    for(k in 1:nrow(indexarray)) {
+      flatIndex = convertToFlatIndex(indexarray[k,],dim(cpt))
+      loglike = cpt[flatIndex]
+      #evidence = as.data.frame(data[k,parents,drop=FALSE])
+      #predicted = predict(fit, node=node, data=evidence,method = "parents", prob = TRUE)
+      #index = as.factor(df[k,node])
+      totalloglike = totalloglike + loglike*weight[k]
+    }
+    parentparams = 0
+    for(p in parents) {
+      parentparams = parentparams + length(levels(df[,p]))
+    }
+    parapenalty = nparams(fit)-parentparams
+    totalloglike = totalloglike - kpenalty*parapenalty
+    
+  }
+  if(!is.null(args$prevFit)) {
+    prevParents = parents(args$prevFit,node)
+    totalloglike = totalloglike - kpenalty*4*length(setdiff(parents,prevParents))
+  }
+  if(!is.null(args$nextFit)) {
+    nextParents = parents(args$nextFit,node)
+    totalloglike = totalloglike - kpenalty*4*length(setdiff(parents,nextParents))
+  }
+  return(totalloglike)
+}
+
+weightedImpute = function(fitList,fit,dataListNAadapt,inputdata,currentTime) {
+  if(is.null(inputdata$PREVTIMEPOINT)) {
+    print('PREVTIMEPOINT missing when imputing weight')
+    inputdata$PREVTIMEPOINT = rep(0,nrow(inputdata))
+  }
+  imputeCount = 0
+  outputdata = inputdata
+  weight = rep(1,nrow(outputdata))
+  for(k in 1:nrow(inputdata)) {
+    if(is.na(outputdata[k,'TIMEPOINT'])) {
+      imputeCount = imputeCount+1
+      datainstance = inputdata[k,]
+      evidenceList = getEvidenceList(dataListNAadapt,datainstance$id,currentTime)
+      if(!is.na(inputdata[k,'PREVTIMEPOINT'])) {
+        probSurvive = 1
+      }else {
+        probSurvive = BnExactInferenceCumulated(fitList,evidenceList,currentTime-1)
+      }
+      prob = BnExactInference(fit,evidenceList[[currentTime]])
+      if(is.nan(probSurvive) | is.nan(prob)) {print('Error imputing: prob is nan')}
+      if(prob>1 |prob<0){print('weightedImpute: prob error')}
+      
+      outputdata[k,'TIMEPOINT'] = 0
+      weight[k] = probSurvive*prob
+      
+      datainstance['TIMEPOINT'] = 1
+      outputdata = rbind(outputdata,datainstance)
+      weight = c(weight,probSurvive*(1-prob))
+    }
+  }
+  #print(imputeCount)
+  outputdata[,c('PREVTIMEPOINT','time','delta','id')] = NULL
+  if(anyNA(outputdata)) {print('Warning: data imputed contain NA value')}
+  return(list(data=outputdata,weight=weight))
+}
+
+weightedImputeKM = function(kmMod,inputdata,timePoints,currentTime) {
+  if(is.null(inputdata$PREVTIMEPOINT)) {
+    print('PREVTIMEPOINT missing when imputing weight')
+    inputdata$PREVTIMEPOINT = rep(0,nrow(inputdata))
+  }
+  imputeCount = 0
+  outputdata = inputdata
+  weight = rep(1,nrow(outputdata))
+  for(k in 1:nrow(inputdata)) {
+    if(is.na(outputdata[k,'TIMEPOINT'])) {
+      imputeCount = imputeCount+1
+      datainstance = inputdata[k,]
+      evidence = inputdata[k,]
+      evidence$TIMEPOINT = NULL
+      if(!is.na(inputdata[k,'PREVTIMEPOINT'])|currentTime==1) {
+        probSurvive = 1
+      }else {
+        probSurvive = predict(kmMod,timePoints[currentTime-1])/predict(kmMod,datainstance$time)
+        #probSurvive = predict(kmMod,timePoints[currentTime-1])
+        #probSurvive = 0
+      }
+      if(currentTime>1) {
+        prob = predict(kmMod,timePoints[currentTime])/predict(kmMod,timePoints[currentTime-1])
+        # if(is.na(inputdata[k,'PREVTIMEPOINT'])) {
+        #   prob = (predict(kmMod,timePoints[currentTime-1])/predict(kmMod,datainstance$time))-(predict(kmMod,timePoints[currentTime])/predict(kmMod,datainstance$time))
+        # }else {
+        #   prob = predict(kmMod,timePoints[currentTime])/predict(kmMod,datainstance$time)
+        # }
+      }else {
+        prob = predict(kmMod,timePoints[currentTime])
+      }
+      if(is.nan(probSurvive) | is.nan(prob)) {print('weightedImputeKM: Error imputing: prob is nan')}
+      if(probSurvive>1 |probSurvive<0){print('weightedImputeKM: probSurvive error')}
+      if(prob>1 |prob<0){print('weightedImputeKM: prob error')}
+      
+      outputdata[k,'TIMEPOINT'] = 0
+      weight[k] = probSurvive*prob
+      
+      datainstance['TIMEPOINT'] = 1
+      outputdata = rbind(outputdata,datainstance)
+      weight = c(weight,probSurvive*(1-prob))
+    }
+  }
+  #print(imputeCount)
+  outputdata[,c('PREVTIMEPOINT','time','delta','id')] = NULL
+  if(anyNA(outputdata)) {print('Warning: data imputed contain NA value')}
+  return(list(data=outputdata,weight=weight))
+}
+
+randomflip = function(data,rate=0.4) {
+  if(anyNA(data)){print('randomflip: Error. missing data')}
+  for(k in 1:nrow(data)) {
+    if(runif(1,0,1)<rate) {
+      if(data[k,'TIMEPOINT']==1){
+        data[k,'TIMEPOINT']=0
+      }else {
+        data[k,'TIMEPOINT']=1
+      }
+      if(is.na(data[k,'TIMEPOINT'])){print('randomflip: Error, produce missing data')}
+    }
+  }
+  return(data)
+}
+getEvidenceList = function(dataListNAadapt,id,currentTime) {
+  evidenceList = vector("list", currentTime)
+  for(i in 1:currentTime) {
+    data = dataListNAadapt[[i]]
+    evidence = data[data$id==id,]
+    evidence[c('PREVTIMEPOINT','TIMEPOINT','time','delta','id')] = NULL
+    evidenceList[[i]] = evidence
+  }
+  return(evidenceList)
+}
+  
+  
+  
+  
+  
+  

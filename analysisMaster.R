@@ -95,7 +95,7 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
                           CoxKP = F,CoxKPEN = F, KaplanMeier = F, RSFModel = F, AFTModel = F, MTLRModel = T, BayesianNetModel = T, #Models
                           DCal = T, OneCal = T, Concor = T,ConcorCurve = T, L1Measure = T, BrierInt = T, BrierSingle = T, #Evaluations
                           DCalBins = 10, OneCalTime = NULL,  concordanceTies = "All", #Evaluation args
-                          SingleBrierTime = NULL, IntegratedBrierTimes = NULL, numBrierPoints = 1000, Ltype = "Hinge", #Evaluation args
+                          SingleBrierTime = NULL, IntegratedBrierTimes = NULL, numBrierPoints = 1000, Ltype = "Margin", #Evaluation args
                           Llog = F, typeOneCal = "DN", oneCalBuckets = 10, survivalPredictionMethod = "Median", #Evaluation args
                           AFTDistribution = "weibull", #Model args,
                           FS = T, imputeZero=T, verbose = T # Misc args

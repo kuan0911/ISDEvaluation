@@ -11,8 +11,8 @@ timeSplitFunction <- function(numTimepoint = 10, method = 'quantile', data, debu
     timesplit<-vector()
     remainData = data[data$delta == 1,]
     #remainData = data
-    while(nrow(remainData)>10) {
-      res = quantile(remainData$time,1/numTimepoint)
+    while(nrow(remainData)>50) {
+      res = quantile(remainData[remainData$delta==1,]$time,1/numTimepoint)
       timesplit = c(timesplit, res)
       remainData = remainData[remainData$time > res,]
     }

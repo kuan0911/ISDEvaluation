@@ -9,14 +9,15 @@
 library(bnlearn)
 library(plyr)
 library(gtools)
-library(e1071)
+#library(e1071)
 library(prodlim)
 library(MTLR)
 library(Rcpp)
 source("Models/cleanDataForBayesNet.R")
 source("Models/bayesianNetHelper.R")
+source("Models/changesource.R")
 
-BayesianNet = function(training, testing, BayesianC1 = 1, timePoints = 0,debug = FALSE){
+BayesianNet = function(training, testing, timePoints = 0,debug = FALSE){
   originalTraining = training
   originalTesting = testing
   
@@ -30,8 +31,8 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timePoints = 0,debug =
   kmMod = prodlim(Surv(time,delta)~1, data = originalTraining)
   
   queryMethod = 'exact'
-  prior = T
-  weighted = T
+  prior = F
+  weighted = F
   cont = F
   fillAllMB = F
   
@@ -43,12 +44,34 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timePoints = 0,debug =
   
   allData = rbind(testing,training)
   
-  cleaned = cleanDataType(nrow(testing),allData,allDiscrete=T,discretize_level=6)
+  cleaned = cleanDataType(nrow(testing),allData,allDiscrete=T,discretize_level=3)
   testing = cleaned$test
   training = cleaned$train
   
+  trainingList = vector("list", numTimepoint)
+  testingList = vector("list", numTimepoint)
+  for(i in 1:numTimepoint) {
+    levelnum = numTimepoint - i
+    if(levelnum>4) {levelnum=4}
+    else if(levelnum<2) {levelnum=2}
+    cleaned = cleanDataType(nrow(testing),allData,allDiscrete=T,discretize_level=levelnum)
+    testingList[[i]] = cleaned$test
+    trainingList[[i]] = cleaned$train
+  }
+  
+  cleanedLevels = cleanDataType(nrow(testing),allData,allDiscrete=T,discretize_level=3)
+  testingLevels = cleanedLevels$test
+  trainingLevels = cleanedLevels$train
+
   dataList = createTimeSplit(training,timePoints,assumption = F,includeNa = F)
   dataListNA = createTimeSplit(training,timePoints,includeNa = T)
+
+  dataListNAadapt = vector("list", numTimepoint)
+  
+  for(i in 1:numTimepoint) {
+    dataListNAList = createTimeSplit(trainingList[[i]],timePoints,includeNa = T)
+    dataListNAadapt[[i]] = dataListNAList[[i]]
+  }
   
   cleanedCont = cleanDataType(nrow(testing),allData,allDiscrete=F,discretize_level=10)
   trainingCont = cleanedCont$train
@@ -57,10 +80,10 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timePoints = 0,debug =
   print(length(dataList))
   
   #mLess = floor(length(timePoints)/2)
-  mLess = 2
+  mLess = 3
   quantileVals = seq(0,1,length.out = mLess+2)[-c(1)]
   #quantileVals = seq(0,1,length.out = m+2)[-1]
-  timesplitLess = unname(quantile(training$time, quantileVals))
+  timesplitLess = unname(quantile(training[training$delta==1,]$time, quantileVals))
   timesplitLess = timesplitLess[!duplicated(timesplitLess)]
   dataListLess = createTimeSplit(training,timesplitLess,assumption = F,includeNa = T)
   
@@ -75,155 +98,177 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timePoints = 0,debug =
   
   allmb = c()
   
+  prevLikelihood = 0
   
-  # structureData = dataListLess[[2]]
-  # #structureData = dataList[[i]]
-  # structureData$PREVTIMEPOINT = NULL
-  # structureData$time = NULL
-  # structureData$delta = NULL
-  # structureData$id = NULL
-  # 
-  # dag = structural.em(structureData, maximize = "hc",maximize.args = list(restart=15,blacklist=NULL,whitelist=NULL), fit = "bayes",fit.args=list(iss=20),impute='bayes-lw',return.all = T,start = NULL, max.iter = 2, debug = FALSE)
-  # # blackWhiteList = blacklistFunctionFixParents(colnames(structureData),parents(dag$dag,'TIMEPOINT'))
+  for(iter in 1:5) {
+    if(iter==1) {
+      iLess = 1
+      structureData = dataListLess[[2]]
   
-  #whiteList = c('PREVTIMEPOINT','TIMEPOINT')
-  for(iter in 1:1) {
-    iLess = 1
-    structureData = dataListLess[[1]]
-    #structureData = dataListLess[[2]]
-    #structureData = dataList[[i]]
-    structureData$PREVTIMEPOINT = NULL
-    structureData$time = NULL
-    structureData$delta = NULL
-    structureData$id = NULL
-    
-    #blackList = blacklistFunction(names(variableList[variableList==T&names(variableList)!='time']))
-    #blackList = blacklistFunction(colnames(structureData))
-    start = structural.em(structureData, maximize = "hc",maximize.args = list(restart=25,blacklist=NULL,whitelist=NULL,score='bic'), fit = "bayes",fit.args=list(iss=20),impute='bayes-lw',return.all = T,start = NULL, max.iter = 2, debug = FALSE)
-    
-    #plotDag(start$dag)
-    # print(parents(dag$dag,'TIMEPOINT'))
-    # print(children(dag$dag,'TIMEPOINT'))
-    #blackWhiteList = blacklistFunctionFixParents(colnames(structureData),parents(dag$dag,'TIMEPOINT'))
-    
-    for(i in 1:numTimepoint) {
-      fitListParents[[i]] = start$dag
+      #structureData = do.call("rbind", dataListLess)
+      #structureData = structureData[structureData$PREVTIMEPOINT==0,]
+      structureData[,c('PREVTIMEPOINT','time','delta','id')] = NULL
+      allstart = structural.em(structureData, maximize = "hc",maximize.args = list(restart=50,blacklist=NULL,whitelist=NULL,score='bic'), fit = "bayes",fit.args=list(iss=2),impute='bayes-lw',return.all = T,start = NULL, max.iter = 2, debug = FALSE)
+      prevFitS = NULL
+      prevDag = NULL
+      prevFit = NULL
+      
+      allstart$fitted = timepointFixer(allstart$fitted,structureData)
+      #plotDag(start$dag)
+      print(mb(allstart$dag,'TIMEPOINT'))
     }
-    
     for(i in 1:numTimepoint) {
       if(isTRUE(debug)){cat(i)
         cat(' ')}
-      data = dataListNA[[i]]
-      
-      # for(k in 1:nrow(data)) {
-      #   if(!is.na(data[k,'PREVTIMEPOINT'])) {
-      #     if(data[k,'PREVTIMEPOINT']==1) {
-      #       data[k,'TIMEPOINT'] = NA
-      #     }
-      #   }
-      # }
 
-      # }
-      # if(i>1&i<numTimepoint) {
-      #   data = rbind(dataList[[i-1]],dataList[[i]],dataList[[i+1]])
-      # }else if(i==1){
-      #   data = rbind(dataList[[i]],dataList[[i+1]])
-      # }else if(i==numTimepoint) {
-      #   data = rbind(dataList[[i]],dataList[[i-1]])
-      # }
+      data = dataListNAadapt[[i]]
       
-      #rcount = nrow(data)
-      data = data[data$PREVTIMEPOINT == 0,]
+      datapara2 = data
+      datapara2 = datapara2[datapara2$PREVTIMEPOINT == 0|is.na(datapara2$PREVTIMEPOINT),]
+
+      data[,c('time','delta','id')] = NULL
+      
+      # dataStart = data
+      # dataStart$PREVTIMEPOINT = NULL
+      
+      datapara = data
+      datapara = datapara[!is.na(datapara$PREVTIMEPOINT),]
+      datapara = datapara[datapara$PREVTIMEPOINT == 0,]
+      datapara$PREVTIMEPOINT = NULL
+      
       data$PREVTIMEPOINT = NULL
-      data$time = NULL
-      data$delta = NULL
-      data$id = NULL
-
-      #dataDie = data[data$TIMEPOINT == 1,]
-      #datadownsample = data[sample(nrow(data), nrow(dataDie)), ]
-      #datadownsample = rbind(datadownsample,dataDie)
       
-      if(timePoints[i]>timesplitLess[iLess]) {
-        iLess = iLess+1
-        structureData = dataListLess[[iLess]]
-        #structureData = dataList[[i]]
-        structureData$PREVTIMEPOINT = NULL
-        structureData$time = NULL
-        structureData$delta = NULL
-        structureData$id = NULL
+      #dataComplete = dataStart[complete.cases(dataStart),]
+      #internaltest = datapara[complete.cases(datapara),]
+      
+      #imputedRes = imputeFunctionSuvival(fit,prevFitS,datapara2)
+      #imputed = imputedRes$data
+      #weight = imputedRes$weight
+      #dag = hc(internaltest,restart=100,start=allstart$dag,score='bic')
+      # #dag = structural.em(datapara, maximize = "hc",maximize.args = list(restart=100,score='bic'), fit = "bayes",impute='bayes-lw',return.all = T,start = allstart$dag, max.iter = 5, debug = FALSE)
+      # #dag = dag$dag
+      # fit = bn.fit(dag, datapara, method='bayes')
+      # fit = timepointFixer(fit,datapara)
+      for(emiter in 1:3) {
+        if(iter>1) {
+          fit = fitList[[i]]
+          imputeRes = weightedImpute(fitList,fit,dataListNAadapt,datapara2,i)
+        }else {
+          internaltest = datapara[complete.cases(datapara),]
+          dag = hc(internaltest,restart=100,start=allstart$dag,score='bic')
+          fit = bn.fit(dag, datapara, method='bayes')
+          imputeRes = weightedImputeKM(kmMod,datapara2,timePoints,i)
+        }
+        imputed = imputeRes$data
+        weight = imputeRes$weight
+        # prevLogLike = 0
+        # maxfit = fit
+        fit = timepointFixer(fit,imputed,weight)
+        fit = childrenFixer(fit,imputed,weight)
+      #for(emiter in 1:1) {
+        #dag = hc(imputed,restart=100,start=allstart$dag,score='bic')
+        #dag = hc(imputed, start=dag,score="custom",fun = customScoreFunction, args=list(weight=weight,prevFit=NULL,nextFit=NULL))
         
-        #blackList = blacklistFunction(names(variableList[variableList==T&names(variableList)!='time']))
-        #start = structural.em(structureData, maximize = "hc",maximize.args = list(restart=20,blacklist=NULL,whitelist=NULL), fit = "bayes",fit.args=list(iss=20),impute='bayes-lw',return.all = T,start = NULL, max.iter = 1, debug = FALSE)
-        #plotDag(start$dag)
-        #print(parents(dag$dag,'TIMEPOINT'))
-        #print(children(dag$dag,'TIMEPOINT'))
+        #fit = bn.fit(dag, datapara, method='bayes')
+        # fit = timepointFixer(fit,imputed,weight)
+        # fit = childrenFixer(fit,imputed,weight)
+        # imputeRes = weightedImpute(fitList,fit,datapara2,i)
+        # imputed = imputeRes$data
+        # weight = imputeRes$weight
+        
+        # totalloglike = 0
+        # for(k in 1:nrow(internaltest)) {
+        #   evidence = internaltest[k,]
+        #   prob = BnExactInference(fit,evidence)
+        #   if(internaltest[k,'TIMEPOINT']==0){loglike = prob}
+        #   else{loglike = 1-prob}
+        #   totalloglike = totalloglike + loglike*weight[k]
+        # }
+        #print(totalloglike)
+        # if(abs(prevLogLike-totalloglike)<0.00001 | totalloglike<=prevLogLike){
+        #   print('break')
+        #   break
+        # }
+        # if(totalloglike>prevLogLike) {
+        #   prevLogLike = totalloglike
+        #   prevfit = fit
+        # } 
       }
-      
-      # structureData = dataList[[i]]
-      # structureData$PREVTIMEPOINT = NULL
-      # structureData$time = NULL
-      # structureData$delta = NULL
-      # structureData$id = NULL
-      dataComplete = data[complete.cases(data),]
-      #blackList = blacklistFunction(names(variableList[variableList==T&names(variableList)!='time']))
-      #if(i==1) {dag = structural.em(data, maximize = "hc",maximize.args = list(restart=100,blacklist=NULL,whitelist=NULL), fit = "bayes",fit.args=list(iss=2),impute='bayes-lw',return.all = T,start = start$dag, max.iter = 1, debug = FALSE)}
-      #else {dag = structural.em(data, maximize = "hc",maximize.args = list(restart=10,blacklist=NULL,whitelist=NULL), fit = "bayes",fit.args=list(iss=2),impute='bayes-lw',return.all = T,start = start$dag, max.iter = 1, debug = FALSE)}
-      #dag = structural.em(data, maximize = "tabu",maximize.args = list(tabu=200,blacklist=NULL,whitelist=NULL), fit = "bayes",fit.args=list(iss=2),impute='bayes-lw',return.all = T,start = start$dag, max.iter = 1, debug = FALSE)
-      dag = hc(dataComplete,restart=100,start = start$dag)
-      #dag = start
-      # if(length(mb(dag$dag,'TIMEPOINT'))<length(mb(start$dag,'TIMEPOINT'))) {
-      #   dag = start
-      # }
-      #start = dag
-      #dag = start
-      
-      print(parents(dag,'TIMEPOINT'))
-      print(children(dag,'TIMEPOINT'))
-      #whitelist = rbind(c('LDH_SERUM','TIMEPOINT'),c('GRANULOCYTES','TIMEPOINT'))
-      #blacklist = blacklistFunction(colnames(data)[variableList])
-      #dag = hc(structureData,restart=50,blacklist=NULL,whitelist = NULL,start=NULL)
-      
-      fit = bn.fit(dag, data, method='bayes',iss=1)
-      fitParents = bn.fit(fitListParents[[i]], data, method='bayes',iss=10)
-      fitListParents[[i]] = fitParents
-      #fit = emResult$fitted
-      #fit = bn.fit(dag, data, method='bayes')
+        
+      #prevDag = dag
       fitList[[i]] <- fit
-      #data = dataListNA[[i]]
-      nbdata=data
-      #nbdata$PREVTIMEPOINT = NULL
-      nb_model = naiveBayes(as.factor(TIMEPOINT) ~., nbdata, laplace = 20)
-      nbList[[i]] <- nb_model
-      #print(parents(fitList[[i]],'TIMEPOINT'))
+      #print(mb(fitList[[i]],'TIMEPOINT'))
       allmb = unique(c(allmb,mb(fitList[[i]],'TIMEPOINT')))
-      #plotDag(dag$dag)
     }
     
-    prevFitList=NULL
-    bnCurveList=NULL
-    if(prior) {
-      fitList = timepointPrior(dataListNA,fitList,prevFitList,originalTraining,mod,timePoints,kmMod,bnCurveList)
-    }
+    # imputenum = 0
+    # imputedDataListNa = dataListNA
+    # for(dataListIter in 1:length(fitList)) {
+    #   for(k in 1:nrow(imputedDataListNa[[dataListIter]])) {
+    #     if(is.na(imputedDataListNa[[dataListIter]][k,'TIMEPOINT'])) {
+    #       imputenum = imputenum+1
+    #       evidence = imputedDataListNa[[dataListIter]][k,]
+    #       #prob = BnExactInferenceCumulated(fitList,evidence)[dataListIter]
+    #       prob = BnExactInference(fitList[[dataListIter]],evidence)
+    #       if(dataListIter>1) {
+    #         probS = BnExactInferenceCumulated(fitList,evidence)[(dataListIter-1)]
+    #       }else {
+    #         probS=1
+    #       }
+    #       id = imputedDataListNa[[dataListIter]][k,'id']
+    #       #if(runif(1,0,1)>prob) {
+    #       if(0.5>prob) {
+    #         imputedDataListNa[[dataListIter]][k,'TIMEPOINT'] = 1
+    #         if(dataListIter<length(fitList)) {
+    #           for(paddingIter in (dataListIter+1):length(fitList)) {
+    #             imputedDataListNa[[paddingIter]][imputedDataListNa[[paddingIter]][,'id']==id,'TIMEPOINT'] = 1
+    #             imputedDataListNa[[paddingIter]][imputedDataListNa[[paddingIter]][,'id']==id,'PREVTIMEPOINT'] = 1
+    #           }
+    #           #paddingIter = dataListIter+1
+    #           #imputedDataListNa[[paddingIter]][imputedDataListNa[[paddingIter]][,'id']==id,'PREVTIMEPOINT'] = 0
+    #         }
+    #       }else {
+    #         imputedDataListNa[[dataListIter]][k,'TIMEPOINT'] = 0
+    #         if(dataListIter<length(fitList)) {
+    #           paddingIter = dataListIter+1
+    #           imputedDataListNa[[paddingIter]][imputedDataListNa[[paddingIter]][,'id']==id,'PREVTIMEPOINT'] = 0
+    #         }
+    #         # for(paddingIter in dataListIter:1) {
+    #         #   imputedDataListNa[[paddingIter]][imputedDataListNa[[paddingIter]][,'id']==id,'TIMEPOINT'] = 0
+    #         #   imputedDataListNa[[paddingIter]][imputedDataListNa[[paddingIter]][,'id']==id,'PREVTIMEPOINT'] = 0
+    #         # }
+    #       }
+    #       # if(runif(1,0,1)>probS) {
+    #       #   imputedDataListNa[[dataListIter]][k,'PREVTIMEPOINT'] = 1
+    #       # }else {
+    #       #   imputedDataListNa[[dataListIter]][k,'PREVTIMEPOINT'] = 0
+    #       # }
+    #     }
+    #   }
+    # }
+    #print(imputenum)
+    
+    # likelihoodTestdata = dataListNA
+    # likelihood = 0
+    # for(dataListIter in 1:length(fitList)) {
+    #   for(k in 1:nrow(likelihoodTestdata[[dataListIter]])) {
+    #     instance = likelihoodTestdata[[dataListIter]][k,]
+    #     if(instance['TIMEPOINT']==1 & instance['PREVTIMEPOINT']==0 &instance['delta']==1) {
+    #       prob = 1-BnExactInference(fitList[[dataListIter]],instance)
+    #       likelihood = likelihood + prob
+    #     }else if(is.na(instance['TIMEPOINT'])&!is.na(instance['PREVTIMEPOINT'])&instance['delta']==0) {
+    #       prob = BnExactInferenceCumulated(fitList,instance)[dataListIter]
+    #       likelihood = likelihood + prob
+    #     }
+    #   }
+    # }
+    # print(likelihood)
+    
     if(weighted) {
       fitList = weightedLearning(dataListNA,fitList,prevFitList,timePoints,originalTraining,mod,kmMod,bnCurveList)
     }
     prevFitList = fitList
-    
-    # bnCurveList = vector("list", nrow(training))
-    # for(k in 1:nrow(training)){
-    #   bnCurveList[[k]] = BnExactInferenceCumulated(prevFitList,training[k,])
-    # }
-    
-    # for(para_iter in 1:5){
-    #   if(prior) {
-    #     fitList = timepointPrior(dataListNA,fitList,prevFitList,originalTraining,mod,timePoints,kmMod,bnCurveList)
-    #   }
-    #   if(weighted) {
-    #     fitList = weightedLearning(dataListNA,fitList,prevFitList,timePoints,originalTraining,mod,kmMod,bnCurveList)
-    #   }
-    #   prevFitList = fitList
-    # }
-    
+
     
     if(cont) {
       contFittingList = contFitting(dataListCont,fitList,variableList,timePoints)
@@ -231,12 +276,10 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timePoints = 0,debug =
     
   }
   
-  #plot with bigger fontsize
-  #plotDag(dagList[[1]])
   print('start predict')
   #prediction
-  survivalFunctionTesting = predictFunction(fitList,fitListParents,nbList,testing,originalTesting,timePoints,queryMethod,dataList,contFittingList,cont,variableList,kmMod)
-  survivalFunctionTraining = predictFunction(fitList,fitListParents,nbList,training,originalTraining,timePoints,queryMethod,dataList,contFittingList,cont,variableList,kmMod)
+  survivalFunctionTesting = predictFunction(fitList,fitListParents,nbList,testingList,originalTesting,timePoints,queryMethod,dataList,contFittingList,cont,variableList,kmMod)
+  survivalFunctionTraining = predictFunction(fitList,fitListParents,nbList,trainingList,originalTraining,timePoints,queryMethod,dataList,contFittingList,cont,variableList,kmMod)
   
   testCurvesToReturn = survivalFunctionTesting
   timesAndCensTest = cbind.data.frame(time = originalTesting$time, delta = originalTesting$delta)
@@ -246,31 +289,32 @@ BayesianNet = function(training, testing, BayesianC1 = 1, timePoints = 0,debug =
   return(list(TestCurves = testCurvesToReturn, TestData = timesAndCensTest,TrainData = timesAndCensTrain,TrainCurves= trainingCurvesToReturn))  
 }
 
-predictFunction <- function(fitList,fitListParents,nbList,testing,originalTesting,timePoints,queryMethod,dataList,contFittingList,cont,variableList,kmMod) {
-  testing$time = NULL
-  testing$delta = NULL
+predictFunction <- function(fitList,fitListParents,nbList,testingList,originalTesting,timePoints,queryMethod,dataList,contFittingList,cont,variableList,kmMod) {
+  #testing$time = NULL
+  #testing$delta = NULL
   #testing$PREVTIMEPOINT = factor(integer(nrow(testing)),levels = c('0','1'))
   numTimepoint = length(timePoints)
   numReturnNA = 0
   numNotDecreasing = 0
-  threshold = 0.000001
-  
+
   #first value in cpt
-  previousTimepointProb = rep(1,nrow(testing))
-  previousProb = rep(1-(1/numTimepoint),nrow(testing))
-  previousProb2 = rep(1-(1/numTimepoint),nrow(testing))
-  previousProb3 = rep(1-(1/numTimepoint),nrow(testing))
+  previousTimepointProb = rep(1,nrow(testingList[[1]]))
+  # previousProb = rep(1-(1/numTimepoint),nrow(testing))
+  # previousProb2 = rep(1-(1/numTimepoint),nrow(testing))
+  # previousProb3 = rep(1-(1/numTimepoint),nrow(testing))
   
-  survivalFunction <- data.frame(matrix(ncol = nrow(testing), nrow = numTimepoint))
+  survivalFunction <- data.frame(matrix(ncol = nrow(testingList[[1]]), nrow = numTimepoint))
   for(i in 1:numTimepoint) {
+    testing = testingList[[i]]
+    testing$time = NULL
+    testing$delta = NULL
+    
     tempFit = fitList[[i]]
 
-    tempFitParents = fitListParents[[i]]
     tempNb = nbList[[i]]
     cat(i)
     cat(' ')
-    threshold = 0.001
-    
+
     for(j in 1:nrow(testing)) {
       #print(nrow(testing))
       #print(ncol(testCurvesToReturn))
@@ -297,58 +341,13 @@ predictFunction <- function(fitList,fitListParents,nbList,testing,originalTestin
         evidence = testing[j,]
         if(i>1){kmprob = predict(kmMod,timePoints[i])/predict(kmMod,timePoints[i-1])}else{kmprob = predict(kmMod,timePoints[i])}
         prob = BnExactInference(tempFit,evidence,kmprob=kmprob)
-      }else if(queryMethod == 'naivebayes') {
-        evidence = testing[j,]
-        cpt = tempFit[["TIMEPOINT"]][['prob']]
-        p = colnames(as.data.frame(cpt))
-        p = p[p!="Freq"]
-        if(p=='Var1') {p=c('TIMEPOINT')}
-        temp_evidence = evidence
-        temp_evidence$TIMEPOINT = factor(0,levels = c('0','1'))
-        ap1 = cpt[convertToFlatIndex(temp_evidence[p],dim(cpt))]
-        #temp_evidence$TIMEPOINT = factor(1,levels = c('0','1'))
-        #ap2 = cpt[convertToFlatIndex(temp_evidence[p],dim(cpt))]
-        #ap1 = ap1*previousTimepointProb[j]
-        ap2 = 1-ap1
-        
-        p0 = 0
-        p1 = 0
-        variables = children(tempFit,'TIMEPOINT')
-        for(v in variables) {
-          if(cont==T & variableList[v]){
-            par = contFittingList[[i]][[v]]
-            t1 = dnorm(originalTesting[j,v], mean = par['mean0'], sd = par['sd0'])
-            t2 = dnorm(originalTesting[j,v], mean = par['mean1'], sd = par['sd1'])
-          }else {
-            cpt = tempFit[[v]][['prob']]
-            p = colnames(as.data.frame(cpt))
-            p = p[p!="Freq"]
-            temp_evidence = evidence
-            temp_evidence$TIMEPOINT = factor(0,levels = c('0','1'))
-            t1 = cpt[convertToFlatIndex(temp_evidence[p],dim(cpt))]
-            temp_evidence$TIMEPOINT = factor(1,levels = c('0','1'))
-            t2 = cpt[convertToFlatIndex(temp_evidence[p],dim(cpt))]
-          }
-          
-          
-          if(t1>threshold) {rawp0=t1} else {rawp0=threshold}
-          if(t2>threshold) {rawp1=t2} else {rawp1=threshold}
-          p0 = p0 + log(rawp0)
-          p1 = p1 + log(rawp1)
-          
-        }
-        #print(t)
-        #p0 = p0
-        #p1 = p1
-        p0_Prob = exp(p0 + log(ap1))/(exp(p0 + log(ap1))+exp(p1 + log(ap2)))
-        prob = p0_Prob
       }else{
         print('No such query method')
       }
       
-      previousProb3[j] = previousProb2[j]
-      previousProb2[j] = previousProb[j]
-      previousProb[j] = prob
+      # previousProb3[j] = previousProb2[j]
+      # previousProb2[j] = previousProb[j]
+      # previousProb[j] = prob
       # if(j==1) {prob = previousProb[j]}
       # else if(j==2) {prob = (previousProb3[j]+previousProb2[j])/2}
       # else {prob = (previousProb3[j]+previousProb2[j]+previousProb[j])/3}
@@ -598,8 +597,8 @@ timepointPrior <- function(dataList,fitList,prevFitList,originalTraining,mod,tim
     dead = sum(dataiss$TIMEPOINT==1,na.rm=T)
     censored = sum(is.na(dataiss$TIMEPOINT))
     
-    iss = 1
-    iss_dead = iss * (dead/(alive+dead+censored*0.5))
+    #iss = 5
+    #iss_dead = iss * (dead/(alive+dead+0.5*censored))
 
     timepointProb = timepoint1
     
@@ -622,7 +621,7 @@ timepointPrior <- function(dataList,fitList,prevFitList,originalTraining,mod,tim
       #iss = timepointNANACount[j]
       iss=2
       if(iss<5) {iss=5}
-      iss_dead = iss * (dead/(alive+dead+censored*0.5))
+      iss_dead = iss * (dead/(alive+dead+0.5*censored))
       # if(iss_dead<2){
       #   iss_dead = 2
       #   iss = (iss_dead*(alive+dead+censored*0.5))/dead
@@ -673,7 +672,7 @@ timepointPrior <- function(dataList,fitList,prevFitList,originalTraining,mod,tim
   return(fitList)
 }
 
-weightedLearning <- function(dataList,fitList,prevFitList,timePoints,originalTraining,mod,kmMod,bnCurveList) {
+weightedLearning <- function(dataList,fitList,prevFitList,timePoints,originalTraining,mod,kmMod,bnCurveList,weight=NULL) {
   
   #testCurvesToReturn = predict(mod)
   
@@ -753,28 +752,12 @@ weightedLearning <- function(dataList,fitList,prevFitList,timePoints,originalTra
       for(k in 1:nrow(dataComplete)) {
         index = dataComplete[k,p]
         flatIndex = convertToFlatIndex(index,dim(newcpt))
-        newcpt[flatIndex] = newcpt[flatIndex] + 1
+        newcpt[flatIndex] = newcpt[flatIndex] + weight[k]
       }
-      
-      # for(k in 1:nrow(data)) {
-      #   if(is.na(data[k,'TIMEPOINT'])&!is.na(data[k,'PREVTIMEPOINT'])) {
-      #     index = data[k,p]
-      #     index['TIMEPOINT'] = 1
-      #     flatIndex = convertToFlatIndex(index,dim(newcpt))
-      #     newcpt[flatIndex] = newcpt[flatIndex] + 0.5
-      #     index['TIMEPOINT'] = 2
-      #     flatIndex = convertToFlatIndex(index,dim(newcpt))
-      #     newcpt[flatIndex] = newcpt[flatIndex] + 0.5
-      #   }
-      # }
       
       newcpt[is.na(newcpt)] = 0
       iss = 5
       newcpt = newcpt + iss
-      
-      # if(i>6){
-      #   for(k in 1:length(newcpt)){newcpt[k]=5}
-      # }
       
       normal = as.table(array(integer(prod(dim(newcpt)[-1])),dim=dim(newcpt)[-1]))
       for(z in 1:length(normal)){normal[z]=0}
@@ -849,5 +832,122 @@ contFitting = function(dataListCont,fitList,variableList,timePoints) {
   return(contFittingList)
 }
 
+imputeFunction = function(fitted1,fitted2,inputdata) {
+  #n=floor(50*nrow(inputdata[!is.na(inputdata),])/nrow(inputdata[is.na(inputdata),]))
+  n=1
+  if(n<1){n=1}
+  if(n>20){n=20}
+  imputeCount = 0
+  ouputdata = inputdata[complete.cases(inputdata),]
+  ouputdata = ouputdata[1,]
+  for(k in 1:nrow(inputdata)) {
+    if(is.na(inputdata[k,'TIMEPOINT'])) {
+    #if(T) {
+      imputeCount = imputeCount+1
+      evidence = inputdata[k,]
+      datainstance = inputdata[k,]
+      evidence$TIMEPOINT = NULL
+      if(is.null(fitted1)) {
+        prob1 = 1
+      }else {
+        prob1 = BnExactInference(fitted1,evidence)
+      }
+      prob2 = BnExactInference(fitted2,evidence)
+      imputeProb = prob2/prob1
+      if(is.nan(prob1)){prob1=0}
+      if(is.nan(imputeProb)){imputeProb=1}
+      if(imputeProb>1){imputeProb=1}
+      if(imputeProb<0){imputeProb=0}
+      for(w in 1:n) {
+        if(runif(1,0,1)<imputeProb) {
+          datainstance['TIMEPOINT'] = 0
+          ouputdata = rbind(ouputdata,datainstance)
+        }else {
+          datainstance['TIMEPOINT'] = 1
+          ouputdata = rbind(ouputdata,datainstance)
+        }
+      }
+    }else {
+      for(w in 1:n) {
+        ouputdata = rbind(ouputdata,inputdata[k,])
+      }
+    }
+    # if(!is.na(inputdata[k,'TIMEPOINT'])) {
+    #   for(w in 1:n) {
+    #     ouputdata = rbind(ouputdata,inputdata[k,])
+    #   }
+    # }
+  }
+  print(imputeCount)
+  return(ouputdata)
+}
 
-
+imputeFunctionSuvival = function(fitted1,fitted2,inputdata) {
+  #n=floor(50*nrow(inputdata[!is.na(inputdata),])/nrow(inputdata[is.na(inputdata),]))
+  n=1
+  if(n<1){n=1}
+  if(n>20){n=20}
+  imputeCount = 0
+  ouputdata = inputdata[complete.cases(inputdata),]
+  ouputdata = ouputdata[1,]
+  weight = c(1)
+  for(k in 1:nrow(inputdata)) {
+    if(is.na(inputdata[k,'TIMEPOINT'])) {
+    #if(T) {
+      imputeCount = imputeCount+1
+      evidence = inputdata[k,]
+      datainstance = inputdata[k,]
+      evidence$TIMEPOINT = NULL
+      if(is.null(fitted1)) {
+        prob1 = 1
+      }else {
+        prob1 = BnExactInference(fitted1,evidence)
+      }
+      #prob2 = BnExactInference(fitted2,evidence)
+      #prob1 = BnExactInference(fitted1,evidence)
+      imputeProb = prob1
+      if(is.nan(prob1)){prob1=0}
+      if(is.nan(imputeProb)){imputeProb=1}
+      if(imputeProb>1){imputeProb=1}
+      if(imputeProb<0){imputeProb=0}
+      if(is.na(inputdata[k,'PREVTIMEPOINT'])) {
+        if(is.null(fitted2)) {
+          probS = 1
+        }else {
+          probS = BnExactInference(fitted2,evidence)
+        }
+      }else {
+        probS = 1
+      }
+      datainstance['TIMEPOINT'] = 0
+      ouputdata = rbind(ouputdata,datainstance)
+      weight = c(weight,probS*prob1)
+      datainstance['TIMEPOINT'] = 1
+      ouputdata = rbind(ouputdata,datainstance)
+      weight = c(weight,probS*(1-prob1))
+      # for(w in 1:floor(probS*n)) {
+      #   if(runif(1,0,1)<imputeProb) {
+      #     datainstance['TIMEPOINT'] = 0
+      #     ouputdata = rbind(ouputdata,datainstance)
+      #   }else {
+      #     datainstance['TIMEPOINT'] = 1
+      #     ouputdata = rbind(ouputdata,datainstance)
+      #   }
+      # }
+    }else {
+      # for(w in 1:n) {
+      #   ouputdata = rbind(ouputdata,inputdata[k,])
+      # }
+      ouputdata = rbind(ouputdata,inputdata[k,])
+      weight = c(weight,1)
+    }
+    # if(!is.na(inputdata[k,'TIMEPOINT'])) {
+    #   for(w in 1:n) {
+    #     ouputdata = rbind(ouputdata,inputdata[k,])
+    #   }
+    # }
+  }
+  print(imputeCount)
+  ouputdata$PREVTIMEPOINT = NULL
+  return(list(data=ouputdata,weight=weight))
+}
