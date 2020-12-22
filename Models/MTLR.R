@@ -66,8 +66,13 @@ source("Evaluations/EvaluationHelperFunctions.R")
 
 MTLR = function(training, testing, C1 = NULL, numFolds = 5){
   if(is.null(C1)){
+    #nintervals <- ceiling(sqrt(((5-1)/5)*nrow(training)))
+    m = floor(sqrt(nrow(training)*4/5)+1)
+    quantileVals = seq(0,1,length.out = m+2)[-c(1,m+2)]
+    timePoints = unname(quantile(training$time, quantileVals))
+    time_points = timePoints[!duplicated(timePoints)]
     C1 = mtlr_cv(Surv(time,delta)~.,data=training, loss= "conc", C1_vec = c(0.001,0.01,0.1,1,10,100,1000)
-, train_biases = F,train_uncensored = F)$best_C1
+, train_biases = F,train_uncensored = F,time_points = time_points)$best_C1
     print(C1)
   }
   

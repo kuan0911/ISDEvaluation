@@ -5,6 +5,19 @@
 survivalDataset <- read.csv(file = "Data/NACD_colorectal.csv")
 names(survivalDataset)[c(1,2)] = c("time", "delta")
 survivalDataset$delta = 1 - survivalDataset$delta 
+
+survivalDataset <- read.csv(file = "Data/KIPAN.csv")
+
+# for(k in 1:nrow(survivalDataset)) {
+#   if(runif(1,0,1)<0.7 & survivalDataset[k,'delta']==1) {
+#     censoreTime = runif(1,0.1,max(survivalDataset$time))
+#     if(censoreTime<survivalDataset[k,'time']) {
+#       survivalDataset[k,'delta'] = as.integer(0)
+#       survivalDataset[k,'time'] = censoreTime
+#     }
+#   }
+# }
+print(sum(survivalDataset$delta==0)/nrow(survivalDataset))
 # survivalDataset$STAGE_4 = NULL
 # survivalDataset$STAGE_3 = NULL
 # survivalDataset$STAGE_2 = NULL
@@ -15,6 +28,11 @@ survivalDataset$delta = 1 - survivalDataset$delta
 # survivalDataset$PERFORMANCE_STATUS_1 = NULL
 # survivalDataset$PERFORMANCE_STATUS_0 = NULL
 # survivalDataset$AGE65 = NULL
+
+survivalDataset <- read.csv(file = "Data/covid_hospitalized_data.csv")
+survivalDataset$delta = as.integer(as.logical(survivalDataset$event))
+survivalDataset$event = NULL
+survivalDataset$X = NULL
 
 survivalDataset <- read.csv(file = "Data/LifeExpectancyData.csv")
 
@@ -27,7 +45,7 @@ survivalDataset$X = NULL
 
 source('analysisMaster.R')
 
-ISD = analysisMaster(survivalDataset, CoxKP = F, MTLRModel=F,BayesianNetModel=T,KaplanMeier = F, FS = T, numberOfFolds = 5)
+ISD = analysisMaster(survivalDataset, CoxKP = F, MTLRModel=T,BayesianNetModel=F,KaplanMeier = F, FS = T, numberOfFolds = 5)
 
 ISD = analysisMaster(survivalDataset, MTLRModel=T,BayesianNetModel=T,KaplanMeier = F, FS = F, numberOfFolds = 5)
 

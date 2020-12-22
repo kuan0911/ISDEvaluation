@@ -12,7 +12,7 @@ sythesize2 = function(n=5000) {
   LorD = as.integer(c(0,1))
   
   a = sample(LV3, 5000, prob = rep(1/3, 3), replace = TRUE)
-  c = sample(LV3, 5000, prob = c(0.45, 0.3, 0.25), replace = TRUE)
+  c = sample(LV3, 5000, prob = c(0.75, 0.2, 0.05), replace = TRUE)
   d = sample(LV3, 5000, prob = c(0.4, 0.3, 0.3), replace = TRUE)
   e = sample(c(1, 2), 5000, prob = c(0.75, 0.25), replace = TRUE)
   
@@ -23,11 +23,7 @@ sythesize2 = function(n=5000) {
   
   b = TIMEPOINT
   b[b == 0] = sample(LV3, length(which(b == 0)), prob = c(0.6, 0.2, 0.2), replace = TRUE)
-  b[b == 1] = sample(LV3, length(which(b == 1)), prob = c(0.15, 0.15, 0.7), replace = TRUE)
-  
-  e = TIMEPOINT
-  e[e == 0] = sample(c(1, 2), length(which(e == 0)), prob = c(0.9, 0.1), replace = TRUE)
-  e[e == 1] = sample(c(1, 2), length(which(e == 1)), prob = c(0.3, 0.7), replace = TRUE)
+  b[b == 1] = sample(LV3, length(which(b == 1)), prob = c(0.15, 0.7, 0.15), replace = TRUE)
   
   g = TIMEPOINT
   g[g == 0] = sample(LV3, length(which(g == 0)), prob = c(0.5, 0.4, 0.1), replace = TRUE)
@@ -50,11 +46,11 @@ sythesize2 = function(n=5000) {
   
   TIMEPOINT = d
   TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.95, 0.05), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.7, 0.3), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.9, 0.1), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.85, 0.25), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.8, 0.2), replace = TRUE)
   
   e = TIMEPOINT
-  e[e == 0] = sample(c(1, 2), length(which(e == 0)), prob = c(0.5, 0.5), replace = TRUE)
+  e[e == 0] = sample(c(1, 2), length(which(e == 0)), prob = c(0.7, 0.5), replace = TRUE)
   e[e == 1] = sample(c(1, 2), length(which(e == 1)), prob = c(0.3, 0.7), replace = TRUE)
   
   # g = TIMEPOINT
@@ -81,12 +77,10 @@ sythesize2 = function(n=5000) {
   fit2 = bn.fit(dag2,syndata2)
   #graphviz.plot(fit2)
   
-  g = sample(LV3, 5000, prob = c(0.4, 0.3, 0.3), replace = TRUE)
-  
   TIMEPOINT = g
-  TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.7, 0.3), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.1, 0.9), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.3, 0.7), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.8, 0.2), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.6, 0.4), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.7, 0.3), replace = TRUE)
   
   syndata3 = data.frame(
     TIMEPOINT = factor(TIMEPOINT, levels = LorD),
@@ -102,7 +96,7 @@ sythesize2 = function(n=5000) {
   arcs(dag3) = arc.set3
   fit3 = bn.fit(dag3,syndata3)
   #graphviz.plot(fit3)
-
+  
   covariateData = data.frame(
     A = factor(a, levels = LV3),
     B = factor(b, levels = LV3),
@@ -120,8 +114,8 @@ sythesize2 = function(n=5000) {
   fitList[[4]] = fit2
   fitList[[5]] = fit3
   fitList[[6]] = fit3
-  #fitList[[7]] = fit3
-  # fitList[[8]] = fit3
+  #fitList[[7]] = fit2
+  #fitList[[8]] = fit3
   
   covariateDag = empty.graph(c('A','B','C','D','E','G'))
   covariateFit = bn.fit(covariateDag, covariateData, method='bayes',iss=5)
@@ -135,9 +129,8 @@ sythesize2 = function(n=5000) {
     for(k in 1:nrow(covariateSim)) {
       if(is.na(time[k])) {
         covariate = covariateSim[k,]
-        lev = lapply(Filter(is.factor,covariateSim), levels)
         #predicted = predict(object = fitList[[i]], node = "TIMEPOINT", data = covariate, method = "bayes-lw", n=2000, prob = TRUE)
-        prob = BnExactInference(fitList[[i]],covariate,threshold=0.0005,kmprob=NULL,noise=T,lev=lev)
+        prob = BnExactInference(fitList[[i]],covariate,kmprob=NULL)
         if(runif(1,0,1)>prob) {
           time[k] = runif(1,timePointsWithZero[i], timePointsWithZero[i+1])
         }
@@ -150,7 +143,7 @@ sythesize2 = function(n=5000) {
   for(k in 1:nrow(syntheticData)) {
     if(is.na(syntheticData[k,'time'])) {
       syntheticData[k,'delta'] = as.integer(0)
-      syntheticData[k,'time'] = runif(1,timePoints[m],timePoints[m]+10)
+      syntheticData[k,'time'] = runif(1,timePoints[m],2*timePoints[m]-timePoints[m-1])
     }
   }
   
@@ -167,5 +160,3 @@ sythesize2 = function(n=5000) {
   write.csv(syntheticData,'Data/syntheticData.csv')
   
 }
-
-

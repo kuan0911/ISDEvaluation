@@ -52,8 +52,8 @@ BayesianNet = function(training, testing, timePoints = 0,debug = FALSE){
   testingList = vector("list", numTimepoint)
   for(i in 1:numTimepoint) {
     levelnum = numTimepoint - i
-    if(levelnum>4) {levelnum=4}
-    else if(levelnum<2) {levelnum=2}
+    if(levelnum>10) {levelnum=10}
+    else if(levelnum<3) {levelnum=3}
     cleaned = cleanDataType(nrow(testing),allData,allDiscrete=T,discretize_level=levelnum)
     testingList[[i]] = cleaned$test
     trainingList[[i]] = cleaned$train
@@ -100,7 +100,7 @@ BayesianNet = function(training, testing, timePoints = 0,debug = FALSE){
   
   prevLikelihood = 0
   
-  for(iter in 1:5) {
+  for(iter in 1:1) {
     if(iter==1) {
       iLess = 1
       structureData = dataListLess[[2]]
@@ -108,7 +108,7 @@ BayesianNet = function(training, testing, timePoints = 0,debug = FALSE){
       #structureData = do.call("rbind", dataListLess)
       #structureData = structureData[structureData$PREVTIMEPOINT==0,]
       structureData[,c('PREVTIMEPOINT','time','delta','id')] = NULL
-      allstart = structural.em(structureData, maximize = "hc",maximize.args = list(restart=50,blacklist=NULL,whitelist=NULL,score='bic'), fit = "bayes",fit.args=list(iss=2),impute='bayes-lw',return.all = T,start = NULL, max.iter = 2, debug = FALSE)
+      allstart = structural.em(structureData, maximize = "hc",maximize.args = list(restart=500,blacklist=NULL,whitelist=NULL,score='bic'), fit = "bayes",fit.args=list(iss=2),impute='bayes-lw',return.all = T,start = NULL, max.iter = 2, debug = FALSE)
       prevFitS = NULL
       prevDag = NULL
       prevFit = NULL
@@ -149,55 +149,30 @@ BayesianNet = function(training, testing, timePoints = 0,debug = FALSE){
       # #dag = dag$dag
       # fit = bn.fit(dag, datapara, method='bayes')
       # fit = timepointFixer(fit,datapara)
-      for(emiter in 1:3) {
-        if(iter>1) {
-          fit = fitList[[i]]
-          imputeRes = weightedImpute(fitList,fit,dataListNAadapt,datapara2,i)
-        }else {
-          internaltest = datapara[complete.cases(datapara),]
-          dag = hc(internaltest,restart=100,start=allstart$dag,score='bic')
-          fit = bn.fit(dag, datapara, method='bayes')
-          imputeRes = weightedImputeKM(kmMod,datapara2,timePoints,i)
-        }
-        imputed = imputeRes$data
-        weight = imputeRes$weight
-        # prevLogLike = 0
-        # maxfit = fit
-        fit = timepointFixer(fit,imputed,weight)
-        fit = childrenFixer(fit,imputed,weight)
-      #for(emiter in 1:1) {
-        #dag = hc(imputed,restart=100,start=allstart$dag,score='bic')
-        #dag = hc(imputed, start=dag,score="custom",fun = customScoreFunction, args=list(weight=weight,prevFit=NULL,nextFit=NULL))
-        
-        #fit = bn.fit(dag, datapara, method='bayes')
-        # fit = timepointFixer(fit,imputed,weight)
-        # fit = childrenFixer(fit,imputed,weight)
-        # imputeRes = weightedImpute(fitList,fit,datapara2,i)
-        # imputed = imputeRes$data
-        # weight = imputeRes$weight
-        
-        # totalloglike = 0
-        # for(k in 1:nrow(internaltest)) {
-        #   evidence = internaltest[k,]
-        #   prob = BnExactInference(fit,evidence)
-        #   if(internaltest[k,'TIMEPOINT']==0){loglike = prob}
-        #   else{loglike = 1-prob}
-        #   totalloglike = totalloglike + loglike*weight[k]
-        # }
-        #print(totalloglike)
-        # if(abs(prevLogLike-totalloglike)<0.00001 | totalloglike<=prevLogLike){
-        #   print('break')
-        #   break
-        # }
-        # if(totalloglike>prevLogLike) {
-        #   prevLogLike = totalloglike
-        #   prevfit = fit
-        # } 
+      if(iter>1) {
+        fit = fitList[[i]]
+        imputeRes = weightedImpute(fitList,fit,dataListNAadapt,datapara2,i)
+      }else {
+        internaltest = datapara[complete.cases(datapara),]
+        dag = hc(internaltest,restart=100,start=allstart$dag,score='bic')
+        fit = bn.fit(dag, datapara, method='bayes')
+        fit = timepointFixer(fit,datapara)
+        #imputeRes = weightedImputeKM(kmMod,datapara2,timePoints,i)
       }
+      #imputed = imputeRes$data
+      #weight = imputeRes$weight
+      # prevLogLike = 0
+      # maxfit = fit
+      #dag = hc(internaltest,start=NULL,score="custom",fun = customScoreFunction, args=list(weight=weight,prevFit=NULL,nextFit=NULL))
+      #fit = bn.fit(dag, datapara, method='bayes')
+      #fit = timepointFixer(fit,imputed,weight)
+      #fit = timepointFixer(fit,datapara)
+      #fit = childrenFixer(fit,imputed,weight)
+      
         
       #prevDag = dag
       fitList[[i]] <- fit
-      #print(mb(fitList[[i]],'TIMEPOINT'))
+      print(mb(fitList[[i]],'TIMEPOINT'))
       allmb = unique(c(allmb,mb(fitList[[i]],'TIMEPOINT')))
     }
     
@@ -290,19 +265,13 @@ BayesianNet = function(training, testing, timePoints = 0,debug = FALSE){
 }
 
 predictFunction <- function(fitList,fitListParents,nbList,testingList,originalTesting,timePoints,queryMethod,dataList,contFittingList,cont,variableList,kmMod) {
-  #testing$time = NULL
-  #testing$delta = NULL
-  #testing$PREVTIMEPOINT = factor(integer(nrow(testing)),levels = c('0','1'))
   numTimepoint = length(timePoints)
   numReturnNA = 0
   numNotDecreasing = 0
 
   #first value in cpt
   previousTimepointProb = rep(1,nrow(testingList[[1]]))
-  # previousProb = rep(1-(1/numTimepoint),nrow(testing))
-  # previousProb2 = rep(1-(1/numTimepoint),nrow(testing))
-  # previousProb3 = rep(1-(1/numTimepoint),nrow(testing))
-  
+
   survivalFunction <- data.frame(matrix(ncol = nrow(testingList[[1]]), nrow = numTimepoint))
   for(i in 1:numTimepoint) {
     testing = testingList[[i]]
@@ -322,17 +291,7 @@ predictFunction <- function(fitList,fitListParents,nbList,testingList,originalTe
       if(queryMethod == 'lw') {
         eviList = as.list(testing[j,])
         prob = cpquery(tempFit, event = (TIMEPOINT == 0), evidence = as.list(testing[j,]),method = 'lw')
-      }else if(queryMethod == 'ls') {
-        #evidence = testing[j,c('TIMEPOINT',children(dag$dag,'TIMEPOINT'))]
-        #prob = predict(tempFit, evidence)
-        #iss_total = (alive+dead+censored*0.5)*0.1
-        #iss_dead = dead*0.1
-        #prob = 1-(iss_dead/iss_total)
       }else if(queryMethod == 'predict') {
-        # cpt = tempFit[["TIMEPOINT"]][['prob']]
-        # p = colnames(as.data.frame(cpt))
-        # p = p[p!="Freq"]
-        # if(p=='Var1') {p=c('TIMEPOINT')}
         evidence = testing[j,]
         predicted = predict(tempFit, node="TIMEPOINT", evidence,method = "bayes-lw", prob = TRUE)
         attr(predicted, "prob")
@@ -345,18 +304,8 @@ predictFunction <- function(fitList,fitListParents,nbList,testingList,originalTe
         print('No such query method')
       }
       
-      # previousProb3[j] = previousProb2[j]
-      # previousProb2[j] = previousProb[j]
-      # previousProb[j] = prob
-      # if(j==1) {prob = previousProb[j]}
-      # else if(j==2) {prob = (previousProb3[j]+previousProb2[j])/2}
-      # else {prob = (previousProb3[j]+previousProb2[j]+previousProb[j])/3}
-
-      #prob = 1-(dead/total)
-      
       survivalFunction[i,j] = prob*previousTimepointProb[j]
       #survivalFunction[i,j] = prob
-      
       
       if(is.na(survivalFunction[i,j])) {
         survivalFunction[i,j] = previousTimepointProb[j]-0.01
@@ -377,10 +326,8 @@ predictFunction <- function(fitList,fitListParents,nbList,testingList,originalTe
   }
   if(numReturnNA>0) {cat('return NA: ',numReturnNA)}
   if(numNotDecreasing>0) {cat('Not decreasing: ',numNotDecreasing)}
-  #survivalFunction = rbind(rep(1,nrow(testing)),survivalFunction)
-  
+
   colnames(survivalFunction) = 1:nrow(testing)
-  #survivalFunction = cbind(time = c(0,timePoints), survivalFunction) 
   return(survivalFunction)
 }
 
@@ -405,50 +352,6 @@ blacklistFunction <- function(nodeNames){
   return(blackList2)
 }
 
-blacklistFunctionFixParents <- function(nodeNames,parents){
-  nodeNames = nodeNames[nodeNames!="TIMEPOINT"&nodeNames!="PREVTIMEPOINT"]
-  notParents = setdiff(nodeNames,parents)
-  blackList = matrix(ncol = 2, nrow = length(notParents))
-  for(i in 1:length(notParents)) {
-    blackList[i,] = c(notParents[i],"TIMEPOINT")
-  }
-  if(length(parents)>0) {
-    whiteList = matrix(ncol = 2, nrow = length(parents))
-    for(i in 1:length(parents)) {
-      whiteList[i,] = c(parents[i],"TIMEPOINT")
-    }
-  }else {
-    whiteList = NULL
-  }
-  
-  
-  return(list(blackList=blackList,whiteList=whiteList))
-}
-
-blacklistFunctionStart <- function(nodeNames){
-  blackList = matrix(ncol = 2, nrow = length(nodeNames))
-  blackList2 = matrix(ncol = 2, nrow = length(nodeNames))
-  blackList3 = matrix(ncol = 2, nrow = length(nodeNames))
-  blackList4 = matrix(ncol = 2, nrow = length(nodeNames))
-  for(i in 1:length(nodeNames)) {
-    blackList[i,] = c(nodeNames[i],"PREVTIMEPOINT")
-    blackList2[i,] = c("TIMEPOINT",nodeNames[i])
-    blackList3[i,] = c("PREVTIMEPOINT", nodeNames[i])
-    blackList4[i,] = c(nodeNames[i],"TIMEPOINT")
-  }
-  blackList = blackList[blackList[,1] != 'PREVTIMEPOINT',]
-  blackList2 = blackList2[blackList2[,2] != 'TIMEPOINT',]
-  blackList2 = blackList2[blackList2[,2] != 'PREVTIMEPOINT',]
-  blackList3 = blackList3[blackList3[,2] != 'TIMEPOINT',]
-  blackList3 = blackList3[blackList3[,2] != 'PREVTIMEPOINT',]
-  
-  blackList = rbind(blackList, blackList2)
-  blackList = rbind(blackList, blackList3)
-  blackList = rbind(blackList, blackList4)
-  
-  return(blackList)
-}
-
 generateEvidenceString <- function(nodeNames,dataInstance) {
   colnamelist = nodeNames
   for(k in 1:length(colnamelist)) {
@@ -462,33 +365,6 @@ generateEvidenceString <- function(nodeNames,dataInstance) {
   evi = paste( c( '(' , evi , ')' ), collapse = '')
   
   return(evi)
-}
-
-fixtime <- function(curve) {
-  newcurve = curve
-  newcurve[1,1] = curve[1,1]/2
-  for(i in 2:nrow(curve)) {
-    newcurve[i,1] = (curve[i-1,1] + curve[i,1])/2
-  }
-  return(newcurve)
-}
-
-smoothCurve <-function(survivalCurve) {
-  newSurvivalCurve = survivalCurve
-  for(i in 2:(nrow(survivalCurve)-1)) {
-    for(j in 2:ncol(survivalCurve)) {
-      newSurvivalCurve[i,j] = (survivalCurve[i-1,j]+survivalCurve[i,j]+survivalCurve[i+1,j])/3
-    }
-  }
-  for(j in 2:ncol(newSurvivalCurve)) {
-    for(i in 1:(nrow(newSurvivalCurve)-1)) {
-      if(newSurvivalCurve[i+1,j] > newSurvivalCurve[i,j]){
-        print('fix curve')
-        newSurvivalCurve[i+1,j] = newSurvivalCurve[i,j]
-      }
-    }
-  }
-  return(newSurvivalCurve)
 }
 
 
@@ -880,74 +756,4 @@ imputeFunction = function(fitted1,fitted2,inputdata) {
   }
   print(imputeCount)
   return(ouputdata)
-}
-
-imputeFunctionSuvival = function(fitted1,fitted2,inputdata) {
-  #n=floor(50*nrow(inputdata[!is.na(inputdata),])/nrow(inputdata[is.na(inputdata),]))
-  n=1
-  if(n<1){n=1}
-  if(n>20){n=20}
-  imputeCount = 0
-  ouputdata = inputdata[complete.cases(inputdata),]
-  ouputdata = ouputdata[1,]
-  weight = c(1)
-  for(k in 1:nrow(inputdata)) {
-    if(is.na(inputdata[k,'TIMEPOINT'])) {
-    #if(T) {
-      imputeCount = imputeCount+1
-      evidence = inputdata[k,]
-      datainstance = inputdata[k,]
-      evidence$TIMEPOINT = NULL
-      if(is.null(fitted1)) {
-        prob1 = 1
-      }else {
-        prob1 = BnExactInference(fitted1,evidence)
-      }
-      #prob2 = BnExactInference(fitted2,evidence)
-      #prob1 = BnExactInference(fitted1,evidence)
-      imputeProb = prob1
-      if(is.nan(prob1)){prob1=0}
-      if(is.nan(imputeProb)){imputeProb=1}
-      if(imputeProb>1){imputeProb=1}
-      if(imputeProb<0){imputeProb=0}
-      if(is.na(inputdata[k,'PREVTIMEPOINT'])) {
-        if(is.null(fitted2)) {
-          probS = 1
-        }else {
-          probS = BnExactInference(fitted2,evidence)
-        }
-      }else {
-        probS = 1
-      }
-      datainstance['TIMEPOINT'] = 0
-      ouputdata = rbind(ouputdata,datainstance)
-      weight = c(weight,probS*prob1)
-      datainstance['TIMEPOINT'] = 1
-      ouputdata = rbind(ouputdata,datainstance)
-      weight = c(weight,probS*(1-prob1))
-      # for(w in 1:floor(probS*n)) {
-      #   if(runif(1,0,1)<imputeProb) {
-      #     datainstance['TIMEPOINT'] = 0
-      #     ouputdata = rbind(ouputdata,datainstance)
-      #   }else {
-      #     datainstance['TIMEPOINT'] = 1
-      #     ouputdata = rbind(ouputdata,datainstance)
-      #   }
-      # }
-    }else {
-      # for(w in 1:n) {
-      #   ouputdata = rbind(ouputdata,inputdata[k,])
-      # }
-      ouputdata = rbind(ouputdata,inputdata[k,])
-      weight = c(weight,1)
-    }
-    # if(!is.na(inputdata[k,'TIMEPOINT'])) {
-    #   for(w in 1:n) {
-    #     ouputdata = rbind(ouputdata,inputdata[k,])
-    #   }
-    # }
-  }
-  print(imputeCount)
-  ouputdata$PREVTIMEPOINT = NULL
-  return(list(data=ouputdata,weight=weight))
 }

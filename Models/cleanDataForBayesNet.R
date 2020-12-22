@@ -205,3 +205,51 @@ variableTypes = function(data,maxFactorLevel) {
   }
   return(variableList)
 }
+
+kmTimesplit = function(m,kmMod,data,step=1) {
+  timePoints = rep(0,m)
+  curves = rep(0,nrow(data))
+  windowMax = max(data$time)
+  summation = 0
+  for(k in 1:nrow(data)) {
+    if(data[k,'delta']==1) {
+      summation = summation + 1
+      curves[k] = 1
+    }else {
+      summation = summation + 1 - predict(kmMod,windowMax)/predict(kmMod,data[k,'time'])
+      curves[k] = 0
+    }
+  }
+  avesum = summation/m
+  prevTime = 0
+  sortData = data[order(data$time),]
+  for(i in 1:m) {
+    for(s in seq(prevTime, windowMax, step)) {
+      localsum = 0
+      timesetflag = F
+      for(k in 1:nrow(sortData)) {
+        if(data[k,'delta']==1) {
+          if(data[k,'time']>=prevTime && data[k,'time']<s) {localsum = localsum + 1}
+          #print(localsum)
+        }else {
+          if(data[k,'time']<s) {
+            localsum = localsum + 1 - predict(kmMod,s)/predict(kmMod,prevTime)
+          }
+        }
+        if(localsum >= avesum) {
+          timePoints[i] = s
+          prevTime = s
+          timesetflag = T
+          print(i)
+          print('time set')
+          #print(timePoints[i])
+          break
+        }
+      }
+      if(timesetflag) {break}
+      #print(localsum)
+    }
+  }
+  return(timePoints)
+}
+

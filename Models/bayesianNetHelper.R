@@ -25,7 +25,7 @@ convertToFlatIndexMultiple = function(index,dimension) {
   return(flatIndexVec)
 }
 
-BnExactInference = function(tempFit,evidence,kmprob=NULL,noise=F,lev=NULL){
+BnExactInference = function(tempFit,evidence,kmprob=NULL,noise=F,lev=NULL,noiserate = 0.1){
   #threshold=0.0005
   evidence[c('PREVTIMEPOINT','TIMEPOINT','time','delta','id')] = NULL
   
@@ -36,7 +36,7 @@ BnExactInference = function(tempFit,evidence,kmprob=NULL,noise=F,lev=NULL){
     if(p=='Var1') {p=c('TIMEPOINT')}
   }
   if(noise) {
-    if(runif(1,0,1)<0.1) {
+    if(runif(1,0,1)<noiserate) {
       index = sample(1:length(evidence), 1)
       evidence[index] = sample(lev[[index]],1)
     }
@@ -141,7 +141,7 @@ timepointFixer <- function(fit,data,weight=NULL,iss=5) {
   alive = sum(data$TIMEPOINT==0,na.rm=T)
   dead = sum(data$TIMEPOINT==1,na.rm=T)
   censored = sum(is.na(data$TIMEPOINT))
-  iss_dead = iss * (dead/(alive+dead+0.5*censored))
+  iss_dead = iss * (dead/(alive+dead+censored))
     
   timepointProb = timepoint1
   for(k in 1:length(timepointProb)){timepointProb[k]=0}
@@ -225,7 +225,7 @@ childrenFixer <- function(fit,data,weight=NULL,iss=1) {
 customScoreFunction = function(node, parents, data, args) {
   if(!is.null(args$weight)) {weight = args$weight}
   else {weight = rep(1,nrow(data))}
-  kpenalty = (log(nrow(data))/2)
+  kpenalty = (log(sum(weight))/2)
   #kpenalty = 1
   df = as.data.frame(data[,node])
   if(length(parents)==0){
@@ -250,19 +250,18 @@ customScoreFunction = function(node, parents, data, args) {
     indexarray = df[,p]
     for(k in 1:nrow(indexarray)) {
       flatIndex = convertToFlatIndex(indexarray[k,],dim(cpt))
-      loglike = cpt[flatIndex]
+      loglike = log(cpt[flatIndex])*weight[k]
       #evidence = as.data.frame(data[k,parents,drop=FALSE])
       #predicted = predict(fit, node=node, data=evidence,method = "parents", prob = TRUE)
       #index = as.factor(df[k,node])
-      totalloglike = totalloglike + loglike*weight[k]
+      totalloglike = totalloglike + loglike
     }
     parentparams = 0
     for(p in parents) {
-      parentparams = parentparams + length(levels(df[,p]))
+      parentparams = parentparams + length(levels(df[,p]))-1
     }
     parapenalty = nparams(fit)-parentparams
     totalloglike = totalloglike - kpenalty*parapenalty
-    
   }
   if(!is.null(args$prevFit)) {
     prevParents = parents(args$prevFit,node)
@@ -290,10 +289,17 @@ weightedImpute = function(fitList,fit,dataListNAadapt,inputdata,currentTime) {
       evidenceList = getEvidenceList(dataListNAadapt,datainstance$id,currentTime)
       if(!is.na(inputdata[k,'PREVTIMEPOINT'])) {
         probSurvive = 1
+        fitList[[currentTime]] = fit
+        prob = BnExactInferenceCumulated(fitList,evidenceList,currentTime)
       }else {
+        fitList[[currentTime]] = fit
         probSurvive = BnExactInferenceCumulated(fitList,evidenceList,currentTime-1)
+        prob = 1-(BnExactInferenceCumulated(fitList,evidenceList,currentTime-1)-BnExactInferenceCumulated(fitList,evidenceList,currentTime))
+        
       }
-      prob = BnExactInference(fit,evidenceList[[currentTime]])
+      #prob = BnExactInference(fit,evidenceList[[currentTime]])
+      fitList[[currentTime]] = fit
+      #prob = 1-(BnExactInferenceCumulated(fitList,evidenceList,currentTime-1)-BnExactInferenceCumulated(fitList,evidenceList,currentTime))
       if(is.nan(probSurvive) | is.nan(prob)) {print('Error imputing: prob is nan')}
       if(prob>1 |prob<0){print('weightedImpute: prob error')}
       
@@ -330,18 +336,19 @@ weightedImputeKM = function(kmMod,inputdata,timePoints,currentTime) {
       }else {
         probSurvive = predict(kmMod,timePoints[currentTime-1])/predict(kmMod,datainstance$time)
         #probSurvive = predict(kmMod,timePoints[currentTime-1])
-        #probSurvive = 0
+        #probSurvive = runif(1,0,1)
       }
       if(currentTime>1) {
         prob = predict(kmMod,timePoints[currentTime])/predict(kmMod,timePoints[currentTime-1])
-        # if(is.na(inputdata[k,'PREVTIMEPOINT'])) {
-        #   prob = (predict(kmMod,timePoints[currentTime-1])/predict(kmMod,datainstance$time))-(predict(kmMod,timePoints[currentTime])/predict(kmMod,datainstance$time))
-        # }else {
-        #   prob = predict(kmMod,timePoints[currentTime])/predict(kmMod,datainstance$time)
-        # }
+         if(is.na(inputdata[k,'PREVTIMEPOINT'])) {
+           prob = 1 - ((predict(kmMod,timePoints[currentTime-1])/predict(kmMod,datainstance$time))-(predict(kmMod,timePoints[currentTime])/predict(kmMod,datainstance$time)))
+         }else {
+           prob = predict(kmMod,timePoints[currentTime])/predict(kmMod,datainstance$time)
+         }
       }else {
         prob = predict(kmMod,timePoints[currentTime])
       }
+      #prob = runif(1,0,1)
       if(is.nan(probSurvive) | is.nan(prob)) {print('weightedImputeKM: Error imputing: prob is nan')}
       if(probSurvive>1 |probSurvive<0){print('weightedImputeKM: probSurvive error')}
       if(prob>1 |prob<0){print('weightedImputeKM: prob error')}
@@ -384,6 +391,20 @@ getEvidenceList = function(dataListNAadapt,id,currentTime) {
   }
   return(evidenceList)
 }
+
+changeTimepoint = function(m,weight,imputed,kmMod) {
+  if(anyNA(imputed)) {print('changeTimepoint: ERROR. data contain NA value')}
+  deadweight = weight[imputed$TIMEPOINT==1]
+  Intervalweight = sum(deadweight)/m
+  for(i in 1:nrow(deadweight)) {
+    
+  }
+  
+}
+
+
+
+
   
   
   
