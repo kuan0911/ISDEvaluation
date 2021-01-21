@@ -121,56 +121,13 @@ createTimeSplit <- function(data, timesplit,assumption = F,includeNa = F) {
     if(assumption == F & includeNa == F) {
       tempData <- tempData[tempData$delta == 1| is.na(tempData$TIMEPOINT) | tempData$TIMEPOINT == 0,]
     }
-    # newTempData = tempData
-    # 
-    # 
-    # for(j in 1:nrow(tempData)) {
-    #   if(tempData[j,]$delta == 1) {
-    #     newTempData = rbind(newTempData,tempData[j,])
-    #     newTempData = rbind(newTempData,tempData[j,])
-    #     newTempData = rbind(newTempData,tempData[j,])
-    #     next
-    #   }else if(tempData[j,]$delta == 0 & tempData[j,]$time < timesplit[i]){
-    #     portion = 0
-    #     if(i>1) {
-    #       portion = (tempData[j,]$time-timesplit[i-1])/(timesplit[i]-timesplit[i-1])
-    #     }else if(i==1) {
-    #       portion = tempData[j,]$time/timesplit[i]
-    #     }else{
-    #       portion = 1
-    #     }
-    # 
-    #     if(portion>0.5) {
-    #       newTempData = rbind(newTempData,tempData[j,])
-    #       next
-    #     }
-    #   }
-    # }
-    # tempData = newTempData
     
-    #tempData$time <- NULL
-    #tempData$delta <- NULL
     #make sure TIMEPOINT has two levels
     levels(tempData$TIMEPOINT) = c('0','1')
     levels(tempData$PREVTIMEPOINT) = c('0','1')
     dataList[[i]] <- tempData
   }
   
-  # tempData <- data
-  # timepoint = integer(nrow(data))
-  # timepoint[data$delta == 1] <- 1
-  # timepoint[data$time >= timesplit[i] & data$delta == 0] <- 0
-  # 
-  # tempData$TIMEPOINT <- factor(timepoint)
-  # tempData$PREVTIMEPOINT <- previousTimepoint
-  # #CENSORED == 'false' or tempData$TIMEPOINT == not dead
-  # tempData$time <- NULL
-  # tempData$delta <- NULL
-  # #make sure TIMEPOINT has two levels
-  # levels(tempData$TIMEPOINT) = c('0','1')
-  # levels(tempData$PREVTIMEPOINT) = c('0','1')
-  # dataList[[length(timesplit)+1]] <- tempData
-  # 
   return(dataList)
 }
 
@@ -251,5 +208,59 @@ kmTimesplit = function(m,kmMod,data,step=1) {
     }
   }
   return(timePoints)
+}
+
+kmTimesplitV2 = function(m,kmMod,data,step=0.1) {
+  timePoints = rep(0,m)
+  windowMax = max(data$time)
+  
+  summation = 0
+  for(k in 1:nrow(data)) {
+    if(data[k,'delta']==1) {
+      summation = summation + 1
+    }else {
+      summation = summation + predict(kmMod,data[k,'time']) - predict(kmMod,windowMax)
+    }
+  }
+  
+  avesum = summation/m
+  prevTime = 0
+  sortData = data[order(data$time),]
+  for(i in 1:m) {
+    for(s in seq(prevTime, windowMax, step)) {
+      localsum = 0
+      timesetflag = F
+      for(k in 1:nrow(sortData)) {
+        if(data[k,'delta']==1) {
+          if(data[k,'time']>=prevTime && data[k,'time']<s) {localsum = localsum + 1}
+        }else {
+          if(data[k,'time']<=prevTime) {
+            localsum = localsum + (predict(kmMod,prevTime) - predict(kmMod,s))/predict(kmMod,data[k,'time'])
+          }else if(data[k,'time']<s & data[k,'time']>prevTime) {
+            localsum = localsum + (predict(kmMod,data[k,'time']) - predict(kmMod,s))/predict(kmMod,data[k,'time'])
+          }
+        }
+        if(localsum >= avesum) {
+          timePoints[i] = s
+          prevTime = s
+          timesetflag = T
+          #print(timePoints[i])
+          break
+        }
+      }
+      if(timesetflag) {break}
+      #print(localsum)
+    }
+  }
+  timePoints = timePoints[timePoints!=0]
+  return(timePoints)
+}
+  
+
+kmTimeSplitSimple = function(m,data) {
+  kmMod = prodlim(Surv(time,delta)~1, data = data)
+  ave = (1 - predict(kmMod,max(data$time,na.rm(T))))/m
+  
+  
 }
 

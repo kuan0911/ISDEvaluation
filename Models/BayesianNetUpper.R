@@ -2,6 +2,7 @@
 #cross validation
 #-------------------
 source("Models/BayesianNet.R")
+source("Models/DHBNglm.R")
 source("Models/cleanDataForBayesNet.R")
 
 BayesianNetUpper = function(training,testing){
@@ -12,33 +13,27 @@ BayesianNetUpper = function(training,testing){
   print(bestC1)
   
   #m = floor(sqrt(nrow(training))+1)
-  #m = floor(nrow(training)^(1/3)+1)
-  #if(m>20) {m=20}
   m = 10
   quantileVals = seq(0,1,length.out = m+2)[-c(1,m+2)]
   #quantileVals = seq(0,1,length.out = m+2)[-1]
-  timePoints = unname(quantile(training[training$delta==1,]$time, quantileVals))
-  timePoints = timePoints[!duplicated(timePoints)]
+  timePoints = unname(quantile(training$time, quantileVals))
+  
+  # kmMod = prodlim(Surv(time,delta)~1, data = training)
+  # step = max(training$time)/500
+  # timePoints = kmTimesplitV2(m,kmMod,training,step=step)
+  
   fillup = seq(max(timePoints),max(training$time),(tail(timePoints, n=2)[2]-tail(timePoints, n=2)[1])*2)
   #timePoints = c(timePoints,fillup)
-  #timePoints = c(timePoints,quantile(training$time,0.99))
+  #timePoints = c(timePoints,max(training$time))
   timePoints = timePoints[!duplicated(timePoints)]
-  #timePoints = timeSplitFunction(numTimepoint = 10, method = 'fixrate', data = training, debug=T)
-  #timePoints = timePoints[-1]
-  #kmMod = prodlim(Surv(time,delta)~1, data = training)
-  #timePoints = kmTimesplit(m,kmMod,training,step=1)
+  
   m = length(timePoints)
  
   
-  #timePoints = timeSplitFunction(numTimepoint = m, method = 'quantile', data = training, debug=T)
+  #timePoints = timeSplitFunction(numTimepoint = 5, method = 'fixrate', data = training, debug=T)
   
-  mod = BayesianNet(training, testing, timePoints,debug=T)
-  
-  # m=20
-  # quantileVals = seq(0,1,length.out = m+2)[-c(1,m+2)]
-  # #quantileVals = seq(0,1,length.out = m+2)[-1]
-  # timePoints = unname(quantile(training$time, quantileVals))
-  # timePoints = timePoints[!duplicated(timePoints)]
+  #mod = BayesianNet(training, testing, timePoints,debug=T)
+  mod = DHBNglm(training, testing,timePoints,debug=T)
   
   #timePoints = fixtime(timePoints)
   survivalFunctionTesting = mod$TestCurves

@@ -317,56 +317,6 @@ weightedImpute = function(fitList,fit,dataListNAadapt,inputdata,currentTime) {
   return(list(data=outputdata,weight=weight))
 }
 
-weightedImputeKM = function(kmMod,inputdata,timePoints,currentTime) {
-  if(is.null(inputdata$PREVTIMEPOINT)) {
-    print('PREVTIMEPOINT missing when imputing weight')
-    inputdata$PREVTIMEPOINT = rep(0,nrow(inputdata))
-  }
-  imputeCount = 0
-  outputdata = inputdata
-  weight = rep(1,nrow(outputdata))
-  for(k in 1:nrow(inputdata)) {
-    if(is.na(outputdata[k,'TIMEPOINT'])) {
-      imputeCount = imputeCount+1
-      datainstance = inputdata[k,]
-      evidence = inputdata[k,]
-      evidence$TIMEPOINT = NULL
-      if(!is.na(inputdata[k,'PREVTIMEPOINT'])|currentTime==1) {
-        probSurvive = 1
-      }else {
-        probSurvive = predict(kmMod,timePoints[currentTime-1])/predict(kmMod,datainstance$time)
-        #probSurvive = predict(kmMod,timePoints[currentTime-1])
-        #probSurvive = runif(1,0,1)
-      }
-      if(currentTime>1) {
-        prob = predict(kmMod,timePoints[currentTime])/predict(kmMod,timePoints[currentTime-1])
-         if(is.na(inputdata[k,'PREVTIMEPOINT'])) {
-           prob = 1 - ((predict(kmMod,timePoints[currentTime-1])/predict(kmMod,datainstance$time))-(predict(kmMod,timePoints[currentTime])/predict(kmMod,datainstance$time)))
-         }else {
-           prob = predict(kmMod,timePoints[currentTime])/predict(kmMod,datainstance$time)
-         }
-      }else {
-        prob = predict(kmMod,timePoints[currentTime])
-      }
-      #prob = runif(1,0,1)
-      if(is.nan(probSurvive) | is.nan(prob)) {print('weightedImputeKM: Error imputing: prob is nan')}
-      if(probSurvive>1 |probSurvive<0){print('weightedImputeKM: probSurvive error')}
-      if(prob>1 |prob<0){print('weightedImputeKM: prob error')}
-      
-      outputdata[k,'TIMEPOINT'] = 0
-      weight[k] = probSurvive*prob
-      
-      datainstance['TIMEPOINT'] = 1
-      outputdata = rbind(outputdata,datainstance)
-      weight = c(weight,probSurvive*(1-prob))
-    }
-  }
-  #print(imputeCount)
-  outputdata[,c('PREVTIMEPOINT','time','delta','id')] = NULL
-  if(anyNA(outputdata)) {print('Warning: data imputed contain NA value')}
-  return(list(data=outputdata,weight=weight))
-}
-
 randomflip = function(data,rate=0.4) {
   if(anyNA(data)){print('randomflip: Error. missing data')}
   for(k in 1:nrow(data)) {
@@ -390,16 +340,6 @@ getEvidenceList = function(dataListNAadapt,id,currentTime) {
     evidenceList[[i]] = evidence
   }
   return(evidenceList)
-}
-
-changeTimepoint = function(m,weight,imputed,kmMod) {
-  if(anyNA(imputed)) {print('changeTimepoint: ERROR. data contain NA value')}
-  deadweight = weight[imputed$TIMEPOINT==1]
-  Intervalweight = sum(deadweight)/m
-  for(i in 1:nrow(deadweight)) {
-    
-  }
-  
 }
 
 

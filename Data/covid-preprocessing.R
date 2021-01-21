@@ -1,6 +1,5 @@
 survivalDataset <- read.csv(file = "Data/covid_latestdata.csv", na.strings='')
 survivalDataset <- read.csv(file = "Data/covid_clean_data_v3.csv", na.strings='')
-survivalDataset <- read.csv(file = "Data/covid_hospitalized_data.csv", na.strings='')
 
 survivalDataset$additional_information = NULL
 

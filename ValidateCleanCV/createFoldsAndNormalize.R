@@ -77,13 +77,28 @@ library(caret)
 #We use this for the build_scales function to apply normalization to variables.
 library(dataPreparation)
 
-createFoldsAndNormalize = function(survivalDataset, numberOfFolds){
-  folds = createFoldsOfData(survivalDataset, numberOfFolds)
+createFoldsAndNormalize = function(survivalDataset, numberOfFolds, predefinedFoldIndex = F, foldIndex = NULL, normalize=T){
+  if(predefinedFoldIndex == F) {folds = createFoldsOfData(survivalDataset, numberOfFolds)}
+  else if(predefinedFoldIndex == T) {folds = foldsOfDataFromPredefinedIndex(survivalDataset, foldIndex)}
   originalIndexing = folds[[1]]
   listOfDatasets = folds[[2]]
   listOfImputedDatasets = meanImputation(listOfDatasets)
-  listOfNormalizedDatasets = normalizeVariables(listOfImputedDatasets)
+  if(normalize) {listOfNormalizedDatasets = normalizeVariables(listOfImputedDatasets)}
+  else {
+    print('no normalization')
+    listOfNormalizedDatasets = listOfImputedDatasets
+  }
   return(list(originalIndexing, listOfNormalizedDatasets))
+}
+
+foldsOfDataFromPredefinedIndex = function(survivalDataset, foldIndex){
+  #Create folds of data from predefined fold index
+  print('Using predefined fold index')
+  if(is.null(foldIndex)) {print('Error: createFoldsAndNormalize. The foldIndex is missing while using the predefined index option.')}
+  listOfTestingSets = lapply(foldIndex, function(indexs) survivalDataset[indexs,])
+  listOfTrainingSets = lapply(foldIndex, function(indexs) survivalDataset[-indexs,])
+  listOfDatasets = list(Training = listOfTrainingSets, Testing = listOfTestingSets)
+  return(list(foldIndex,listOfDatasets))
 }
 
 createFoldsOfData = function(survivalDataset, numberOfFolds){

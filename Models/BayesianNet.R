@@ -1,7 +1,6 @@
 #------------------------------------------------------------
 #Cumulative model with seperate network at each timepoint
 #include all data in structure learning. Na if dead or censored
-#mtlr parameter learning
 #
 #
 #------------------------------------------------------------

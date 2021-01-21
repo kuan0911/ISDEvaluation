@@ -98,12 +98,13 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
                           SingleBrierTime = NULL, IntegratedBrierTimes = NULL, numBrierPoints = 1000, Ltype = "Margin", #Evaluation args
                           Llog = F, typeOneCal = "DN", oneCalBuckets = 10, survivalPredictionMethod = "Median", #Evaluation args
                           AFTDistribution = "weibull", #Model args,
-                          FS = T, imputeZero=T, verbose = T # Misc args
+                          FS = T, imputeZero=T, verbose = T, # Misc args
+                          foldIndex = NULL
 ){
   validatedData = validateAndClean(survivalDataset, imputeZero)
-  if(FS)
-    validatedData = FeatureSelection(validatedData, type = "UniCox")
-  foldsAndNormalizedData = createFoldsAndNormalize(validatedData, numberOfFolds)
+  if(FS) {validatedData = FeatureSelection(validatedData, type = "UniCox")}
+  if(is.null(foldIndex)) {foldsAndNormalizedData = createFoldsAndNormalize(validatedData, numberOfFolds)}
+  else if(!is.null(foldIndex)) {foldsAndNormalizedData = createFoldsAndNormalize(validatedData, numberOfFolds, T, foldIndex)}
   originalIndexing = foldsAndNormalizedData[[1]]
   normalizedData = foldsAndNormalizedData[[2]]
   evaluationResults = data.frame()
@@ -210,10 +211,9 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
       aftConc = Concordance(aftMod, concordanceTies,survivalPredictionMethod)
       mtlrConc = Concordance(mtlrMod, concordanceTies,survivalPredictionMethod)
       bayesConc = Concordance(bayesianNetMod, concordanceTies,survivalPredictionMethod)
-      
       ConcordanceResults = rbind(coxConc,coxENConc, kmConc, rsfConc, aftConc, mtlrConc, bayesConc)
     }
-    if(ConcorCurve){
+    if(F){
       if(verbose){
         print("Staring Evaluation: Concordance Curve")
       }
