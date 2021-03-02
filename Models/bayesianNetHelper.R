@@ -342,7 +342,19 @@ getEvidenceList = function(dataListNAadapt,id,currentTime) {
   return(evidenceList)
 }
 
-
+curveCheck = function(survivalFunction) {
+  if(anyNA(survivalFunction)) {
+    print('survival function has missing value')
+    return()
+  }
+  for(k in 2:ncol(survivalFunction)) {
+    for(i in 2:nrow(survivalFunction)) {
+      if(survivalFunction[(i-1),k]<survivalFunction[i,k]) {
+        print('survival function check fail')
+      }
+    }
+  }
+}
 
 
   

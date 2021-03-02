@@ -1,7 +1,7 @@
 source("Models/cleanDataForBayesNet.R")
 source("Models/bayesianNetHelper.R")
 
-sythesize2 = function(n=5000) {
+sythesize2 = function(n=1000) {
   
   
   timePoints = c(5, 13, 24, 32, 44, 57)
@@ -11,15 +11,15 @@ sythesize2 = function(n=5000) {
   LV3 = c(1, 2, 3)
   LorD = as.integer(c(0,1))
   
-  a = sample(LV3, 5000, prob = rep(1/3, 3), replace = TRUE)
+  a = sample(LV3, 5000, prob = c(0.4,0.4,0.2), replace = TRUE)
   c = sample(LV3, 5000, prob = c(0.75, 0.2, 0.05), replace = TRUE)
   d = sample(LV3, 5000, prob = c(0.4, 0.3, 0.3), replace = TRUE)
   e = sample(c(1, 2), 5000, prob = c(0.75, 0.25), replace = TRUE)
   
   TIMEPOINT = a
-  TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.85, 0.15), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.95, 0.05), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.9, 0.1), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.95, 0.05), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.85, 0.15), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.6, 0.4), replace = TRUE)
   
   b = TIMEPOINT
   b[b == 0] = sample(LV3, length(which(b == 0)), prob = c(0.6, 0.2, 0.2), replace = TRUE)
@@ -47,10 +47,10 @@ sythesize2 = function(n=5000) {
   TIMEPOINT = d
   TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.95, 0.05), replace = TRUE)
   TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.85, 0.25), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.8, 0.2), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.5, 0.5), replace = TRUE)
   
   e = TIMEPOINT
-  e[e == 0] = sample(c(1, 2), length(which(e == 0)), prob = c(0.7, 0.5), replace = TRUE)
+  e[e == 0] = sample(c(1, 2), length(which(e == 0)), prob = c(0.7, 0.3), replace = TRUE)
   e[e == 1] = sample(c(1, 2), length(which(e == 1)), prob = c(0.3, 0.7), replace = TRUE)
   
   # g = TIMEPOINT
@@ -130,7 +130,7 @@ sythesize2 = function(n=5000) {
       if(is.na(time[k])) {
         covariate = covariateSim[k,]
         #predicted = predict(object = fitList[[i]], node = "TIMEPOINT", data = covariate, method = "bayes-lw", n=2000, prob = TRUE)
-        prob = BnExactInference(fitList[[i]],covariate,kmprob=NULL)
+        prob = BnExactInference(fitList[[i]],covariate,kmprob=NULL,noise=T,lev=list(LV3,LV3,LV3,LV3,c(1, 2),LV3))
         if(runif(1,0,1)>prob) {
           time[k] = runif(1,timePointsWithZero[i], timePointsWithZero[i+1])
         }

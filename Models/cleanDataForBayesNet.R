@@ -257,10 +257,19 @@ kmTimesplitV2 = function(m,kmMod,data,step=0.1) {
 }
   
 
-kmTimeSplitSimple = function(m,data) {
+kmTimeSplitSimple = function(data, p=0.1,step=0.2, minSurvProb = 0.01) {
+  timePoints <- vector()
   kmMod = prodlim(Surv(time,delta)~1, data = data)
-  ave = (1 - predict(kmMod,max(data$time,na.rm(T))))/m
-  
-  
+  targetProb = 1-p
+  preProb=1
+
+  for(t in seq(0, max(data$time), step)) {
+    if(predict(kmMod,abs(t-step))>targetProb & predict(kmMod,t)<targetProb) {
+      timePoints = c(timePoints, t)
+      targetProb = targetProb * (1-p)
+      if(targetProb<minSurvProb) {break}
+    }
+  }
+  return(timePoints)
 }
 

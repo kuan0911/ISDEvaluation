@@ -3,6 +3,7 @@
 #-------------------
 source("Models/BayesianNet.R")
 source("Models/DHBNglm.R")
+source("Models/DHLR.R")
 source("Models/cleanDataForBayesNet.R")
 
 BayesianNetUpper = function(training,testing){
@@ -24,16 +25,15 @@ BayesianNetUpper = function(training,testing){
   
   fillup = seq(max(timePoints),max(training$time),(tail(timePoints, n=2)[2]-tail(timePoints, n=2)[1])*2)
   #timePoints = c(timePoints,fillup)
-  #timePoints = c(timePoints,max(training$time))
+  timePoints = c(timePoints,max(training$time))
   timePoints = timePoints[!duplicated(timePoints)]
+  
+  #timePoints = kmTimeSplitSimple(training, p=0.1,step=0.2, minSurvProb = 0.01)
   
   m = length(timePoints)
  
-  
-  #timePoints = timeSplitFunction(numTimepoint = 5, method = 'fixrate', data = training, debug=T)
-  
   #mod = BayesianNet(training, testing, timePoints,debug=T)
-  mod = DHBNglm(training, testing,timePoints,debug=T)
+  mod = DHLR(training, testing,timePoints,debug=T)
   
   #timePoints = fixtime(timePoints)
   survivalFunctionTesting = mod$TestCurves
@@ -48,6 +48,9 @@ BayesianNetUpper = function(training,testing){
   survivalFunctionTraining= rbind(rep(1,nrow(training)),survivalFunctionTraining)
   trainingCurvesToReturn = cbind(time = c(0,timePoints), survivalFunctionTraining)
   #trainingCurvesToReturn = cbind.data.frame(time = timePoints, survivalProbabilitiesTrain) 
+  
+  curveCheck(testCurvesToReturn)
+  curveCheck(trainingCurvesToReturn)
   return(list(TestCurves = testCurvesToReturn, TestData = timesAndCensTest,TrainData = timesAndCensTrain,TrainCurves= trainingCurvesToReturn))  
 }
 

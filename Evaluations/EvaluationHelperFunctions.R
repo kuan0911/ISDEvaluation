@@ -96,7 +96,8 @@ predictMedianSurvivalTimeSpline = function(survivalCurve, predictedTimes){
   
   if(is.na(minProb)){return(0)}
   
-  cut = max(survivalCurve)/2
+  #cut = max(survivalCurve)/2
+  cut=0.5
   
   if(minProb < cut){
     maximumSmallerThanMedian = predictedTimes[min(which(survivalCurve <cut))]
