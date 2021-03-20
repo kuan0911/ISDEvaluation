@@ -130,28 +130,22 @@ EMdata = function(x,y,w,data,model,timePoints) {
   hazardFunction <- data.frame(matrix(nrow = nrow(x), ncol = ncol(y)))
   previousTimepointProb = rep(1,nrow(x))
   probInt = 1 - model %>% predict(x)
+  probInt = probInt[,1:ncol(y)]
   for(i in 1:ncol(y)) {
     prob = probInt[,i]
     hazardFunction[,i] = prob
     survivalFunction[,i] = prob*previousTimepointProb
     previousTimepointProb = survivalFunction[,i]
   }
-  deltaTime = rep(ncol(y),nrow(x))
-  for(i in 1:ncol(y)) {
-    for(k in 1:nrow(x)) {
-      if(w[k,i]<1) {
-        deltaTime[k]=i-1
-      }
-    }
-  }
-  
+
+  oldy = y
   copy_y = y
   weight = w
   copyWeight = matrix(0,nrow(w),ncol(w))
   for(k in 1:nrow(y)) {
     for(i in 1:ncol(y)) {
       if(w[k,i]<1&data[k,'delta']==0) {
-        y[k,i] = 0
+        oldy[k,i] = 0
         copy_y[k,i] = 1
         survivalCurve = c(1,survivalFunction[k,])
         survivalCurveTime = c(0,timePoints)
@@ -162,6 +156,51 @@ EMdata = function(x,y,w,data,model,timePoints) {
         }
         b = predictProbabilityFromCurve(survivalCurve,survivalCurveTime,timePoints[i])
         c = predictProbabilityFromCurve(survivalCurve,survivalCurveTime,data[k,'time'])+0.0001
+        if(i>1) {
+          if(w[k,i-1]<1) {
+            survprob = survivalFunction[k,i-1]
+            #survprob = a/c
+          }else {
+            survprob = 1
+          }
+        }else {
+          survprob = 1
+        }
+        prob = hazardFunction[k,i]
+        # if(i>1) {
+        #   prob = 1- ((a/c)-(b/c))
+        # }else {
+        #   prob = b/c
+        # }
+        weight[k,i] = survprob*prob
+        copyWeight[k,i] = survprob*(1-prob)
+      }
+    }
+  }
+  newx = rbind(x,x)
+  newy = rbind(oldy,copy_y)
+  neww = rbind(weight,copyWeight)
+  
+  return(list(x=newx,y=newy,w=neww))
+}
+
+EMdataKM = function(x,y,w,data,kmMod,timePoints) {
+  
+  copy_y = y
+  weight = w
+  copyWeight = matrix(0,nrow(w),ncol(w))
+  for(k in 1:nrow(y)) {
+    for(i in 1:ncol(y)) {
+      if(w[k,i]<1&data[k,'delta']==0) {
+        y[k,i] = 0
+        copy_y[k,i] = 1
+        if(i>1) {
+          a = predict(kmMod,timePoints[i-1])
+        }else {
+          a = 1
+        }
+        b = predict(kmMod,timePoints[i])
+        c = predict(kmMod,data[k,'time'])
         if(i>1) {
           if(w[k,i-1]<1) {
             #survprob = survivalFunction[k,i-1]
@@ -282,3 +321,34 @@ hazard2survival = function(hazard) {
   return(survivalFunction)
 }
 
+makeMod = function(TestCurves,TrainCurves, timePoints, training, testing) {
+  
+  #timePoints = fixtime(timePoints)
+  survivalFunctionTesting = TestCurves
+  survivalFunctionTesting= rbind(rep(1,nrow(testing)),survivalFunctionTesting)
+  testCurvesToReturn = cbind(time = c(0,timePoints), survivalFunctionTesting)
+  
+  #testCurvesToReturn = cbind.data.frame(time = timePoints, survivalProbabilitiesTest) 
+  timesAndCensTest = cbind.data.frame(time = testing$time, delta = testing$delta)
+  timesAndCensTrain = cbind.data.frame(time = training$time, delta = training$delta)
+  
+  survivalFunctionTraining = TrainCurves
+  survivalFunctionTraining= rbind(rep(1,nrow(training)),survivalFunctionTraining)
+  trainingCurvesToReturn = cbind(time = c(0,timePoints), survivalFunctionTraining)
+  #trainingCurvesToReturn = cbind.data.frame(time = timePoints, survivalProbabilitiesTrain) 
+  
+  curveCheck(testCurvesToReturn)
+  curveCheck(trainingCurvesToReturn)
+  
+  return(list(TestCurves = testCurvesToReturn, TestData = timesAndCensTest,TrainData = timesAndCensTrain,TrainCurves= trainingCurvesToReturn))  
+  
+}
+
+Evaluation = function(EMMod) {
+  survivalPredictionMethod = 'Median'
+  bayesConc = Concordance(EMMod, 'None',survivalPredictionMethod)
+  bayesBrierInt = BrierScore(EMMod, type = "Integrated", numPoints =  1000, integratedBrierTimes = NULL)
+  bayesL1 = L1(EMMod, 'Margin', F,survivalPredictionMethod)
+  bayesDcal = DCalibrationCumulative(list(EMMod),10)
+  return(list(Conc=bayesConc,BrierInt=bayesBrierInt,L1=bayesL1,Dcal=bayesDcal))
+}

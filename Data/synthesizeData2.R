@@ -19,11 +19,11 @@ sythesize2 = function(n=1000) {
   TIMEPOINT = a
   TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.95, 0.05), replace = TRUE)
   TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.85, 0.15), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.6, 0.4), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.7, 0.3), replace = TRUE)
   
   b = TIMEPOINT
   b[b == 0] = sample(LV3, length(which(b == 0)), prob = c(0.6, 0.2, 0.2), replace = TRUE)
-  b[b == 1] = sample(LV3, length(which(b == 1)), prob = c(0.15, 0.7, 0.15), replace = TRUE)
+  b[b == 1] = sample(LV3, length(which(b == 1)), prob = c(0.15, 0.15, 0.7), replace = TRUE)
   
   g = TIMEPOINT
   g[g == 0] = sample(LV3, length(which(g == 0)), prob = c(0.5, 0.4, 0.1), replace = TRUE)
@@ -46,8 +46,8 @@ sythesize2 = function(n=1000) {
   
   TIMEPOINT = d
   TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.95, 0.05), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.85, 0.25), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.5, 0.5), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.85, 0.15), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.7, 0.3), replace = TRUE)
   
   e = TIMEPOINT
   e[e == 0] = sample(c(1, 2), length(which(e == 0)), prob = c(0.7, 0.3), replace = TRUE)
@@ -79,8 +79,8 @@ sythesize2 = function(n=1000) {
   
   TIMEPOINT = g
   TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.8, 0.2), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.6, 0.4), replace = TRUE)
-  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.7, 0.3), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.7, 0.3), replace = TRUE)
+  TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.6, 0.4), replace = TRUE)
   
   syndata3 = data.frame(
     TIMEPOINT = factor(TIMEPOINT, levels = LorD),
@@ -97,15 +97,6 @@ sythesize2 = function(n=1000) {
   fit3 = bn.fit(dag3,syndata3)
   #graphviz.plot(fit3)
   
-  covariateData = data.frame(
-    A = factor(a, levels = LV3),
-    B = factor(b, levels = LV3),
-    C = factor(c, levels = LV3),
-    D = factor(d, levels = LV3),
-    E = factor(e, levels = c(1, 2)),
-    G = factor(g, levels = LV3)
-  )
-  
   fitList <- vector("list", length(timePoints))
   
   fitList[[1]] = fit1
@@ -116,6 +107,22 @@ sythesize2 = function(n=1000) {
   fitList[[6]] = fit3
   #fitList[[7]] = fit2
   #fitList[[8]] = fit3
+  
+  a = sample(LV3, 5000, prob = c(0.4,0.4,0.2), replace = TRUE)
+  b = sample(LV3, 5000, prob = c(0.3, 0.4, 0.3), replace = TRUE)
+  c = sample(LV3, 5000, prob = c(0.75, 0.2, 0.05), replace = TRUE)
+  d = sample(LV3, 5000, prob = c(0.4, 0.3, 0.3), replace = TRUE)
+  e = sample(c(1, 2), 5000, prob = c(0.75, 0.25), replace = TRUE)
+  g = sample(LV3, 5000, prob = c(0.3, 0.3, 0.4), replace = TRUE)
+  
+  covariateData = data.frame(
+    A = factor(a, levels = LV3),
+    B = factor(b, levels = LV3),
+    C = factor(c, levels = LV3),
+    D = factor(d, levels = LV3),
+    E = factor(e, levels = c(1, 2)),
+    G = factor(g, levels = LV3)
+  )
   
   covariateDag = empty.graph(c('A','B','C','D','E','G'))
   covariateFit = bn.fit(covariateDag, covariateData, method='bayes',iss=5)
@@ -130,7 +137,7 @@ sythesize2 = function(n=1000) {
       if(is.na(time[k])) {
         covariate = covariateSim[k,]
         #predicted = predict(object = fitList[[i]], node = "TIMEPOINT", data = covariate, method = "bayes-lw", n=2000, prob = TRUE)
-        prob = BnExactInference(fitList[[i]],covariate,kmprob=NULL,noise=T,lev=list(LV3,LV3,LV3,LV3,c(1, 2),LV3))
+        prob = BnExactInference(fitList[[i]],covariate,kmprob=NULL,noise=F,lev=list(LV3,LV3,LV3,LV3,c(1, 2),LV3))
         if(runif(1,0,1)>prob) {
           time[k] = runif(1,timePointsWithZero[i], timePointsWithZero[i+1])
         }

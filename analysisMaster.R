@@ -79,6 +79,7 @@ source("Models/RandomSurvivalForests.R")
 source("Models/AcceleratedFailureTime.R")
 source("Models/MTLR.R")
 source("Models/BayesianNetUpper.R")
+source("Models/GBMCox.R")
 
 #Evaluation files:
 source("Evaluations/DCalibration.R")
@@ -94,7 +95,7 @@ source("Plotting/plotSurvivalCurves.R")
 analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
                           CoxKP = F,CoxKPEN = F, KaplanMeier = F, RSFModel = F, AFTModel = F, MTLRModel = T, BayesianNetModel = T, #Models
                           DCal = T, OneCal = T, Concor = T,ConcorCurve = T, L1Measure = T, BrierInt = T, BrierSingle = T, #Evaluations
-                          DCalBins = 10, OneCalTime = NULL,  concordanceTies = "None", #Evaluation args
+                          DCalBins = 10, OneCalTime = NULL,  concordanceTies = "All", #Evaluation args
                           SingleBrierTime = NULL, IntegratedBrierTimes = NULL, numBrierPoints = 1000, Ltype = "Margin", #Evaluation args
                           Llog = F, typeOneCal = "DN", oneCalBuckets = 10, survivalPredictionMethod = "Median", #Evaluation args
                           AFTDistribution = "weibull", #Model args,
@@ -128,6 +129,7 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
         print("Starting Cox Proportional Hazards.")
       }
       coxMod = CoxPH_KP(training, testing)
+      #coxMod = GBMCox_KP(training, testing)
       if(length(coxMod) ==1){
         combinedTestResults$Cox = list()
         coxTimes = NULL
@@ -366,8 +368,9 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
   names(survivalCurves) = c("Cox","CoxEN","KM","AFT","RSF","MTLR","Bayes")[c(CoxKP,CoxKPEN, KaplanMeier, AFTModel,RSFModel, MTLRModel, BayesianNetModel)]
   rownames(evaluationResults) = NULL
   
-  combinedBins = list(MTLR=NULL,BayesianNet=NULL,KM=NULL)
+  combinedBins = list(MTLR=NULL,Cox=NULL,BayesianNet=NULL,KM=NULL)
   combinedBins$MTLR =colSums(ldply(lapply(seq_along(combinedTestResults$MTLR), function(x) getBinned(combinedTestResults$MTLR[[x]], DCalBins)), rbind))
+  combinedBins$Cox =colSums(ldply(lapply(seq_along(combinedTestResults$Cox), function(x) getBinned(combinedTestResults$Cox[[x]], DCalBins)), rbind))
   combinedBins$BayesianNet =colSums(ldply(lapply(seq_along(combinedTestResults$BayesianNet), function(x) getBinned(combinedTestResults$BayesianNet[[x]], DCalBins)), rbind))
     
   return(list(datasetUsed = validatedData, survivalCurves = survivalCurves, results = evaluationResults, DcalHistogram = combinedBins, ConCurve = ConcordanceCurve))

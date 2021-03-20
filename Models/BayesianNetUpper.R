@@ -13,8 +13,8 @@ BayesianNetUpper = function(training,testing){
   print('bestC1')
   print(bestC1)
   
-  #m = floor(sqrt(nrow(training))+1)
-  m = 10
+  m = floor(sqrt(nrow(training))+1)
+  #m = 10
   quantileVals = seq(0,1,length.out = m+2)[-c(1,m+2)]
   #quantileVals = seq(0,1,length.out = m+2)[-1]
   timePoints = unname(quantile(training$time, quantileVals))
@@ -25,7 +25,7 @@ BayesianNetUpper = function(training,testing){
   
   fillup = seq(max(timePoints),max(training$time),(tail(timePoints, n=2)[2]-tail(timePoints, n=2)[1])*2)
   #timePoints = c(timePoints,fillup)
-  timePoints = c(timePoints,max(training$time))
+  #timePoints = c(timePoints,max(training$time))
   timePoints = timePoints[!duplicated(timePoints)]
   
   #timePoints = kmTimeSplitSimple(training, p=0.1,step=0.2, minSurvProb = 0.01)

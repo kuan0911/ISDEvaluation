@@ -59,7 +59,7 @@ DHLR = function(training, testing, timePoints = 0,debug = FALSE){
   x=res$x
   y=res$y
   w=res$w
-  
+
   for(iter in 1:1) {
     break
     for(i in 1:numTimepoint) {
@@ -155,22 +155,28 @@ DHLR = function(training, testing, timePoints = 0,debug = FALSE){
   oldy = y
   oldw = w
   
+  allHazard = colSums(y*w)/colSums(w)
+  
   if(anyNA(x)|anyNA(y)|anyNA(w)) {print('Missing value in training data')}
   
-  bestLambda = 0.1
+  bestLambda = 0
   cvFoldIndex = createFoldsOfData(training, numberOfFolds=5)[[1]]
   #bestLambda = keras_cvInt(x,y,w,cvFoldIndex)
   bestLambda = bestLambda * 0.8
   cat('best lambda: ');cat(bestLambda);
   
-  
+  resKM = EMdataKM(oldx,oldy,oldw,training,kmMod,timePoints)
+  x=resKM$x
+  y=resKM$y
+  w=resKM$w
+
   for(iter in 1:1) {
     print('EM')
     
-    #customBCEIntegrated_wrapper <- custom_metric("wbce", function(y_true, y_pred){customBCE(y_true, y_pred, weights=w)})
+    customBCEIntegrated_wrapper <- custom_metric("wbce", function(y_true, y_pred){customBCE(y_true, y_pred)})
     #aveAccuracy_wrapper <- custom_metric("ave_acc", function(y_true, y_pred){aveAccuracy(y_true, y_pred, weights=w)})
-    my_regularizer_wrapper <- custom_metric("reg", function(x){my_regularizer(x, lambda1=bestLambda,lambda2=0)})
-    #my_bias_regularizer_wrapper <- custom_metric("regb", function(x){my_bias_regularizer(x, weights=x)})
+    my_regularizer_wrapper <- custom_metric("reg", function(x){my_regularizer(x, lambda1=bestLambda,lambda2=1000,weights=w)})
+    my_bias_regularizer_wrapper <- custom_metric("regb", function(x){my_bias_regularizer(x, allHazard=log(allHazard))})
     
     model <- keras_model_sequential()
     model %>%  layer_dense(units=2*ncol(y), activation='sigmoid', input_shape=c(ncol(x)),use_bias=TRUE,
@@ -178,8 +184,8 @@ DHLR = function(training, testing, timePoints = 0,debug = FALSE){
                            #kernel_regularizer = regularizer_l1(l = 0.5),
                            #kernel_constraint = constraint_maxnorm(max_value = 10*ncol(x), axis = 0),
                            #bias_constraint = constraint_maxnorm(max_value = 10*ncol(x), axis = 0),
-                           kernel_regularizer = my_regularizer_wrapper
-                           #bias_regularizer = my_bias_regularizer_wrapper
+                           kernel_regularizer = my_regularizer_wrapper,
+                           bias_regularizer = my_bias_regularizer_wrapper
     )
     #summary(model)
     optimizer = optimizer_sgd(
@@ -194,7 +200,7 @@ DHLR = function(training, testing, timePoints = 0,debug = FALSE){
       lr = 5.0
     )
     model %>% compile(
-      loss = customBCE,
+      loss = customBCEIntegrated_wrapper,
       optimizer = optimizer,
       metrics = NULL
       #sample_weight_mode='temporal',
@@ -212,6 +218,20 @@ DHLR = function(training, testing, timePoints = 0,debug = FALSE){
       verbose = 0,
       callbacks = list(early_stopping,reduceLearningRate)
     )
+    
+    probInt = model %>% predict(oldx)
+    probInt = probInt[,1:ncol(oldy)]
+    loss = sum((oldy*log(probInt+0.00001) + (1-oldy)*log(1-probInt+0.00001))*oldw)
+    print('loss: ')
+    print(loss)
+    
+    TestCurves = predictFunctionLRInt(model,originalTesting,timePoints)
+    TrainCurves = predictFunctionLRInt(model,originalTraining,timePoints)
+    EMMod = makeMod(TestCurves,TrainCurves, timePoints, training, testing)
+    resEval = Evaluation(EMMod)
+    print(resEval)
+    
+    
     res = EMdata(oldx,oldy,oldw,training,model,timePoints)
     x=res$x
     y=res$y
@@ -219,9 +239,10 @@ DHLR = function(training, testing, timePoints = 0,debug = FALSE){
   }
 
   layerkernalweights = as.matrix(model$weights[[1]])
+  layerkernalweights[abs(layerkernalweights)<0.001]=0
   layerbiasweights = as.matrix(model$weights[[2]])
   rownames(layerkernalweights) = colnames(x)
-  write.csv(layerkernalweights,'layerkernalweights.csv')
+  #write.csv(layerkernalweights,'layerkernalweights.csv')
   
   print('start predict')
   #prediction
@@ -238,17 +259,25 @@ DHLR = function(training, testing, timePoints = 0,debug = FALSE){
   return(list(TestCurves = testCurvesToReturn, TestData = timesAndCensTest,TrainData = timesAndCensTrain,TrainCurves= trainingCurvesToReturn))  
 }
 
-customBCE = function(y_true, y_pred){
+customBCE = function(y_true,y_pred){
   K <- backend()
+  
   m = floor(ncol(y_true)[[1]]/2)
-  #K$print_tensor(m)
+  
   weightsF = y_true[,(m+1):(2*m)]
   y_trueF = y_true[,1:m]
   y_predF = y_pred[,1:m]
   loss = (y_trueF)*K$log(y_predF+0.00001) + (1-y_trueF)*K$log(1-y_predF+0.00001)
   weighted_loss = loss*weightsF
   
-  return(K$sum(-weighted_loss))
+  weights_col = K$sum(weightsF,axis=as.integer(0),keepdims = F)
+  loss_col = K$sum(weighted_loss,axis=as.integer(0),keepdims = F)
+
+  #col_weights_col = loss_col*K$cast_to_floatx(weights_col)
+  
+  #weights_sum_all = K$cast_to_floatx(K$sum(weightsF))
+  
+  return(K$sum(-loss_col))
 }
   
 aveAccuracy = function(y_true, y_pred, weights){
@@ -267,49 +296,45 @@ aveAccuracy = function(y_true, y_pred, weights){
   return(acc)
 }
   
-my_regularizer = function(x,lambda1,lambda2){
+my_regularizer = function(x,lambda1,lambda2,weights){
   K <- backend()
   m = floor(ncol(x)[[1]]/2)
   xF = x[,1:m]
   xW = x[,(m+1):ncol(x)]
 
-  shiftx = xF[,2:(ncol(xF))]
-  concat = xF[,ncol(xF)]
+  shiftx = xF[,2:m]
+  concat = xF[,m]
   concat2D = K$expand_dims(concat)
   shiftx_concat = K$concatenate(list(shiftx,concat2D))
   sub = K$abs(shiftx_concat - xF)
 
-  #weights_col = K$sum(weights,axis=as.integer(0),keepdims = F)
-  weights_sum_all = K$cast_to_floatx(K$sum(xW))
+  weights_col = K$sum(weights,axis=as.integer(0),keepdims = F)
+  #weights_sum_all = K$cast_to_floatx(K$sum(xW))
 
-  # sub_sum = K$sum(sub,axis=as.integer(0),keepdims = F)
-  # weighted_sub = sub_sum*K$cast_to_floatx(weights_col)
-  # 
-  # x_abs = K$abs(xF)
-  # x_sum = K$sum(x_abs,axis=as.integer(0),keepdims = F)
-  # weighted_x = x_sum*K$cast_to_floatx(weights_col)
+  sub_sum = K$sum(sub,axis=as.integer(0),keepdims = F)
+  weighted_sub = sub_sum/K$cast_to_floatx(weights_col)
 
-  #regabs = 0.05*(K$sum(weighted_sub)/weights_sum_all)
-  regabs = lambda2*(K$sum(sub))
-  #regweight = 0.0005*(K$sum(weighted_x)/weights_sum_all)
-  
-  regweight = lambda1*K$sum(K$abs(xF))/weights_sum_all
+  #x_sum_col = K$sum(K$abs(xF),axis=as.integer(0),keepdims = F)
+  #weighted_x = x_sum_col/K$cast_to_floatx(weights_col)
+
+  regabs = lambda2*(K$sum(weighted_sub))
+
+  regweight = lambda1*K$sum(K$abs(xF))
+  #regweight = lambda1*K$sum(weighted_x)
   regconstrain = K$sum(K$abs(xW))
   return(regweight+regconstrain+regabs) 
 }
   
-my_bias_regularizer = function(x){
+my_bias_regularizer = function(x,allHazard){
   K <- backend()
   m = floor(length(x)[[1]]/2)
-  xW = x[(m+1):length(x)]
-  sub = xW + 0.5
+  #xW = x[(m+1):length(x)]
   
   xF = x[1:m]
-  # regabs = 0.0001*K$mean(K$abs(sub))
-  
-  regconstrain = 0.5*K$sum(K$abs(sub))
-  reg = 0.0001*K$sum(K$abs(xF))
-  return(regconstrain) 
+  sub = xF - allHazard
+  #regconstrain = 0.5*K$sum(K$abs(xW))
+  regabs = 1000*K$sum(K$abs(sub))
+  return(regabs) 
 }
 
 
