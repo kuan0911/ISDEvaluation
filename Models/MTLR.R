@@ -72,6 +72,9 @@ MTLR = function(training, testing, C1 = NULL, numFolds = 5){
     quantileVals = seq(0,1,length.out = m+2)[-c(1,m+2)]
     timePoints = unname(quantile(training$time, quantileVals))
     
+    #extend curve plot
+    #timePoints = c(timePoints,max(c(training$time,testing$time)))
+    
     # kmMod = prodlim(Surv(time,delta)~1, data = training)
     # step = max(training$time)/500
     # timePoints = kmTimesplitV2(m,kmMod,training,step=step)

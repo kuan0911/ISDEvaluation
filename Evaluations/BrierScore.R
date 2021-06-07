@@ -77,6 +77,7 @@ BrierScore = function(survMod, type = "Integrated", singleBrierTime = NULL, inte
   suppressWarnings(if(is.na(survMod[[1]])) return(NULL))
   if(type == "Integrated" & is.null(integratedBrierTimes))
     integratedBrierTimes = c(0, max(c(survMod[[2]]$time, survMod[[3]]$time))) #max time of the training and testing set combined (the entire dataset).
+    #integratedBrierTimes = c(0, min( c(max(c(survMod[[2]]$time), max(survMod[[3]]$time)))))
   score = ifelse(type =="Single",
                  singleBrier(survMod, singleBrierTime),
                  integratedBrier(survMod, integratedBrierTimes, numPoints))
@@ -88,6 +89,7 @@ singleBrier = function(survMod, singleBrierTime){
   censorStatus = survMod[[2]]$delta
   trainingEventTimes = survMod[[3]]$time
   trainingCensorStatus = survMod[[3]]$delta
+ 
   #Default brier time will be the 50th quantile of training and testing event times combined.
   if(is.null(singleBrierTime)){
     singleBrierTime = quantile(c(eventTimes, trainingEventTimes), .5)
@@ -100,14 +102,21 @@ singleBrier = function(survMod, singleBrierTime){
   weightCat1 = (eventTimes[orderOfTimes] <= singleBrierTime & censorStatus[orderOfTimes])/predict(invProbCensor,
                                                                                             eventTimes,
                                                                                             level.chaos = 1)
+  #weightCat1 = (eventTimes[orderOfTimes] <= singleBrierTime & censorStatus[orderOfTimes])
   #Catch if event times goes over max training event time, i.e. predict gives NA
   weightCat1[is.na(weightCat1)] = 0
+  
+  
   #Category 2 is individuals whose time was greater than the time of interest (singleBrierTime) - both censored and uncensored individuals.
   weightCat2 = (eventTimes[orderOfTimes] > singleBrierTime)/predict(invProbCensor,
                                                                     singleBrierTime,
                                                               level.chaos = 1)
+
+  #weightCat2 = (eventTimes[orderOfTimes] > singleBrierTime)
   #predict returns NA if the passed in time is greater than any of the times used to build the inverse probability of censoring model.
   weightCat2[is.na(weightCat2)] = 0
+  
+  
   
   predictedTimes = survMod[[1]][,1]
   #Take the survival curves, remove the times column, and then order the curves by the order in which they died. We have to order them to 
@@ -115,6 +124,9 @@ singleBrier = function(survMod, singleBrierTime){
   survivalCurvesOrdered = survMod[[1]][,-1][orderOfTimes]
   predictions = apply(survivalCurvesOrdered,2, function(z) predictProbabilityFromCurve(z,predictedTimes,singleBrierTime))
   bScore = mean(predictions^2*weightCat1 + (1-predictions)^2*weightCat2)
+  # print(sum(weightCat2))
+  # print(sum((1-predictions)^2*weightCat2))
+  # print(predictions[weightCat2==1])
   return(bScore)
 }
 
@@ -141,6 +153,7 @@ singleBrierMultiplePoints = function(survMod, BrierTimes){
   censorStatus = survMod[[2]]$delta
   trainingEventTimes = survMod[[3]]$time
   trainingCensorStatus = survMod[[3]]$delta
+  
   inverseCensorTrain = 1 - trainingCensorStatus
   invProbCensor = prodlim(Surv(trainingEventTimes,inverseCensorTrain)~1)
   orderOfTimes = order(eventTimes)
@@ -149,10 +162,12 @@ singleBrierMultiplePoints = function(survMod, BrierTimes){
   
   #Each column represents the indicator for a single brier score 
   weightCat1Mat = (eventTimes[orderOfTimes] <= bsPointsMat & censorStatus[orderOfTimes])/predict(invProbCensor, eventTimes, level.chaos = 1)
+  #weightCat1Mat = (eventTimes[orderOfTimes] <= bsPointsMat & censorStatus[orderOfTimes])
   #Catch if event times goes over max training event time, i.e. predict gives NA
   weightCat1Mat[is.na(weightCat1Mat)] = 0
 
   weightCat2Mat = t(t((eventTimes[orderOfTimes] > bsPointsMat))/predict(invProbCensor, BrierTimes,level.chaos = 2))
+  #weightCat2Mat = t(t((eventTimes[orderOfTimes] > bsPointsMat)))
   #Catch if BrierTimes goes over max event time, i.e. predict gives NA
   weightCat2Mat[is.na(weightCat2Mat)] = 0
   

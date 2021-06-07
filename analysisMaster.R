@@ -36,7 +36,7 @@
 # Llog: A boolean specifying whether or not to use log-L1 metric. Default is FALSE.
 # typeOneCal: A string indicating the type of 1-Calibrtion to use. Must be one of "DN" or "Uncensored". Default is "DN".
 # oneCalBuckets: An int specifying number of bins for 1-Calibration. Default is 10.
-# survivalPredictionMethod: The way in which to estimate average surival times. Must be one of "Mean" or "Median". Default is "Median".
+# survivalPredictionMethod: The way in which to estimate average survival times. Must be one of "Mean" or "Median". Default is "Median".
 # AFTDistribution: The distribution to use for AFT, default is "weibull". Must be one of "weibull","exponential","lognormal","gaussian",
 #                   "loglogistic","logistic".
 # FS: A boolean specifying whether or not to use feature selection. Default is TRUE.
@@ -87,6 +87,7 @@ source("Evaluations/OneCalibration.R")
 source("Evaluations/Concordance.R")
 source("Evaluations/L1Measures.R")
 source("Evaluations/BrierScore.R")
+source("Evaluations/TimeDependentAUC.R")
 
 #Misc files:
 source("FeatureSelection/FeatureSelection.R")
@@ -100,7 +101,7 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
                           Llog = F, typeOneCal = "DN", oneCalBuckets = 10, survivalPredictionMethod = "Median", #Evaluation args
                           AFTDistribution = "weibull", #Model args,
                           FS = T, imputeZero=T, verbose = T, # Misc args
-                          foldIndex = NULL
+                          foldIndex = NULL, useAllData=F
 ){
   validatedData = validateAndClean(survivalDataset, imputeZero)
   if(FS) {validatedData = FeatureSelection(validatedData, type = "UniCox")}
@@ -121,6 +122,7 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
     coxMod = NULL;coxENMod =NULL; kmMod = NULL; rsfMod = NULL; aftMod = NULL; mtlrMod = NULL; bayesianNetMod = NULL;
     training = normalizedData[[1]][[i]]
     testing = normalizedData[[2]][[i]]
+    if(useAllData) {training = rbind(training,testing)}
     if(verbose){
       print(paste("Beginning model training."))
     }
@@ -128,8 +130,8 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
       if(verbose){
         print("Starting Cox Proportional Hazards.")
       }
-      coxMod = CoxPH_KP(training, testing)
-      #coxMod = GBMCox_KP(training, testing)
+      #coxMod = CoxPH_KP(training, testing)
+      coxMod = GBMCox_KP(training, testing)
       if(length(coxMod) ==1){
         combinedTestResults$Cox = list()
         coxTimes = NULL
@@ -227,31 +229,6 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
       mtlrConCurve = Concordance(mtlrMod, concordanceTies,survivalPredictionMethod)
       bayesConCurve = Concordance(bayesianNetMod, concordanceTies,survivalPredictionMethod)
       
-      timeOfInterest = unname(quantile(validatedData$time,c(.1,.2,.3,.4,.5,.6,.7,.8,.9)))
-      #timeOfInterest = seq(0,quantile(validatedData$time,0.95),(quantile(validatedData$time,0.95)-0)/8 )
-      for(timepoint in timeOfInterest) {
-        TestCurve = mtlrMod[[1]]
-        TestData = mtlrMod[[2]]
-        if(sum(TestData$time>timepoint)<1 | max(TestCurve$time)<timepoint) {mtlrConCurve = c(mtlrConCurve,0);next;}
-        TestCurve = TestCurve[,c(TRUE,TestData$time>timepoint)]
-        TestData = TestData[TestData$time>timepoint,]
-        TestCurve = TestCurve[TestCurve[,1]>timepoint,]
-        mtlrModSlice = list(TestCurve=TestCurve,TestData=TestData)
-        mtlrConc = Concordance(mtlrModSlice, concordanceTies,survivalPredictionMethod)
-        mtlrConCurve = c(mtlrConCurve,mtlrConc)
-      }
-      for(timepoint in timeOfInterest) {
-        TestCurve = bayesianNetMod[[1]]
-        TestData = bayesianNetMod[[2]]
-        if(sum(TestData$time>timepoint)<1 | max(TestCurve$time)<timepoint) {bayesConCurve = c(bayesConCurve,0);next;}
-        TestCurve = TestCurve[,c(TRUE,TestData$time>timepoint)]
-        TestData = TestData[TestData$time>timepoint,]
-        TestCurve = TestCurve[TestCurve[,1]>timepoint,]
-        bayesModSlice = list(TestCurve=TestCurve,TestData=TestData)
-        bayesConc = Concordance(bayesModSlice, concordanceTies,survivalPredictionMethod)
-        bayesConCurve = c(bayesConCurve,bayesConc)
-      }
-      
       ConcordanceCurveResults = rbind(mtlrConCurve, bayesConCurve)
       if(is.null(ConcordanceCurve)) {ConcordanceCurve = rbind(timeOfInterest,ConcordanceCurveResults)}
       else{ConcordanceCurve = rbind(ConcordanceCurve,ConcordanceCurveResults)}
@@ -285,6 +262,15 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
       mtlrBrierSingle = BrierScore(mtlrMod, type = "Single", singleBrierTime =SingleBrierTime )
       bayesBrierSingle = BrierScore(bayesianNetMod, type = "Single", singleBrierTime =SingleBrierTime )
       
+      # BrierSingleVec = c()
+      # timeOfInterest = unname(quantile(validatedData$time,c(.1,.2,.3,.4,.5,.6,.7,.8,.9,.95,.98,.99)))
+      # for(timepoint in timeOfInterest) {
+      #   BrierSingleVec = c(BrierSingleVec,BrierScore(mtlrMod, type = "Single", singleBrierTime =timepoint ))
+      # }
+      # print(timeOfInterest)
+      # print(BrierSingleVec)
+      
+      
       BrierResultsSingle = rbind(coxBrierSingle,coxENBrierSingle, kmBrierSingle, rsfBrierSingle, aftBrierSingle, mtlrBrierSingle, bayesBrierSingle)
       
     }
@@ -302,6 +288,7 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
       
       L1Results = rbind(coxL1,coxENL1,kmL1,rsfL1,aftL1,mtlrL1,bayesL1)
     }
+    
     toAdd = as.data.frame(cbind(ConcordanceResults,
                                 BrierResultsInt, BrierResultsSingle,L1Results))
     metricsRan = c(Concor,BrierInt,BrierSingle, L1Measure)
@@ -372,7 +359,8 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
   combinedBins$MTLR =colSums(ldply(lapply(seq_along(combinedTestResults$MTLR), function(x) getBinned(combinedTestResults$MTLR[[x]], DCalBins)), rbind))
   combinedBins$Cox =colSums(ldply(lapply(seq_along(combinedTestResults$Cox), function(x) getBinned(combinedTestResults$Cox[[x]], DCalBins)), rbind))
   combinedBins$BayesianNet =colSums(ldply(lapply(seq_along(combinedTestResults$BayesianNet), function(x) getBinned(combinedTestResults$BayesianNet[[x]], DCalBins)), rbind))
-    
+  combinedBins$RSF =colSums(ldply(lapply(seq_along(combinedTestResults$RSF), function(x) getBinned(combinedTestResults$RSF[[x]], DCalBins)), rbind))
+  
   return(list(datasetUsed = validatedData, survivalCurves = survivalCurves, results = evaluationResults, DcalHistogram = combinedBins, ConCurve = ConcordanceCurve))
 }
 

@@ -28,7 +28,7 @@
 library(ggplot2)
 #For shaping the data into long form:
 library(reshape2)
-plotSurvivalCurves = function(survivalCurves, indexToPlot = 1, color = c(), xlim = c()){
+plotSurvivalCurves = function(survivalCurves, indexToPlot = 1, color = c(), xlim = c(), title=''){
   colorOK = T
   if(length(color) == 0)
     colorOK = F
@@ -39,13 +39,15 @@ plotSurvivalCurves = function(survivalCurves, indexToPlot = 1, color = c(), xlim
   }
   time = survivalCurves$time
   curves = survivalCurves[,indexToPlot +1,drop=F]
-  plotTimes = seq(min(time),max(time), length.out = length(time)*100)
+  maxPlotTimes = ifelse(length(xlim)==2,xlim[2],max(time))
+  plotTimes = seq(min(time),maxPlotTimes, length.out = length(time)*100)
   plotProbs = as.data.frame(sapply(curves,
                                    function(curve){
                                      curve = ifelse(curve < 1e-20,0,curve)
                                      survivialSpline = splinefun(time, curve, method = "hyman")
-                                     return(pmax(survivialSpline(plotTimes),0))
+                                     return(pmax(predictProbabilityFromCurve(curve,time,plotTimes),0))
                                    }
+                                   #predictProbabilityFromCurve(curve,time,plotTimes)
   ))
   data = cbind.data.frame(plotTimes,plotProbs)
   longFormData = melt(data,measure.vars = names(data)[-1], variable.name = "Index")
@@ -58,11 +60,12 @@ plotSurvivalCurves = function(survivalCurves, indexToPlot = 1, color = c(), xlim
   }
   plot = plot +scale_y_continuous( limits= c(0,1),breaks = c(0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1))+
     theme_bw() +
-    theme(text = element_text(size=18, face=  "bold"),
-          axis.title = element_text(size = 20),
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+    theme(text = element_text(size=30),
+          axis.title = element_text(size = 30),
           axis.title.x = element_text(margin = margin(t = 15)),
           axis.title.y = element_text(margin = margin(r = 15))) + 
-    labs(y = "Survival Probaility",x = "Time" )
+    labs(y = "Survival Probaility",x = "Day",title=title )
   #If we have too many survival curves then the legend takes up the whole plot. We have an if to catch this and remove the legend.
   if(length(indexToPlot) > 15){
     plot = plot + theme(legend.position = "None")

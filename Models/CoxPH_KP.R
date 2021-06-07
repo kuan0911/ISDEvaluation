@@ -46,7 +46,7 @@ library(fastcox)
 #For sindex
 library(prodlim)
 
-CoxPH_KP = function(training, testing,ElasticNet=F, numFolds = 5){
+CoxPH_KP = function(training, testing,ElasticNet=T, numFolds = 5){
   if(ElasticNet){
     timeInd = which(names(training) == "time")
     deltaInd = which(names(training) == "delta")
@@ -54,7 +54,8 @@ CoxPH_KP = function(training, testing,ElasticNet=F, numFolds = 5){
     lambda = NULL
     bestError = Inf
     #Try 6 values for alpha and then do repeated (10 times) k-fold cross validation for selecting best hyper parameters.
-    for(a in c(0.01,.2,.4,.6,.8,1)){
+    #for(a in c(0.01,.2,.4,.6,.8,1)){
+    for(a in c(1)){
       errors = NULL
       #Taken from https://stats.stackexchange.com/questions/97777/variablity-in-cv-glmnet-results
       for(i in 1:10){
@@ -72,7 +73,9 @@ CoxPH_KP = function(training, testing,ElasticNet=F, numFolds = 5){
         bestError = modelError
       }
     }
-    coxModel = cocktail(as.matrix(training[,-c(timeInd, deltaInd)]),training[,timeInd], training[,deltaInd],alpha = alpha,lambda = lambda)
+    print(lambda.min)
+    coxModel = cocktail(as.matrix(training[,-c(timeInd, deltaInd)]),training[,timeInd], training[,deltaInd],alpha = 1,lambda = 0.01)
+    print(as.matrix(coxModel$beta))
     linearPredictionsTraining = predict(coxModel,as.matrix(training[,-c(timeInd, deltaInd)]),type = "link")
     linearPredictionsTesting = predict(coxModel,as.matrix(testing[,-c(timeInd, deltaInd)]),type = "link")
     survivalEstimate = KPEstimator(linearPredictionsTraining, training$time,training$delta)

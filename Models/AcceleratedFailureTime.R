@@ -46,7 +46,7 @@ library(survival)
 AFT = function(training, testing, AFTDistribution){
   #Sometimes the AFT model will fail to converge (though rare) we want to catch this.
   tryCatch({
-    AFTMod = survreg(Surv(time,delta)~., data = training, dist = AFTDistribution)
+    AFTMod = survreg(Surv(time,delta)~., data = training, dist = AFTDistribution,control = list(maxiter=1000))
     
     trainingTimes = sort(unique(training$time))
     if(0 %in% trainingTimes){

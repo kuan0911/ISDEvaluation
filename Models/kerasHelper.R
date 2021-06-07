@@ -1,4 +1,6 @@
 source('Evaluations/EvaluationHelperFunctions.R')
+source("ValidateCleanCV/createFoldsAndNormalize.R")
+source("Models/kerasLossFunction.R")
 keras_cv = function(x,y,weights,cvFoldIndex) {
   lambdaList = c(0.0001,0.001,0.01,0.1)
   lossList = rep(nrow(y),length(lambdaList))
@@ -40,7 +42,7 @@ keras_cv = function(x,y,weights,cvFoldIndex) {
 }
 
 keras_cvInt = function(x,y,w,cvFoldIndex) {
-  lambdaList = c(0.001,0.01,0.05,0.1,0.5,1)
+  lambdaList = c(0.001,0.01,0.1,1,10)
   lossList = rep(0,length(lambdaList))
   cat('internal cross validation: ')
   for(lambdaIter in 1:length(lambdaList)) {
@@ -54,7 +56,7 @@ keras_cvInt = function(x,y,w,cvFoldIndex) {
       cv_w_v = w[cvFoldIndex[[cvIter]],]
       
       
-      my_regularizer_wrapper_cv <- custom_metric("reg", function(x){my_regularizer(x, lambda1=lambdaList[lambdaIter],lambda2=0)})
+      my_regularizer_wrapper_cv <- custom_metric("reg", function(x){my_regularizer(x, lambda1=lambdaList[lambdaIter],lambda2=0,weights=w)})
 
       model_cv <- keras_model_sequential()
       model_cv %>%  layer_dense(units=2*ncol(cv_y), activation='sigmoid', input_shape=c(ncol(cv_x)),use_bias=TRUE,
@@ -65,7 +67,7 @@ keras_cvInt = function(x,y,w,cvFoldIndex) {
       )
       #summary(model)
       optimizerSGD = optimizer_sgd(
-        lr = 2.0,
+        lr = 0.1,
         momentum = 0.5,
         decay = 0.0,
         nesterov = FALSE,
@@ -79,8 +81,8 @@ keras_cvInt = function(x,y,w,cvFoldIndex) {
         #sample_weight_mode='temporal',
         #weighted_metrics = 'binary_accuracy'
       )
-      early_stopping = callback_early_stopping(monitor='loss', patience=300, verbose=2)
-      reduceLearningRate = callback_reduce_lr_on_plateau(monitor='loss', patience=30, factor=0.9,min_lr=0.01, verbose=0)
+      early_stopping = callback_early_stopping(monitor='loss', patience=1000, verbose=2)
+      reduceLearningRate = callback_reduce_lr_on_plateau(monitor='loss', patience=20, factor=0.9,min_lr=0.01, verbose=0)
       
       fitted <- model_cv %>% fit(
         cv_x, cbind(cv_y,cv_w),
@@ -125,6 +127,74 @@ keras_cvInt = function(x,y,w,cvFoldIndex) {
   return(bestLambda)
 }
 
+keras_cvInt_lambda2 = function(x,y,w,cvFoldIndex,bestLambda1) {
+  lambdaList = c(0.001,0.01,0.1,0.5,1)
+  lossList = rep(0,length(lambdaList))
+  cat('internal cross validation: ')
+  for(lambdaIter in 1:length(lambdaList)) {
+    cat(lambdaList[lambdaIter]);cat(' ');
+    for(cvIter in 1:length(cvFoldIndex)) {
+      cv_x = x[-cvFoldIndex[[cvIter]],]
+      cv_y = y[-cvFoldIndex[[cvIter]],]
+      cv_w = w[-cvFoldIndex[[cvIter]],]
+      cv_x_v = x[cvFoldIndex[[cvIter]],]
+      cv_y_v = y[cvFoldIndex[[cvIter]],]
+      cv_w_v = w[cvFoldIndex[[cvIter]],]
+      
+      allHazard = colSums(cv_y*cv_w)/colSums(cv_w)
+      my_regularizer_wrapper_cv <- custom_metric("reg", function(x){my_regularizer(x, lambda1=bestLambda1,lambda2=lambdaList[lambdaIter],weights=w)})
+      my_bias_regularizer_wrapper_cv <- custom_metric("regb", function(x){my_bias_regularizer(x, allHazard=log(allHazard))})
+      
+      model_cv <- keras_model_sequential()
+      model_cv %>%  layer_dense(units=2*ncol(cv_y), activation='sigmoid', input_shape=c(ncol(cv_x)),use_bias=TRUE,
+                                #bias_initializer = initializer_random_normal(-2.19,0.5),
+                                #kernel_regularizer = regularizer_l1(l = 0.5),
+                                kernel_regularizer = my_regularizer_wrapper_cv
+                                #bias_regularizer=my_bias_regularizer_wrapper_cv
+      )
+      #summary(model)
+      optimizerSGD = optimizer_sgd(
+        lr = 0.1,
+        momentum = 0.5,
+        decay = 0.0,
+        nesterov = FALSE,
+        clipnorm = 1,
+        clipvalue = 1
+      )
+      model_cv %>% compile(
+        loss = customBCE,
+        optimizer = optimizerSGD,
+        metrics = NULL
+        #sample_weight_mode='temporal',
+        #weighted_metrics = 'binary_accuracy'
+      )
+      early_stopping = callback_early_stopping(monitor='loss', patience=1000, verbose=2)
+      reduceLearningRate = callback_reduce_lr_on_plateau(monitor='loss', patience=10, factor=0.9,min_lr=0.01, verbose=0)
+      
+      fitted <- model_cv %>% fit(
+        cv_x, cbind(cv_y,cv_w),
+        epochs = 6000, batch_size = 16,
+        validation_split = 0,
+        #validation_data = list(cv_x_v,cbind(cv_y_v,cv_w_v)),
+        shuffle=T,
+        verbose = 0,
+        callbacks = list(early_stopping,reduceLearningRate)
+      )
+      
+      probInt = model_cv %>% predict(cv_x_v)
+      probInt = probInt[,1:ncol(cv_y_v)]
+      loss = sum((cv_y_v*log(probInt+0.00001) + (1-cv_y_v)*log(1-probInt+0.00001))*cv_w_v)
+      #lossList[lambdaIter] = lossList[lambdaIter]+tail(fitted$metrics$val_loss,1)
+      lossList[lambdaIter] = lossList[lambdaIter]+loss
+      #print(loss)
+    }
+    print(lossList[lambdaIter])
+  }
+  bestLambda = lambdaList[which.max(lossList)]
+  
+  return(bestLambda)
+}
+
 EMdata = function(x,y,w,data,model,timePoints) {
   survivalFunction <- data.frame(matrix(nrow = nrow(x), ncol = ncol(y)))
   hazardFunction <- data.frame(matrix(nrow = nrow(x), ncol = ncol(y)))
@@ -155,10 +225,11 @@ EMdata = function(x,y,w,data,model,timePoints) {
           a = 1
         }
         b = predictProbabilityFromCurve(survivalCurve,survivalCurveTime,timePoints[i])
-        c = predictProbabilityFromCurve(survivalCurve,survivalCurveTime,data[k,'time'])+0.0001
+        c = predictProbabilityFromCurve(survivalCurve,survivalCurveTime,data[k,'time'])
         if(i>1) {
           if(w[k,i-1]<1) {
             survprob = survivalFunction[k,i-1]
+            #survprob = 1
             #survprob = a/c
           }else {
             survprob = 1
@@ -166,13 +237,14 @@ EMdata = function(x,y,w,data,model,timePoints) {
         }else {
           survprob = 1
         }
-        prob = hazardFunction[k,i]
-        # if(i>1) {
-        #   prob = 1- ((a/c)-(b/c))
-        # }else {
-        #   prob = b/c
-        # }
-        weight[k,i] = survprob*prob
+        #prob = hazardFunction[k,i]
+        #prob = b/a
+        if(i>1) {
+          prob = 1- ((a)-(b))
+        }else {
+          prob = b
+        }
+        weight[k,i] = survprob*(prob)
         copyWeight[k,i] = survprob*(1-prob)
       }
     }
@@ -180,6 +252,14 @@ EMdata = function(x,y,w,data,model,timePoints) {
   newx = rbind(x,x)
   newy = rbind(oldy,copy_y)
   neww = rbind(weight,copyWeight)
+  copyWeight = matrix(0,nrow(w),ncol(w))
+  # newx = rbind(x,x)
+  # newy = rbind(y,copy_y)
+  # neww = rbind(w,copyWeight)
+  
+  newx = newx[rowSums(neww)>0,]
+  newy = newy[rowSums(neww)>0,]
+  neww = neww[rowSums(neww)>0,]
   
   return(list(x=newx,y=newy,w=neww))
 }
@@ -203,21 +283,21 @@ EMdataKM = function(x,y,w,data,kmMod,timePoints) {
         c = predict(kmMod,data[k,'time'])
         if(i>1) {
           if(w[k,i-1]<1) {
-            #survprob = survivalFunction[k,i-1]
-            survprob = a/c
+            survprob = predict(kmMod,timePoints[i-1])/c
+            #survprob = a/c
           }else {
             survprob = 1
           }
         }else {
           survprob = 1
         }
-        #prob = hazardFunction[k,i]
+        #prob = b/a
         if(i>1) {
           prob = 1- ((a/c)-(b/c))
         }else {
           prob = b/c
         }
-        weight[k,i] = survprob*prob
+        weight[k,i] = 1-survprob*(1-prob)
         copyWeight[k,i] = survprob*(1-prob)
       }
     }
@@ -303,6 +383,7 @@ prepareDataKeras = function(data,timePoints) {
     singleweight[y[,i]==1 & y[,i-1]==0 ] <- 1
     singleweight[y[,i]==1 & y[,i-1]==1 ] <- 0
     singleweight[is.na(y[,i]) & y[,i-1]==0] <- 0.5
+    #singleweight[is.na(y[,i]) & y[,i-1]==0] <- 0
     singleweight[is.na(y[,i]) & is.na(y[,i-1])] <- 0
     w[,i] =  singleweight
   }
@@ -311,14 +392,17 @@ prepareDataKeras = function(data,timePoints) {
   return(list(x=x,y=y,w=w))
 }
 
-hazard2survival = function(hazard) {
-  survivalFunction <- matrix(ncol = ncol(hazard), nrow = nrow(hazard))
-  previousTimepointProb = rep(1,nrow(hazard))
-  for(i in 1:ncol(hazard)) {
-    survivalFunction[,i] = hazard[,i]*previousTimepointProb
+hazard2survival = function(hazard,timePoints) {
+  invHazard = 1-hazard
+  survivalFunction <- matrix(ncol = ncol(invHazard), nrow = nrow(invHazard))
+  previousTimepointProb = rep(1,nrow(invHazard))
+  for(i in 1:ncol(invHazard)) {
+    survivalFunction[,i] = invHazard[,i]*previousTimepointProb
     previousTimepointProb = survivalFunction[,i]
   }
-  return(survivalFunction)
+  prob = cbind(1,survivalFunction)
+  time = c(0,timePoints)
+  return(list(prob = prob, time = time))
 }
 
 makeMod = function(TestCurves,TrainCurves, timePoints, training, testing) {
@@ -351,4 +435,107 @@ Evaluation = function(EMMod) {
   bayesL1 = L1(EMMod, 'Margin', F,survivalPredictionMethod)
   bayesDcal = DCalibrationCumulative(list(EMMod),10)
   return(list(Conc=bayesConc,BrierInt=bayesBrierInt,L1=bayesL1,Dcal=bayesDcal))
+}
+
+logliklyhood = function(xlim,survivalCurves,data,m=100,deltaFraction=0.1) {
+  loglik = 0
+  delta = data$time*deltaFraction/2
+  tstep = xlim/m
+  for(t in seq(0,xlim,tstep)) {
+    probInt = rep(0,nrow(data))
+    for(n in 1:nrow(data)) {
+      if(data[n,'time']<=t & data[n,'time']>t-tstep) {
+        if(data[n,'delta']==1) {
+          pmf = -(predictProbabilityFromCurve(survivalCurves$prob[n,],survivalCurves$time,t+delta)-predictProbabilityFromCurve(survivalCurves$prob[n,],survivalCurves$time,t-tstep-delta))/(delta*2+tstep)
+          if(pmf<0) {print('logliklyhood error: negative pmf')}
+          loglik = loglik + log(pmf+0.00001)
+        }else if(data[n,'delta']==0){
+          survFunS = predictProbabilityFromCurve(survivalCurves$prob[n,],survivalCurves$time,t)
+          loglik = loglik + survFunS
+        }
+      }
+    }
+  }
+  return(loglik)
+}
+
+cvGeneral = function(data,timePoints,numberOfFolds=3) {
+  #lambdaList = c(0.001,0.01,0.1,0.5,1,10)
+  lambdaList = c(50,40,30,20,10,5)
+  lossList = rep(0,length(lambdaList))
+  cvFoldIndex = createFoldsOfData(data, numberOfFolds=numberOfFolds)[[1]]
+  cat('internal cross validation: ')
+  for(lambdaIter in 1:length(lambdaList)) {
+    cat(lambdaList[lambdaIter]);cat(' ');
+    for(cvIter in 1:length(cvFoldIndex)) {
+      quantileVals = seq(0,1,length.out = lambdaList[lambdaIter]+2)[-c(1,lambdaList[lambdaIter]+2)]
+      timePoints = unname(quantile(data[cvFoldIndex[[cvIter]],]$time, quantileVals))
+      timePoints = timePoints[!duplicated(timePoints)]
+      print(lambdaList[lambdaIter])
+      res = prepareDataKeras(data,timePoints)
+      x=res$x
+      y=res$y
+      w=res$w
+      cv_x = x[-cvFoldIndex[[cvIter]],]
+      cv_y = y[-cvFoldIndex[[cvIter]],]
+      cv_w = w[-cvFoldIndex[[cvIter]],]
+      cv_x_v = x[cvFoldIndex[[cvIter]],]
+      cv_y_v = y[cvFoldIndex[[cvIter]],]
+      cv_w_v = w[cvFoldIndex[[cvIter]],]
+      
+      allHazard = colSums(cv_y*cv_w)/colSums(cv_w)
+      my_regularizer_wrapper_cv <- custom_metric("reg", function(x){my_regularizer(x, lambda1=0.1,lambda2=0.1,weights=w)})
+      my_bias_regularizer_wrapper <- custom_metric("regb", function(x){my_bias_regularizer(x, allHazard=log(allHazard))})
+      
+      model_cv <- keras_model_sequential()
+      model_cv %>%  layer_dense(units=2*ncol(cv_y), activation='sigmoid', input_shape=c(ncol(cv_x)),use_bias=TRUE,
+                                #bias_initializer = initializer_random_normal(-2.19,0.5),
+                                #kernel_regularizer = regularizer_l1(l = 0.5),
+                                kernel_regularizer = my_regularizer_wrapper_cv,
+                                bias_regularizer = my_bias_regularizer_wrapper
+      )
+      #summary(model)
+      optimizerSGD = optimizer_sgd(
+        lr = 1.0,
+        momentum = 0.1,
+        decay = 0.0,
+        nesterov = FALSE,
+        clipnorm = 1,
+        clipvalue = 1
+      )
+      model_cv %>% compile(
+        loss = customBCE,
+        optimizer = optimizerSGD,
+        metrics = NULL
+        #sample_weight_mode='temporal',
+        #weighted_metrics = 'binary_accuracy'
+      )
+      early_stopping = callback_early_stopping(monitor='loss', patience=300, verbose=2)
+      reduceLearningRate = callback_reduce_lr_on_plateau(monitor='loss', patience=10, factor=0.9,min_lr=0.01, verbose=0)
+      
+      fitted <- model_cv %>% fit(
+        cv_x, cbind(cv_y,cv_w),
+        epochs = 6000, batch_size = 16,
+        validation_split = 0,
+        #validation_data = list(cv_x_v,cbind(cv_y_v,cv_w_v)),
+        shuffle=T,
+        verbose = 0,
+        callbacks = list(early_stopping,reduceLearningRate)
+      )
+      
+      probInt = model_cv %>% predict(cv_x_v)
+      k_clear_session()
+      
+      probInt = probInt[,1:ncol(cv_y_v)]
+      survivalCurves = hazard2survival(probInt,timePoints)
+      
+      loss = logliklyhood(xlim=quantile(data$time,0.8),survivalCurves,data[cvFoldIndex[[cvIter]],],m=100)
+      lossList[lambdaIter] = lossList[lambdaIter]+loss
+      #print(loss)
+    }
+    print(lossList)
+  }
+  bestLambda = lambdaList[which.max(lossList)]
+  
+  return(bestLambda)
 }

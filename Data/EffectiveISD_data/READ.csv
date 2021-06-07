@@ -1,0 +1,172 @@
+"Composite Element REF","years_to_birth","delta","time","tumor_tissue_site","pathologic_stage","pathology_T_stage","pathology_N_stage","pathology_M_stage","gender","date_of_initial_pathologic_diagnosis","days_to_last_known_alive","radiation_therapy","histological_type","tumor_stage","residual_tumor","number_of_lymph_nodes","ethnicity"
+"value","60","1","316","rectum","stage iv","t3","n1","m1","male","2009",NA,"no","rectal adenocarcinoma",NA,"r0","1","not hispanic or latino"
+"value","67","0","244","rectum","stage i","t1","n0","m0","male","2007",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","72","0","424","rectum","stage iia","t3","n0","m0","male","2009","31","no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","55","0","608","rectum","stage iiib","t3","n1","m0","female","2009",NA,"no","rectal adenocarcinoma",NA,"r0","1",NA
+"value","62","0","518","rectum","stage i","t2","n0","m0","male","2009",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","63","0","518","rectum","stage iia","t3","n0","m0","male","2008",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","75","0","790","rectum","stage iia","t3","n0","m0","male","2008",NA,"yes","rectal adenocarcinoma",NA,"r0","0",NA
+"value","86","0","485","rectum","stage i","t2","n0","m0","male","2009",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","64","0","1096","rectum","stage i","t1","n0","m0","female","2009",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","68","0","943","rectum","stage iv","t2","n0","m1","female","2009",NA,"no","rectal adenocarcinoma",NA,"r2","0",NA
+"value","62","1","1581","rectum","stage iv","t4","n2","m1","female","2005",NA,"no","rectal adenocarcinoma",NA,"r2","6",NA
+"value","73","0","646","rectum","stage iiib","t3","n1",NA,"male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","74","1","556","rectum",NA,"t3","n2","m0","male","2009",NA,"no","rectal adenocarcinoma",NA,"r0","27","not hispanic or latino"
+"value","72","0","1696","rectum","stage iiib","t3","n1","mx","male","2007",NA,"no","rectal adenocarcinoma",NA,"r1","1","not hispanic or latino"
+"value","67","0","804","rectum","stage iiia","t1","n1","mx","male","2009",NA,"no","rectal mucinous adenocarcinoma",NA,"r0","1","not hispanic or latino"
+"value","57","0","1427","rectum","stage iiic","t3","n2","m0","male","2009",NA,"yes","rectal adenocarcinoma",NA,"r0","6","not hispanic or latino"
+"value","41","1","1201","rectum","stage iv","t3","n2","m1","female","2009",NA,"no","rectal adenocarcinoma",NA,"r0","6","not hispanic or latino"
+"value","76","1","524","rectum","stage iiic","t3","n2","m0","female","2009",NA,"no","rectal adenocarcinoma",NA,"r0","3","not hispanic or latino"
+"value","48","0","1309","rectum","stage i","t1","n0","m0","female","2009",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","54","0","412",NA,"stage iia","t3","n0","m0","female","2009",NA,"no",NA,NA,"r0","0","not hispanic or latino"
+"value","75","0","1155",NA,"stage i","t2","n0","mx","male","2009",NA,"no",NA,NA,NA,"0","not hispanic or latino"
+"value","54","0","1049","rectum","stage iia","t3","n0","m0","male","2009",NA,"yes","rectal mucinous adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","48","0","1148","rectum","stage iiic","t3","n2","mx","male","2009",NA,"yes","rectal adenocarcinoma",NA,NA,"9","not hispanic or latino"
+"value","39","0","1146","rectum","stage iiib","t3","n2a","m0","male","2010",NA,"yes","rectal adenocarcinoma",NA,"r0","5","not hispanic or latino"
+"value","77","0","912",NA,"stage iva","t4a","n2b","mx","male","2010",NA,"no",NA,NA,"r0","21","not hispanic or latino"
+"value","73","1","512","rectum","stage i","t2","n0","m0","female","2010","257","no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","72","0","741","rectum","stage iiib","t3","n1b","mx","female","2011",NA,"yes","rectal adenocarcinoma",NA,NA,"2","not hispanic or latino"
+"value","66","0","609","rectum","stage iiia","t2","n1","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","2","not hispanic or latino"
+"value","43","0","748","rectum","stage iv","t4a","n2b","mx","male","2011",NA,"yes","rectal adenocarcinoma",NA,NA,"18","not hispanic or latino"
+"value","56","0","2635","rectum","stage iia","t3","n0","m0","male","2006",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","48","0","2007","rectum","stage iiic","t3","n2","m0","female","2008",NA,"no","rectal adenocarcinoma",NA,"rx","10",NA
+"value","47","0","360","rectum","stage iia","t3","n0","m0","female","2012",NA,"yes","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","89","1","1096","rectum","stage ii","t3","n0","m0","female","2005",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","51","0","365","rectum","stage ii","t3","n0","m0","male","2006",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","76","0","974","rectum","stage iia","t3","n0","m0","female","2007",NA,"no","rectal mucinous adenocarcinoma",NA,"r0","0",NA
+"value","63","0","215","rectum","stage i","t2","n0","m0","male","2007",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","75","1","1096","rectum","stage iv","t3","n1","m1","male","2007",NA,"no","rectal adenocarcinoma",NA,"r2","1",NA
+"value","66","1","610","rectum","stage iv","t3","n2","m1","male","2008",NA,"no","rectal mucinous adenocarcinoma",NA,"r2","9",NA
+"value","60","1","730","rectum","stage iv","t3","n2","m1","male","2008",NA,"no","rectal adenocarcinoma",NA,"r2","20",NA
+"value","72","0","31","rectum","stage iii","t3","n2","m0","female","2006",NA,NA,NA,NA,"r0","4",NA
+"value","65","0","1400","rectum","stage i","t2","n0","m0","male","2007",NA,"yes","rectal adenocarcinoma",NA,"r0","0",NA
+"value","66","0","1035","rectum","stage iia","t3","n0","m0","female","2007",NA,"yes","rectal adenocarcinoma",NA,"r0","0",NA
+"value","68","0","1035","rectum","stage iia","t3","n0","m0","male","2007",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","72","0","1035","rectum","stage iia","t3","n0","m0","female","2007",NA,"yes","rectal adenocarcinoma",NA,"r0","0",NA
+"value","77","1","61","rectum","stage iia","t3","n0","m0","male","2007",NA,"no","rectal mucinous adenocarcinoma",NA,"r0","0",NA
+"value","69","0","1522","rectum","stage iia","t3","n0","m0","male","2007",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","70","0","366","rectum","stage i","t2","n0","m0","male","2007",NA,"no",NA,NA,"r0","0",NA
+"value","62","0","184","rectum","stage iiic","t3","n2","m0","male","2007",NA,"yes","rectal adenocarcinoma",NA,"r0","31",NA
+"value","68","0","0","rectum","stage iiib","t4","n1","m0","male","2007",NA,NA,"rectal adenocarcinoma",NA,"r2","2",NA
+"value","66","0","0","rectum","stage iiic","t3","n2","m0","female","2007",NA,NA,"rectal adenocarcinoma",NA,"r0","5",NA
+"value","85","0","30","rectum","stage iv","t3","n1","m1","female","2008",NA,NA,"rectal adenocarcinoma",NA,"r2","3",NA
+"value","79","0","485","rectum","stage iia","t3","n0","m0","female","2008",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","65","0","608","rectum","stage iiic","t3","n2","m0","female","2008",NA,"no","rectal adenocarcinoma",NA,"r0","4",NA
+"value","90","0","638","rectum","stage iii","t3","n2","m0","female","2005",NA,"no","rectal adenocarcinoma",NA,"r0","5",NA
+"value","63","0","243","rectum","stage i","t2","n0","m0","female","2006",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","78","0","30","rectum","stage iii","t3","n1","m0","female","2006",NA,NA,"rectal adenocarcinoma",NA,"r0","2",NA
+"value","73","0","912","rectum","stage iiib","t3","n1","m0","male","2006",NA,"no","rectal adenocarcinoma",NA,"r0","3",NA
+"value","65","0","1126","rectum","stage iv","t3","n1","m1","male","2004",NA,"no","rectal adenocarcinoma",NA,"r2","3",NA
+"value","78","0","1003","rectum","stage i","t2","n0","m0","female","2005",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","85","0","30","rectum","stage i","t1","n0","m0","female","2004",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","64","0","30","rectum","stage i","t2","n0","m0","male","2007",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","83","0","579","rectum","stage iia","t3","n0","m0","female","2008",NA,"no",NA,NA,NA,"0",NA
+"value","66","0","608","rectum","stage i","t2","n0","m0","female","2008",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","69","0","31","rectum","stage i","t2","n0","m0","male","2008",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","71","0","546","rectum","stage iiib","t3","n1","m0","female","2008",NA,"yes","rectal adenocarcinoma",NA,"r0","3",NA
+"value","68","0","1124","rectum","stage iia","t3","n0","m0","male","2009",NA,"yes","rectal mucinous adenocarcinoma",NA,"r0","0",NA
+"value","66","0","548","rectum","stage i","t2","n0","m0","female","2009",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","57","0","396","rectum","stage i","t1","n0","m0","female","2009",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","74","0","1065","rectum","stage iiib","t3","n1","m0","male","2009",NA,"no","rectal adenocarcinoma",NA,"r0","1",NA
+"value","65","0","426","rectum","stage iia","t3","n0","m0","male","2009",NA,"yes","rectal adenocarcinoma",NA,"r0","0",NA
+"value","85","0","31","rectum","stage i","t2","n0","m0","female","2009",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","61","0","1461","rectum","stage iia","t3","n0","m0","male","2006",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","67","0","761","rectum","stage iiib","t3","n1","m0","female","2007",NA,"no","rectal mucinous adenocarcinoma",NA,"r0","2",NA
+"value","61","0","974","rectum","stage iia","t3","n0","m0","male","2007",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","67","0","608","rectum","stage i","t2","n0","m0","female","2008",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","69","0","608","rectum","stage iiib","t3","n1","m0","female","2008",NA,"no","rectal adenocarcinoma",NA,"r0","3",NA
+"value","61","0","853","rectum","stage iiic","t3","n2","m0","female","2008",NA,"no","rectal adenocarcinoma",NA,"r0","20",NA
+"value","74","0","1096","rectum","stage iia","t3","n0","m0","female","2009",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","64","0","427","rectum","stage iv","t3","n2","m1","male","2007",NA,"no","rectal adenocarcinoma",NA,"r0","7",NA
+"value","86","0","31","rectum","stage iv","t4","n2","m1","male","2007",NA,NA,"rectal adenocarcinoma",NA,"r2","5",NA
+"value","83","0","426","rectum","stage i","t2","n0","m0","male","2009",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","85","0","0","rectum","stage iia","t3","n0","m0","female","2009",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","84","1","121","rectum","stage iv","t3","n2","m1","female","2005",NA,"no","rectal adenocarcinoma",NA,"r2","5",NA
+"value","59","0","1400","rectum","stage ii","t3","n0","m0","female","2006",NA,"yes","rectal adenocarcinoma",NA,"r0","0",NA
+"value","35","0","638","rectum","stage i","t2","n0","m0","male","2009",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","50","0","424","rectum","stage i","t2","n0","m0","female","2009",NA,"no","rectal mucinous adenocarcinoma",NA,"r0","0",NA
+"value","49","0","183","rectum","stage iiib","t3","n1","m0","female","2007",NA,"yes","rectal adenocarcinoma",NA,"r0","1",NA
+"value","68","0","700","rectum","stage iia","t3","n0","m0","male","2008",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","80","0","1126","rectum","stage iia","t3","n0","m0","male","2009",NA,"no","rectal adenocarcinoma",NA,"r0","0",NA
+"value","55","0","276","rectum","stage iv","t3","n2","m1","male","2009",NA,"no","rectal adenocarcinoma",NA,"r2","4",NA
+"value","59","0","31","rectum","stage iia","t3","n0","m0","female","2009",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","58","0","0","rectum","stage iiib","t3","n1","m0","male","2009",NA,NA,"rectal adenocarcinoma",NA,"r0","2",NA
+"value","67","0","0","rectum","stage ii","t3","n0","m0","female","2004",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","49","0","0","rectum","stage ii","t3","n0","m0","female","2004",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","57","0","31","rectum","stage iii","t3","n1","m0","female","2005",NA,NA,"rectal mucinous adenocarcinoma",NA,"r0","1",NA
+"value","62","0","1520","rectum","stage i","t1","n0","m0","female","2006",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","66","1","59","rectum","stage ii","t4","n0","m0","male","2006",NA,NA,"rectal adenocarcinoma",NA,"r1","0",NA
+"value","66","1","1185","rectum","stage iv","t2","n1","m1","male","2007",NA,"no","rectal adenocarcinoma",NA,"r2","3",NA
+"value","67","0","1885","rectum","stage ii","t3","n0","m0","male","2005",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","77","0","1247","rectum","stage i","t2","n0","m0","male","2007",NA,NA,"rectal adenocarcinoma",NA,"r0","0",NA
+"value","68","0","1157","rectum","stage iiib","t3","n1","m0","male","2007",NA,"yes","rectal adenocarcinoma",NA,"r0","2",NA
+"value","71","0","3562","rectum","stage iii","t3","n2","m0","male","2002",NA,"yes","rectal adenocarcinoma",NA,"r0","18",NA
+"value","60","0","1173","rectum",NA,"t3","n1","m1","male","2010",NA,"no","rectal adenocarcinoma",NA,NA,"3",NA
+"value","79","1","76","rectum",NA,"t3","n0","mx","female","2010",NA,"no","rectal adenocarcinoma",NA,NA,"0",NA
+"value","66","0","532","rectum",NA,"t3","nx","mx","male","2010",NA,"no","rectal adenocarcinoma",NA,"rx",NA,NA
+"value","50","1","1314","rectum","stage iiic","t3","n2b","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","8",NA
+"value","73","0","838","rectum",NA,"t3","nx","mx","male","2010",NA,"no","rectal adenocarcinoma",NA,NA,"0",NA
+"value","48","0","804","rectum","stage i","t2","n0","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","46","0","592","rectum","stage iiib","t3","n1b","m0","male","2010",NA,"no","rectal mucinous adenocarcinoma",NA,"r0","3","not hispanic or latino"
+"value","41","0","184","rectum","stage iv","t3","n1c","m1","male","2010",NA,NA,"rectal adenocarcinoma",NA,NA,NA,"not hispanic or latino"
+"value","41","0","1009","rectum","stage iva","t3","n1","m1","female","2010",NA,"no","rectal adenocarcinoma",NA,NA,NA,"not hispanic or latino"
+"value","63","0","419","rectum","stage iiib","t3","n1","mx","male","2010",NA,NA,"rectal adenocarcinoma",NA,NA,"0","not hispanic or latino"
+"value","74","0","1362","rectum","stage iib","t4","n0","m0","male","2010",NA,"yes","rectal adenocarcinoma",NA,NA,"0","not hispanic or latino"
+"value","44","0","1443","rectum","stage i","t1","n0","m0","male","2011",NA,NA,"rectal adenocarcinoma",NA,NA,NA,"not hispanic or latino"
+"value","53","0","1466","rectum","stage i","t2","n0","m0","female","2011",NA,NA,"rectal adenocarcinoma",NA,NA,NA,"not hispanic or latino"
+"value","79","1",NA,"rectum",NA,"t3","n1","m0","female","2008",NA,"no","rectal adenocarcinoma",NA,NA,"2","hispanic or latino"
+"value","71","0","2376","rectum","stage iiic","t3","n2","mx","female","2006",NA,"no","rectal adenocarcinoma",NA,"rx",NA,"not hispanic or latino"
+"value","90","0","218","rectum","stage iia","t3","n0","mx","female","2008",NA,"no","rectal adenocarcinoma",NA,"rx",NA,"not hispanic or latino"
+"value","49","0","639","rectum","stage iiib","t3","n1a","m0","female","2010",NA,"no","rectal adenocarcinoma",NA,"r0","1","not hispanic or latino"
+"value","57","0","762","rectum","stage i","t2","n0","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","69","0","792","rectum","stage i","t1","n0","m0","male","2010","304","no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","62","0","943","rectum","stage iiib","t3","n1a","m0","female","2010",NA,"no","rectal adenocarcinoma",NA,"r0","1","not hispanic or latino"
+"value","57","0","365","rectum","stage iva","t4a","n2b","m1","female","2010",NA,"no","rectal adenocarcinoma",NA,"r0","8","not hispanic or latino"
+"value","31","0","425","rectum","stage iiia","t2","n1b","m0","female","2010",NA,"no","rectal adenocarcinoma",NA,"r0","3","not hispanic or latino"
+"value","62","0","943","rectum","stage iva","t4a","n2b","m1a","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","7","not hispanic or latino"
+"value","48","0","1581","rectum","stage i","t2","n0","m0","male","2009",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","70","1","334","rectum","stage i","t2","n0","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","68","0","1339","rectum","stage i","t2","n0","m0","male","2009",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","70","0","790","rectum","stage iva","t3","n2a","m1a","female","2011",NA,"no","rectal adenocarcinoma",NA,"r0","7","not hispanic or latino"
+"value","57","0","762","rectum","stage iia","t3","n0","m0","male","2011",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","43","0","762","rectum","stage iiib","t3","n1b","m0","male","2011",NA,"no","rectal adenocarcinoma",NA,"r0","3","not hispanic or latino"
+"value","51","0","384","rectum","stage ii","t3","n0","m0","male","2010",NA,"yes","rectal mucinous adenocarcinoma",NA,"rx",NA,"not hispanic or latino"
+"value","57","0","3846","rectum","stage iia","t3","n0","m0","female","2001","3635",NA,"rectal adenocarcinoma",NA,NA,"0","not hispanic or latino"
+"value","72","1","1258","rectum","stage iia","t3","n0","m0","female","2000",NA,NA,"rectal adenocarcinoma",NA,NA,"0","not hispanic or latino"
+"value","77","1","1741","rectum","stage iiib","t3","n1","m0","female","1999","1741",NA,"rectal adenocarcinoma",NA,NA,"1","not hispanic or latino"
+"value","56","0","3932","rectum","stage iia","t3","n0","m0","female","2001","3667",NA,"rectal adenocarcinoma",NA,NA,"0","not hispanic or latino"
+"value","73","1","734","rectum","stage iiic","t3","n2","m0","female","2001","734",NA,"rectal adenocarcinoma",NA,NA,"5","not hispanic or latino"
+"value","75","1","1566","rectum","stage iva","t3","n1","m1","male","2000",NA,NA,"rectal adenocarcinoma",NA,NA,"2","not hispanic or latino"
+"value","77","1","992","rectum","stage iiia","t2","n1","m0","female","2000","992",NA,"rectal adenocarcinoma",NA,NA,"1","not hispanic or latino"
+"value","54","0","106","rectum","stage iib","t4a","n0","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0",NA,"not hispanic or latino"
+"value","72","0","127","rectum","stage iia","t3","n0","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0",NA,"not hispanic or latino"
+"value","78","0","625","rectum","stage iia","t3","n0","m0","female","2010",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","60","0","607","rectum","stage iia","t3","n0","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","48","0","636","rectum","stage iiib","t3","n1a","m0","female","2010",NA,"no","rectal adenocarcinoma",NA,"r0","1","not hispanic or latino"
+"value","53","0","517","rectum","stage iiic","t3","n2b","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","7","not hispanic or latino"
+"value","77","0","556","rectum",NA,"t2","n0","mx","female","2010",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","52","0","482","rectum","stage iiib","t3","n1","m0","male","2010",NA,"yes","rectal adenocarcinoma",NA,"r0","4","not hispanic or latino"
+"value","64","0","538","rectum","stage iiib","t3","n1","m0","female","2010",NA,"no","rectal adenocarcinoma",NA,"r0","1","not hispanic or latino"
+"value","59","0","497","rectum","stage iiib","t3","n1","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","2","not hispanic or latino"
+"value","59","0","496","rectum","stage iia","t3","n0","m0","female","2010",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","60","0","499","rectum","stage iiia","t3","n1","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","1","not hispanic or latino"
+"value","59","0","262","rectum","stage iia","t3","n0","m0","male","2011",NA,"no","rectal mucinous adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","63","0","350","rectum","stage iic","t3","n0","m0","male","2011",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","71","0","328","rectum","stage iiia","t3","n1","m0","male","2011",NA,"no","rectal adenocarcinoma",NA,"r0","3","not hispanic or latino"
+"value","57","0","415","rectum","stage iv","t3","n1b","m1","female","2011",NA,"no","rectal adenocarcinoma",NA,"r0","2","not hispanic or latino"
+"value","33","0","531","rectum","stage iiia","t3","n1","m0","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","3","not hispanic or latino"
+"value","58","0","364","rectum","stage iv","t3","n2","m1","male","2011",NA,"no","rectal adenocarcinoma",NA,"r0","7","not hispanic or latino"
+"value","37","0","257","rectum",NA,"t4a","n2b","m0","female","2011",NA,"no","rectal mucinous adenocarcinoma",NA,"r0","30","not hispanic or latino"
+"value","77","1","303","rectum","stage iiic","t4b","n2a","m0","female","2011",NA,"no","rectal adenocarcinoma",NA,"r0","4","not hispanic or latino"
+"value","64","0","1506","rectum","stage iia","t3","n0","m0","female","2010",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","62","0","1288","rectum","stage iia","t3","n0","m0","female","2011",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","71","1","869","rectum","stage iva","t3","n1","m1","male","2010",NA,"no","rectal adenocarcinoma",NA,"r0","1","not hispanic or latino"
+"value","71","0","12","rectum",NA,NA,NA,NA,"male","2011",NA,NA,"rectal adenocarcinoma","stage iia","r0","0","not hispanic or latino"
+"value","72","0","979","rectum","stage iia","t3","n0","m0","female","2011",NA,"no","rectal adenocarcinoma",NA,NA,"0","not hispanic or latino"
+"value","67","0","1110","rectum","stage iia","t3","n0","m0","male","2011",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","70","1","598","rectum","stage iiic","t4a","n2","m0","male","2011",NA,"no","rectal adenocarcinoma",NA,"r0","12","not hispanic or latino"
+"value","57","0","1131","rectum","stage iia","t3","n0","m0","male","2011",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","60","0","1160","rectum","stage iia","t3","n0","m0","female","2011",NA,"no","rectal adenocarcinoma",NA,"r0","0","not hispanic or latino"
+"value","71","1","361","rectum","stage iiib","t4a","n1","m0","female","2011",NA,"no","rectal adenocarcinoma",NA,"r0","3","not hispanic or latino"
+"value","74","0","379","rectum","stage iiib","t3","n2a","m0","female","2011",NA,"no","rectal adenocarcinoma",NA,"r0","4","not hispanic or latino"
+"value","56","1","1432","rectum",NA,NA,NA,NA,"male","2004",NA,"no","rectal adenocarcinoma",NA,NA,"0","not hispanic or latino"

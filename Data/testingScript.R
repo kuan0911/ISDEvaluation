@@ -6,19 +6,39 @@ survivalDataset <- read.csv(file = "Data/All_Data_updated_may2011_CLEANED.csv")
 names(survivalDataset)[c(1,2)] = c("time", "delta")
 survivalDataset$delta = 1 - survivalDataset$delta 
 
-survivalDataset <- read.csv(file = "Data/KIPAN.csv")
+survivalDataset <- read.csv(file = "Data/NSBCD.csv")
+survivalDataset <- read.csv(file = "Data/EffectiveISD_data/GBM.csv")
 
-survivalDataset <- read.csv(file = "Data/covid_cv_folds/discharge_final_exp2.csv")
+survivalDataset <- read.csv(file = "Data/covid_cv_folds/discharge_wo_argentina.csv")
+#survivalDataset2 <- read.csv(file = "Data/covid_cv_folds/asian_discharge_city.csv")
+
+# tempEvent = survivalDataset[survivalDataset$event!=0&survivalDataset$event!=1,'time']
+# survivalDataset[survivalDataset$event!=0&survivalDataset$event!=1,'time'] = survivalDataset[survivalDataset$event!=0&survivalDataset$event!=1,'event']
+# survivalDataset[survivalDataset$event!=0&survivalDataset$event!=1,'event'] = tempEvent
+
 survivalDataset$chronic_disease=NULL
 survivalDataset$travel_hist_date=NULL
 survivalDataset$travel_hist_location=NULL
+
 survivalDataset$chronic_disease_binary=NULL
 survivalDataset$latitude=NULL
 survivalDataset$longitude=NULL
 
-fold1 = read.csv(file = "Data/covid_cv_folds/fold_0.csv")
+survivalDataset$countries = paste(as.character(as.integer(survivalDataset$latitude/3)),as.character(as.integer(survivalDataset$longitude/3)))
+
+survivalDataset$GDP_per_capita_country=NULL
+survivalDataset$GDP_total_country=NULL
+
+survivalDataset$population_density_city=NULL
+survivalDataset$population_density_country=NULL
+
+survivalDataset$population_density_city=as.numeric(gsub(",", "", survivalDataset$population_density_city, fixed = TRUE))
+survivalDataset$population_density_country=as.numeric(gsub(",", "", survivalDataset$population_density_country, fixed = TRUE))
+
+
+fold3 = read.csv(file = "Data/covid_cv_folds/fold_0.csv")
 fold2 = read.csv(file = "Data/covid_cv_folds/fold_1.csv")
-fold3 = read.csv(file = "Data/covid_cv_folds/fold_2.csv")
+fold1 = read.csv(file = "Data/covid_cv_folds/fold_2.csv")
 fold4 = read.csv(file = "Data/covid_cv_folds/fold_3.csv")
 fold5 = read.csv(file = "Data/covid_cv_folds/fold_4.csv")
 n1=nrow(fold1);n2=nrow(fold2);n3=nrow(fold3);n4=nrow(fold4);n5=nrow(fold5)
@@ -32,18 +52,18 @@ survivalDataset[survivalDataset=="False"]=0
 survivalDataset[survivalDataset=="True"]=1
 survivalDataset$delta = as.integer(survivalDataset$delta)
 
-survivalDataset$x = cos(survivalDataset$latitude)*cos(survivalDataset$longitude)
-survivalDataset$y = cos(survivalDataset$latitude)*sin(survivalDataset$longitude)
+survivalDataset$translon = cos(survivalDataset$latitude)*cos(survivalDataset$longitude)
+survivalDataset$translat = cos(survivalDataset$latitude)*sin(survivalDataset$longitude)
 
 new_df <- survivalDataset
-#new_df$cities <- factor(new_df$cities, exclude = NULL)
-new_df$countries <- factor(new_df$countries, exclude = NULL)
-new_df <- model.matrix(~.-1, data = new_df[c("countries")],
+new_df$city <- factor(new_df$city, exclude = NULL)
+#new_df$countries <- factor(new_df$countries, exclude = NULL)
+new_df <- model.matrix(~.-1, data = new_df[c("city")],
                        contrasts.arg = list(
-                         countries = contrasts(new_df$countries, contrasts = FALSE)
+                         city = contrasts(new_df$city, contrasts = FALSE)
                        ))
 survivalDataset = cbind(survivalDataset,new_df)
-survivalDataset$cities = NULL
+survivalDataset$city = NULL
 survivalDataset$countries = NULL
 # for(k in 1:nrow(survivalDataset)) {
 #   if(runif(1,0,1)<0.7 & survivalDataset[k,'delta']==1) {
@@ -66,11 +86,6 @@ print(sum(survivalDataset$delta==0)/nrow(survivalDataset))
 # survivalDataset$PERFORMANCE_STATUS_0 = NULL
 # survivalDataset$AGE65 = NULL
 
-survivalDataset <- read.csv(file = "Data/covid-discharge_final.csv", na.strings='')
-survivalDataset <- read.csv(file = "Data/covid-death_final.csv", na.strings='')
-survivalDataset$delta = as.integer(as.logical(survivalDataset$event))
-survivalDataset$event = NULL
-
 survivalDataset <- read.csv(file = "Data/LifeExpectancyData.csv")
 
 source('Data/synthesizeData.R')
@@ -82,7 +97,7 @@ survivalDataset$X = NULL
 
 source('analysisMaster.R')
 
-ISD = analysisMaster(survivalDataset, CoxKP = F, MTLRModel=F,BayesianNetModel=T,KaplanMeier = F, FS = F, numberOfFolds = 5)
+ISD = analysisMaster(survivalDataset, CoxKP = F, MTLRModel=F,BayesianNetModel=T,KaplanMeier = F,RSFModel=F, FS = T, numberOfFolds = 5)
 
 ISD = analysisMaster(survivalDataset, CoxKP = F, MTLRModel=T,BayesianNetModel=F,KaplanMeier = F,RSFModel=F, FS = F, numberOfFolds = 5, foldIndex = foldIndex)
 
@@ -90,8 +105,10 @@ res = aveMetrics(ISD)
 
 plotSurvivalCurves(ISD$survivalCurves$Bayes, 1:10)
 
-barplot(ISD$DcalHistogram$BayesianNet,horiz=TRUE)
+binnames = c("[0.9,1]","[0.8,0.9)","[0.7,0.8)","[0.6,0.7)","[0.5,0.6)","[0.4,0.5)","[0.3,0.4)","[0.2,0.3)","[0.1,0.2)","[0,0.1)")
+barplot(ISD$DcalHistogram$BayesianNet/sum(ISD$DcalHistogram$BayesianNet),horiz=TRUE,xlab='Proportion in bin',names.arg=binnames,las=1,main='')
 
+barplot(100*ISD$DcalHistogram$Cox/sum(ISD$DcalHistogram$Cox),horiz=TRUE,xlab='Percentage in bin',names.arg=binnames,las=1,main='CoxKP',cex.axis=1.6,cex.names=1.6,cex.lab=1.6,cex.main=2)
 
 delta0curveX = delta0curve$time
 delta0curveY = delta0curve[,2]
@@ -119,4 +136,14 @@ aveMetrics = function(ISD) {
   print(paste('DCal:',trunc(D*1000)/1000,sep=' '))
   return(list(Concordance=C,Concordance_std=Cstd,BrierInt=B,BrierInt_std=Bstd,L1Loss=L,L1Loss_std=Lstd,DCalibration=D))
 }
+
+
+
+ISD = analysisMaster(survivalDataset, CoxKP = T, MTLRModel=F,BayesianNetModel=F,KaplanMeier = F,RSFModel=F, FS = F, numberOfFolds = 5,verbose = F)
+res = aveMetrics(ISD)
+ISD = analysisMaster(survivalDataset, CoxKP = F, MTLRModel=T,BayesianNetModel=F,KaplanMeier = F,RSFModel=F, FS = F, numberOfFolds = 5,verbose = F)
+res = aveMetrics(ISD)
+ISD = analysisMaster(survivalDataset, CoxKP = F, MTLRModel=F,BayesianNetModel=F,KaplanMeier = F,RSFModel=T, FS = F, numberOfFolds = 5,verbose = F)
+res = aveMetrics(ISD)
+
 

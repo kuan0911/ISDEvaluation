@@ -13,8 +13,8 @@ BayesianNetUpper = function(training,testing){
   print('bestC1')
   print(bestC1)
   
-  m = floor(sqrt(nrow(training))+1)
-  #m = 10
+  #m = floor(sqrt(nrow(training))+1)
+  m = 10
   quantileVals = seq(0,1,length.out = m+2)[-c(1,m+2)]
   #quantileVals = seq(0,1,length.out = m+2)[-1]
   timePoints = unname(quantile(training$time, quantileVals))
@@ -35,7 +35,7 @@ BayesianNetUpper = function(training,testing){
   #mod = BayesianNet(training, testing, timePoints,debug=T)
   mod = DHLR(training, testing,timePoints,debug=T)
   
-  #timePoints = fixtime(timePoints)
+  timePoints = mod$timePoints
   survivalFunctionTesting = mod$TestCurves
   survivalFunctionTesting= rbind(rep(1,nrow(testing)),survivalFunctionTesting)
   testCurvesToReturn = cbind(time = c(0,timePoints), survivalFunctionTesting)

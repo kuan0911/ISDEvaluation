@@ -47,6 +47,7 @@ library(fastcox)
 library(prodlim)
 
 library(gbm)
+#source("Models/gbm.R")
 
 GBMCox_KP = function(training, testing,ElasticNet=F, numFolds = 5){
   print('Gradien boost')
@@ -65,7 +66,8 @@ GBMCox_KP = function(training, testing,ElasticNet=F, numFolds = 5){
                  train.fraction = 1,      # fraction of data for training, first train.fraction*N used for training
                  cv.folds = 5,              # do 5-fold cross-validation
                  n.minobsinnode = 10,       # minimum total weight needed in each node
-                 keep.data = TRUE)
+                 keep.data = TRUE,
+                 verbose = FALSE)
   best.iter <- gbm.perf(coxModel,method='cv')
   
   linearPredictionsTraining = predict(coxModel,training[,-c(timeInd, deltaInd)],best.iter)
