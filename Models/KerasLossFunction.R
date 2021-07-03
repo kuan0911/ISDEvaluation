@@ -47,7 +47,7 @@ my_regularizer = function(x,lambda1,lambda2,weights){
   shiftx_concat = K$concatenate(list(shiftx,concat2D))
   
   #rep = K$repeat_elements(concat2D, as.integer(m), as.integer(1))
-  sub = K$abs(shiftx_concat - xF)
+  sub = K$square(shiftx_concat - xF)
   
   # shiftx2 = xF[,3:m]
   # shiftx2_concat = K$concatenate(list(shiftx2,xF[,1:2]))

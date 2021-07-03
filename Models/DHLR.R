@@ -158,22 +158,27 @@ DHLR = function(training, testing, timePoints = 0,debug = FALSE){
   
   
   
-  bestLambda = 0.1
-  bestLambda = bestLambda * 0.66
-  cvFoldIndex = createFoldsOfData(training, numberOfFolds=3)[[1]]
+  bestLambda1 = 0.00001
+  #bestLambda1 = bestLambda1 * 0.66
+  cvFoldIndex = createFoldsOfData(rbind(training,training), numberOfFolds=3)[[1]]
   #bestLambda = cvGeneral(training,timePoints,numberOfFolds=3)
   
   res = prepareDataKeras(training,timePoints)
   x=res$x
   y=res$y
   w=res$w
-  bestLambda2 = 0.05
-  #bestLambda2 = keras_cvInt_lambda2(x,y,w,cvFoldIndex,bestLambda)
-  cat('best lambda2: ');cat(bestLambda2);
+  bestLambda2 = 0.00001
   
-  #bestLambda = keras_cvInt(x,y,w,cvFoldIndex)
   
-  cat('best lambda: ');cat(bestLambda);cat('  ');
+  # bestLambda1 = keras_cvInt(x,y,w,cvFoldIndex,bestLambda2)
+  # 
+  #bestLambda2 = keras_cvInt_lambda2(x,y,w,cvFoldIndex,bestLambda1)
+  
+  # bestLambda = keras_cvIntBoth(x,y,w,cvFoldIndex)
+  # bestLambda1 = bestLambda$bestLambda1
+  # bestLambda2 = bestLambda$bestLambda2
+
+  cat('best lambda: ');cat(bestLambda1);cat('  ');cat(bestLambda2);cat('  ');
   # bestLambda = cvGeneral(training,timePoints,numberOfFolds=3)
   # quantileVals = seq(0,1,length.out = bestLambda+2)[-c(1,bestLambda+2)]
   # timePoints = unname(quantile(training$time, quantileVals))
@@ -189,7 +194,7 @@ DHLR = function(training, testing, timePoints = 0,debug = FALSE){
   oldy = y
   oldw = w
   
-  if(F) {
+  if(T) {
     print('start with KM imputation')
     resKM = EMdataKM(oldx,oldy,oldw,training,kmMod,timePoints)
     x=resKM$x
@@ -197,17 +202,23 @@ DHLR = function(training, testing, timePoints = 0,debug = FALSE){
     w=resKM$w
   }
   
-  #y=1-y
+ print(length(cvFoldIndex[1]))
   
   
-  for(iter in 1:1) {
+  for(iter in 1:3) {
+    bestLambda = keras_cvIntBoth(x,y,w,cvFoldIndex)
+    bestLambda1 = bestLambda$bestLambda1
+    bestLambda2 = bestLambda$bestLambda2
+    
+    cat('best lambda: ');cat(bestLambda1);cat('  ');cat(bestLambda2);cat('  ');
+    
     print('EM')
     if(anyNA(x)|anyNA(y)|anyNA(w)) {print('Missing value in training data')}
     allHazard = colSums(oldy*oldw)/colSums(oldw)
     
     customBCEIntegrated_wrapper <- custom_metric("wbce", function(y_true, y_pred){customBCE(y_true, y_pred)})
     #aveAccuracy_wrapper <- custom_metric("ave_acc", function(y_true, y_pred){aveAccuracy(y_true, y_pred, weights=w)})
-    my_regularizer_wrapper <- custom_metric("reg", function(x){my_regularizer(x, lambda1=bestLambda,lambda2=bestLambda2,weights=w)})
+    my_regularizer_wrapper <- custom_metric("reg", function(x){my_regularizer(x, lambda1=bestLambda1,lambda2=bestLambda2,weights=w)})
     my_bias_regularizer_wrapper <- custom_metric("regb", function(x){my_bias_regularizer(x, allHazard=log(allHazard))})
     
     model <- keras_model_sequential()

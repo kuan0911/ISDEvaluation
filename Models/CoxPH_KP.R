@@ -75,7 +75,7 @@ CoxPH_KP = function(training, testing,ElasticNet=T, numFolds = 5){
     }
     print(lambda.min)
     coxModel = cocktail(as.matrix(training[,-c(timeInd, deltaInd)]),training[,timeInd], training[,deltaInd],alpha = 1,lambda = 0.01)
-    print(as.matrix(coxModel$beta))
+    #print(as.matrix(coxModel$beta))
     linearPredictionsTraining = predict(coxModel,as.matrix(training[,-c(timeInd, deltaInd)]),type = "link")
     linearPredictionsTesting = predict(coxModel,as.matrix(testing[,-c(timeInd, deltaInd)]),type = "link")
     survivalEstimate = KPEstimator(linearPredictionsTraining, training$time,training$delta)

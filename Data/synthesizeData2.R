@@ -12,34 +12,37 @@ sythesize2 = function(n=1000) {
   LorD = as.integer(c(0,1))
   
   a = sample(LV3, 5000, prob = c(0.4,0.4,0.2), replace = TRUE)
+  b = sample(c(1, 2), 5000, prob = c(0.75, 0.25), replace = TRUE)
   c = sample(LV3, 5000, prob = c(0.75, 0.2, 0.05), replace = TRUE)
   d = sample(LV3, 5000, prob = c(0.4, 0.3, 0.3), replace = TRUE)
   e = sample(c(1, 2), 5000, prob = c(0.75, 0.25), replace = TRUE)
+  g = sample(LV3, 5000, prob = c(0.4, 0.3, 0.3), replace = TRUE)
   
   TIMEPOINT = a
   TIMEPOINT[TIMEPOINT == 1] = sample(LorD, length(which(TIMEPOINT == 1)), prob = c(0.95, 0.05), replace = TRUE)
   TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.85, 0.15), replace = TRUE)
   TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.7, 0.3), replace = TRUE)
   
-  b = TIMEPOINT
-  b[b == 0] = sample(LV3, length(which(b == 0)), prob = c(0.6, 0.2, 0.2), replace = TRUE)
-  b[b == 1] = sample(LV3, length(which(b == 1)), prob = c(0.15, 0.15, 0.7), replace = TRUE)
+  # b = TIMEPOINT
+  # b[b == 0] = sample(LV3, length(which(b == 0)), prob = c(0.6, 0.2, 0.2), replace = TRUE)
+  # b[b == 1] = sample(LV3, length(which(b == 1)), prob = c(0.15, 0.15, 0.7), replace = TRUE)
   
-  g = TIMEPOINT
-  g[g == 0] = sample(LV3, length(which(g == 0)), prob = c(0.5, 0.4, 0.1), replace = TRUE)
-  g[g == 1] = sample(LV3, length(which(g == 1)), prob = c(0.1, 0.4, 0.5), replace = TRUE)
+  # g = TIMEPOINT
+  # g[g == 0] = sample(LV3, length(which(g == 0)), prob = c(0.5, 0.4, 0.1), replace = TRUE)
+  # g[g == 1] = sample(LV3, length(which(g == 1)), prob = c(0.1, 0.4, 0.5), replace = TRUE)
   
   syndata1 = data.frame(
     TIMEPOINT = factor(TIMEPOINT, levels = LorD),
     A = factor(a, levels = LV3),
-    B = factor(b, levels = LV3),
+    B = factor(b, levels = c(1, 2)),
     C = factor(c, levels = LV3),
     D = factor(d, levels = LV3),
     E = factor(e, levels = c(1, 2)),
     G = factor(g, levels = LV3)
   )
   dag1 = empty.graph(c('TIMEPOINT','A','B','C','D','E','G'))
-  arc.set1 = matrix(c("A", "TIMEPOINT", "TIMEPOINT", "B", "TIMEPOINT", "G"),ncol = 2, byrow = TRUE,dimnames = list(NULL, c("from", "to")))
+  #arc.set1 = matrix(c("A", "TIMEPOINT", "TIMEPOINT", "B", "TIMEPOINT", "G"),ncol = 2, byrow = TRUE,dimnames = list(NULL, c("from", "to")))
+  arc.set1 = matrix(c("A", "TIMEPOINT"),ncol = 2, byrow = TRUE,dimnames = list(NULL, c("from", "to")))
   arcs(dag1) = arc.set1
   fit1 = bn.fit(dag1,syndata1)
   #graphviz.plot(fit1)
@@ -49,22 +52,18 @@ sythesize2 = function(n=1000) {
   TIMEPOINT[TIMEPOINT == 2] = sample(LorD, length(which(TIMEPOINT == 2)), prob = c(0.85, 0.15), replace = TRUE)
   TIMEPOINT[TIMEPOINT == 3] = sample(LorD, length(which(TIMEPOINT == 3)), prob = c(0.7, 0.3), replace = TRUE)
   
-  e = TIMEPOINT
-  e[e == 0] = sample(c(1, 2), length(which(e == 0)), prob = c(0.7, 0.3), replace = TRUE)
-  e[e == 1] = sample(c(1, 2), length(which(e == 1)), prob = c(0.3, 0.7), replace = TRUE)
+  # e = TIMEPOINT
+  # e[e == 0] = sample(c(1, 2), length(which(e == 0)), prob = c(0.7, 0.3), replace = TRUE)
+  # e[e == 1] = sample(c(1, 2), length(which(e == 1)), prob = c(0.3, 0.7), replace = TRUE)
   
   # g = TIMEPOINT
   # g[g == 0] = sample(LV3, length(which(g == 0)), prob = c(0.5, 0.4, 0.1), replace = TRUE)
-  # g[g == 1] = sample(LV3, length(which(g == 1)), prob = c(0.1, 0.7, 0.2), replace = TRUE)
-  
-  g = TIMEPOINT
-  g[g == 0] = sample(LV3, length(which(g == 0)), prob = c(0.5, 0.4, 0.1), replace = TRUE)
-  g[g == 1] = sample(LV3, length(which(g == 1)), prob = c(0.1, 0.4, 0.5), replace = TRUE)
+  # g[g == 1] = sample(LV3, length(which(g == 1)), prob = c(0.1, 0.4, 0.5), replace = TRUE)
   
   syndata2 = data.frame(
     TIMEPOINT = factor(TIMEPOINT, levels = LorD),
     A = factor(a, levels = LV3),
-    B = factor(b, levels = LV3),
+    B = factor(b, levels = c(1, 2)),
     C = factor(c, levels = LV3),
     D = factor(d, levels = LV3),
     E = factor(e, levels = c(1, 2)),
@@ -72,7 +71,8 @@ sythesize2 = function(n=1000) {
   )
   
   dag2 = empty.graph(c('TIMEPOINT','A','B','C','D','E','G'))
-  arc.set2 = matrix(c("D", "TIMEPOINT", "TIMEPOINT", "E", "TIMEPOINT", "G"),ncol = 2, byrow = TRUE,dimnames = list(NULL, c("from", "to")))
+  #arc.set2 = matrix(c("D", "TIMEPOINT", "TIMEPOINT", "E", "TIMEPOINT", "G"),ncol = 2, byrow = TRUE,dimnames = list(NULL, c("from", "to")))
+  arc.set2 = matrix(c("D", "TIMEPOINT"),ncol = 2, byrow = TRUE,dimnames = list(NULL, c("from", "to")))
   arcs(dag2) = arc.set2
   fit2 = bn.fit(dag2,syndata2)
   #graphviz.plot(fit2)
@@ -85,7 +85,7 @@ sythesize2 = function(n=1000) {
   syndata3 = data.frame(
     TIMEPOINT = factor(TIMEPOINT, levels = LorD),
     A = factor(a, levels = LV3),
-    B = factor(b, levels = LV3),
+    B = factor(b, levels = c(1, 2)),
     C = factor(c, levels = LV3),
     D = factor(d, levels = LV3),
     E = factor(e, levels = c(1, 2)),
@@ -109,7 +109,7 @@ sythesize2 = function(n=1000) {
   #fitList[[8]] = fit3
   
   a = sample(LV3, 5000, prob = c(0.4,0.4,0.2), replace = TRUE)
-  b = sample(LV3, 5000, prob = c(0.3, 0.4, 0.3), replace = TRUE)
+  b = sample(c(1, 2), 5000, prob = c(0.5, 0.5), replace = TRUE)
   c = sample(LV3, 5000, prob = c(0.75, 0.2, 0.05), replace = TRUE)
   d = sample(LV3, 5000, prob = c(0.4, 0.3, 0.3), replace = TRUE)
   e = sample(c(1, 2), 5000, prob = c(0.75, 0.25), replace = TRUE)
@@ -117,7 +117,7 @@ sythesize2 = function(n=1000) {
   
   covariateData = data.frame(
     A = factor(a, levels = LV3),
-    B = factor(b, levels = LV3),
+    B = factor(b, levels = c(1, 2)),
     C = factor(c, levels = LV3),
     D = factor(d, levels = LV3),
     E = factor(e, levels = c(1, 2)),
@@ -137,7 +137,7 @@ sythesize2 = function(n=1000) {
       if(is.na(time[k])) {
         covariate = covariateSim[k,]
         #predicted = predict(object = fitList[[i]], node = "TIMEPOINT", data = covariate, method = "bayes-lw", n=2000, prob = TRUE)
-        prob = BnExactInference(fitList[[i]],covariate,kmprob=NULL,noise=F,lev=list(LV3,LV3,LV3,LV3,c(1, 2),LV3))
+        prob = BnExactInference(fitList[[i]],covariate,kmprob=NULL,noise=F,lev=list(LV3,c(1, 2),LV3,LV3,c(1, 2),LV3))
         if(runif(1,0,1)>prob) {
           time[k] = runif(1,timePointsWithZero[i], timePointsWithZero[i+1])
         }

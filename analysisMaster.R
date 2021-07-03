@@ -130,8 +130,8 @@ analysisMaster = function(survivalDataset, numberOfFolds =5, BayesianC1 = NULL,
       if(verbose){
         print("Starting Cox Proportional Hazards.")
       }
-      #coxMod = CoxPH_KP(training, testing)
-      coxMod = GBMCox_KP(training, testing)
+      coxMod = CoxPH_KP(training, testing)
+      #coxMod = GBMCox_KP(training, testing)
       if(length(coxMod) ==1){
         combinedTestResults$Cox = list()
         coxTimes = NULL
